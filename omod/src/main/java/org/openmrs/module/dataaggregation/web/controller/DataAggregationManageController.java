@@ -13,6 +13,9 @@
  */
 package org.openmrs.module.dataaggregation.web.controller;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.context.Context;
@@ -32,5 +35,18 @@ public class  DataAggregationManageController {
 	@RequestMapping(value = "/module/dataaggregation/manage", method = RequestMethod.GET)
 	public void manage(ModelMap model) {
 		model.addAttribute("user", Context.getAuthenticatedUser());
+		
+		//make up fake data for now
+		HashMap<String, Integer> diseaseBurden = new HashMap<String, Integer>();
+		
+		diseaseBurden.put("malaria", 1202);
+		diseaseBurden.put("cholera", 1202);
+		diseaseBurden.put("typhoid", 1202);
+		diseaseBurden.put("hiv/aids", 1202);
+		diseaseBurden.put("syphilis", 1202);
+		
+		//convert the data to a string that is roughly csv
+			
+		model.addAttribute("diseaseBurden", diseaseBurden.toString());
 	}
 }
