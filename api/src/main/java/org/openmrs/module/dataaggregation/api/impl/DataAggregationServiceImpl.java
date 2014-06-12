@@ -17,6 +17,8 @@ import java.util.List;
 
 import org.openmrs.Patient;
 import org.openmrs.api.context.Context;
+import java.util.HashMap;
+
 import org.openmrs.api.impl.BaseOpenmrsService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -53,5 +55,19 @@ public class DataAggregationServiceImpl extends BaseOpenmrsService implements Da
 		  toReturn = toReturn + ("/n Patient: " + patient.getGivenName() + " " + patient.getFamilyName());
 		}
 		return toReturn;
+    }
+
+	@Override
+	public HashMap<String, Integer> getDiseaseBurden() {
+		//make up fake data for now
+		HashMap<String, Integer> diseaseBurden = new HashMap<String, Integer>();
+		
+		diseaseBurden.put("malaria", 1202);
+		diseaseBurden.put("cholera", 1202);
+		diseaseBurden.put("typhoid", 1202);
+		diseaseBurden.put("hiv/aids", 1202);
+		diseaseBurden.put("syphilis", 1202);
+		
+		return diseaseBurden;
 	}
 }
