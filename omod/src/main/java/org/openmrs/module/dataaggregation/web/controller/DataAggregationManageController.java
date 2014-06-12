@@ -16,6 +16,7 @@ package org.openmrs.module.dataaggregation.web.controller;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.dataaggregation.api.DataAggregationService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,5 +33,8 @@ public class  DataAggregationManageController {
 	@RequestMapping(value = "/module/dataaggregation/manage", method = RequestMethod.GET)
 	public void manage(ModelMap model) {
 		model.addAttribute("user", Context.getAuthenticatedUser());
+	
+		DataAggregationService serv = Context.getService(DataAggregationService.class);
+		model.addAttribute("patients", serv.getAllPatientNames());
 	}
 }

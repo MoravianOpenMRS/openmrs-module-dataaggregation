@@ -13,6 +13,10 @@
  */
 package org.openmrs.module.dataaggregation.api.impl;
 
+import java.util.List;
+
+import org.openmrs.Patient;
+import org.openmrs.api.context.Context;
 import org.openmrs.api.impl.BaseOpenmrsService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -41,4 +45,13 @@ public class DataAggregationServiceImpl extends BaseOpenmrsService implements Da
     public DataAggregationDAO getDao() {
 	    return dao;
     }
+    
+    public String getAllPatientNames() {
+		String toReturn = new String();
+		List<Patient> patients = Context.getPatientService().getAllPatients();
+		for (Patient patient : patients) {
+		  toReturn = toReturn + ("/n Patient: " + patient.getGivenName() + " " + patient.getFamilyName());
+		}
+		return toReturn;
+	}
 }

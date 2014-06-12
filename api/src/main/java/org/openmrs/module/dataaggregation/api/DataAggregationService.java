@@ -29,8 +29,5 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public interface DataAggregationService extends OpenmrsService {
      
-	/*
-	 * Add service methods here
-	 * 
-	 */
+	public String getAllPatientNames();
 }
