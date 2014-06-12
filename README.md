@@ -1,6 +1,6 @@
 == Description ==
 
-This module allows for external access to anonymous aggregate data..
+This module allows for external access to anonymous aggregate data.
 
 
 == Building from Source ==
