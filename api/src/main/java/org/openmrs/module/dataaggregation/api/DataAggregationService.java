@@ -13,6 +13,8 @@
  */
 package org.openmrs.module.dataaggregation.api;
 
+import java.util.HashMap;
+
 import org.openmrs.api.OpenmrsService;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,8 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public interface DataAggregationService extends OpenmrsService {
      
-	/*
-	 * Add service methods here
-	 * 
-	 */
+	public String getAllPatientNames();
+	
+	public HashMap<String, Integer> getDiseaseBurden();
 }

@@ -13,9 +13,11 @@
  */
 package org.openmrs.module.dataaggregation.web.controller;
 
+import java.util.HashMap;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.dataaggregation.api.DataAggregationService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,5 +34,14 @@ public class  DataAggregationManageController {
 	@RequestMapping(value = "/module/dataaggregation/manage", method = RequestMethod.GET)
 	public void manage(ModelMap model) {
 		model.addAttribute("user", Context.getAuthenticatedUser());
+	
+		DataAggregationService service = Context.getService(DataAggregationService.class);
+		model.addAttribute("patients", service.getAllPatientNames());
+		
+		DataAggregationService serv = Context.getService(DataAggregationService.class);
+		HashMap<String, Integer> diseaseBurden = serv.getDiseaseBurden();//I have no idea why it gives this error, the method exists
+		
+		//convert the data to a string that is roughly csv	
+		model.addAttribute("diseaseBurden", diseaseBurden.toString());
 	}
 }
