@@ -3,6 +3,19 @@
 This module allows for external access to anonymous aggregate data.
 
 
+== Authors ==
+
+Summer 2014 Students:
+Megan Biernat
+Jason Bocutti
+Steve Chakif
+Lewis Cooper
+Alec Gehrhard
+Charles McDonald
+Vincent Pillenger
+
+Faculty Adviser: Ben Coleman
+
 == Building from Source ==
 
 You will need to have Java 1.6+ and Maven 2.x+ installed.  Use the command 'mvn package' to 
