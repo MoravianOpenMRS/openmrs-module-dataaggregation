@@ -12,7 +12,7 @@ Steve Chakif
 Lewis Cooper
 Alec Gehrhard
 Charles McDonald
-Vincent Pillenger
+Vincent Pillinger
 
 Faculty Adviser: Ben Coleman
 
