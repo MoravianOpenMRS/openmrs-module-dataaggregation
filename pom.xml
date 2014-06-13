@@ -33,8 +33,9 @@
 	</modules>
 	
 	<properties>
-		<openMRSVersion>1.8.2</openMRSVersion>
+		<openMRSVersion>1.9.2</openMRSVersion>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<webservicesRestVersion>2.6-SNAPSHOT</webservicesRestVersion>
 	</properties>
 
 	<dependencyManagement>
@@ -51,9 +52,32 @@
 			</dependency>
 			-->
 			
+			<dependency>
+			    <groupId>org.openmrs.module</groupId>
+			    <artifactId>webservices.rest-omod-1.8</artifactId>
+			    <version>${webservicesRestVersion}</version>
+			    <type>jar</type>
+			    <scope>provided</scope>
+			</dependency>
+ 
+			 <dependency>
+			    <groupId>org.openmrs.module</groupId>
+			    <artifactId>webservices.rest-omod-common</artifactId>
+			    <version>${webservicesRestVersion}</version>
+			    <type>jar</type>
+			    <scope>provided</scope>
+			</dependency>
 			
+			<dependency>
+			    <groupId>org.openmrs.module</groupId>
+			    <artifactId>webservices.rest-omod-common</artifactId>
+			    <version>${webservicesRestVersion}</version>
+			    <type>test-jar</type>
+			    <scope>test</scope>
+			</dependency>
 
 			<!-- Begin OpenMRS core -->
+			
 			
 			<dependency>
 				<groupId>org.openmrs.api</groupId>
