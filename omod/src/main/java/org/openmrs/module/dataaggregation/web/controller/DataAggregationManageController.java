@@ -23,6 +23,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -48,7 +49,10 @@ public class  DataAggregationManageController {
 	}
 	@RequestMapping(value = "/module/dataaggregation/names", method = RequestMethod.GET)
 	@ResponseBody
-	public Object names() {
-		return Context.getService(DataAggregationService.class).getDiseaseBurden();	
+	public Object names(@RequestParam("startDate") Integer startDate, @RequestParam("endDate") Integer endDate) {
+		HashMap<String, Integer> toReturn = Context.getService(DataAggregationService.class).getDiseaseBurden();
+		toReturn.put("startDate", startDate);	
+		toReturn.put("endDate", endDate);	
+		return toReturn;
 	}
 }
