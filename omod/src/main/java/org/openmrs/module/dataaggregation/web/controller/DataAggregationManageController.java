@@ -53,6 +53,14 @@ public class  DataAggregationManageController {
 		HashMap<String, Integer> toReturn = Context.getService(DataAggregationService.class).getDiseaseBurden();
 		toReturn.put("startDate", startDate);	
 		toReturn.put("endDate", endDate);	
+		return hashMapToCSV(toReturn);
+	}
+	
+	private String hashMapToCSV(HashMap<?,?> map){
+		String toReturn = new String();
+		for(Object val:map.keySet()){
+			toReturn = toReturn + val + "," + map.get(val) + " \n";
+		}
 		return toReturn;
 	}
 }
