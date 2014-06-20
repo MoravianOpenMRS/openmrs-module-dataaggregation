@@ -15,8 +15,11 @@ package org.openmrs.module.dataaggregation.api.impl;
 
 import java.util.List;
 
+import org.hibernate.SQLQuery;
+import org.hibernate.Session;
 import org.openmrs.Patient;
 import org.openmrs.api.context.Context;
+
 import java.util.HashMap;
 
 import org.openmrs.api.impl.BaseOpenmrsService;
@@ -55,6 +58,35 @@ public class DataAggregationServiceImpl extends BaseOpenmrsService implements Da
 		  toReturn = toReturn + ("/n Patient: " + patient.getGivenName() + " " + patient.getFamilyName());
 		}
 		return toReturn;
+    }
+    
+    /**
+     * 
+     */
+    public String getDiseaseCounts() {
+    	
+    	Session session = dao.getSessionFactory().openSession();
+    	
+    	String SQL_Query = "select o.value_coded, c.name, count(*) from obs o, concept_name c "
+    						+ "where o.value_coded = c.concept_id and o.concept_id=6042 and c.concept_name_type = 'FULLY_SPECIFIED'"
+    						+ "group by o.value_coded";
+
+		SQLQuery query = session.createSQLQuery(SQL_Query);
+		
+		@SuppressWarnings("unchecked")
+		List<Object> results = query.list();
+
+		StringBuilder resultString = new StringBuilder();
+		
+		for (Object o : results) {
+			Object[] vals = (Object[]) o;
+			
+			//resultString.append("{Disease " + vals[0] + ": " + vals[1] + ", Cases: " + vals[2] + "}   ");
+			
+			resultString.append(vals[1] + ":" + vals[2] + "\n");
+		}
+		
+    	return resultString.toString();
     }
 
 	@Override

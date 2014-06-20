@@ -13,6 +13,7 @@
  */
 package org.openmrs.module.dataaggregation.api.db;
 
+import org.hibernate.SessionFactory;
 import org.openmrs.module.dataaggregation.api.DataAggregationService;
 
 /**
@@ -23,4 +24,8 @@ public interface DataAggregationDAO {
 	/*
 	 * Add DAO methods here
 	 */
+	
+	public void setSessionFactory(SessionFactory sessionFactory);
+	
+	public SessionFactory getSessionFactory();
 }

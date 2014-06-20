@@ -36,7 +36,10 @@ public class  DataAggregationManageController {
 		model.addAttribute("user", Context.getAuthenticatedUser());
 	
 		DataAggregationService service = Context.getService(DataAggregationService.class);
-		model.addAttribute("patients", service.getAllPatientNames());
+		
+		//model.addAttribute("patients", service.getAllPatientNames());
+		
+		model.addAttribute("diseases", service.getDiseaseCounts());
 		
 		DataAggregationService serv = Context.getService(DataAggregationService.class);
 		HashMap<String, Integer> diseaseBurden = serv.getDiseaseBurden();//I have no idea why it gives this error, the method exists
