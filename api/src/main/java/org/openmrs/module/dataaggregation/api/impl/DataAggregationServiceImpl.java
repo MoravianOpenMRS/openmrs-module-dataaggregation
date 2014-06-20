@@ -55,7 +55,7 @@ public class DataAggregationServiceImpl extends BaseOpenmrsService implements Da
 		String toReturn = new String();
 		List<Patient> patients = Context.getPatientService().getAllPatients();
 		for (Patient patient : patients) {
-		  toReturn = toReturn + ("/n Patient: " + patient.getGivenName() + " " + patient.getFamilyName());
+		  toReturn = toReturn + ("\n Patient: " + patient.getGivenName() + " " + patient.getFamilyName());
 		}
 		return toReturn;
     }

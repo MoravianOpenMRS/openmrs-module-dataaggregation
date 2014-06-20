@@ -14,6 +14,7 @@
 package org.openmrs.module.dataaggregation.web.controller;
 
 import java.util.HashMap;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.context.Context;
@@ -22,6 +23,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * The main controller.
@@ -46,5 +49,21 @@ public class  DataAggregationManageController {
 		
 		//convert the data to a string that is roughly csv	
 		model.addAttribute("diseaseBurden", diseaseBurden.toString());
+	}
+	@RequestMapping(value = "/module/dataaggregation/names", method = RequestMethod.GET)
+	@ResponseBody
+	public Object names(@RequestParam("startDate") Integer startDate, @RequestParam("endDate") Integer endDate) {
+		HashMap<String, Integer> toReturn = Context.getService(DataAggregationService.class).getDiseaseBurden();
+		toReturn.put("startDate", startDate);	
+		toReturn.put("endDate", endDate);	
+		return hashMapToCSV(toReturn);
+	}
+	
+	private String hashMapToCSV(HashMap<?,?> map){
+		String toReturn = new String();
+		for(Object val:map.keySet()){
+			toReturn = toReturn + val + "," + map.get(val) + " \n";
+		}
+		return toReturn;
 	}
 }
