@@ -44,19 +44,19 @@ public class  DataAggregationManageController {
 		
 		model.addAttribute("diseases", service.getDiseaseCounts());
 		
-		DataAggregationService serv = Context.getService(DataAggregationService.class);
-		HashMap<String, Integer> diseaseBurden = serv.getDiseaseBurden();//I have no idea why it gives this error, the method exists
+		//DataAggregationService serv = Context.getService(DataAggregationService.class);
+		//HashMap<String, Integer> diseaseBurden = serv.getDiseaseBurden();
 		
 		//convert the data to a string that is roughly csv	
-		model.addAttribute("diseaseBurden", diseaseBurden.toString());
+		//model.addAttribute("diseaseBurden", diseaseBurden.toString());
 	}
-	@RequestMapping(value = "/module/dataaggregation/names", method = RequestMethod.GET)
+	@RequestMapping(value = "/module/dataaggregation/diseasecounts", method = RequestMethod.GET)
 	@ResponseBody
 	public Object names(@RequestParam("startDate") Integer startDate, @RequestParam("endDate") Integer endDate) {
 		HashMap<String, Integer> toReturn = Context.getService(DataAggregationService.class).getDiseaseBurden();
 		toReturn.put("startDate", startDate);	
 		toReturn.put("endDate", endDate);	
-		return hashMapToCSV(toReturn);
+		return Context.getService(DataAggregationService.class).getDiseaseCounts() + "startDate," + startDate  + "\n endDate," + endDate;
 	}
 	
 	private String hashMapToCSV(HashMap<?,?> map){
