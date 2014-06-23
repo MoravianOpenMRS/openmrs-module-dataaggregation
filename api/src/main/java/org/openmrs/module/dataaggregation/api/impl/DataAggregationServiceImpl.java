@@ -169,15 +169,15 @@ public class DataAggregationServiceImpl extends BaseOpenmrsService implements Da
     						+ "from obs o, concept_name c "
     						+ "where o.value_coded = c.concept_id "
     						+ "and o.concept_id = :coded_id "
-    						+ "and (o.obs_datetime between ':start_date' and ':end_date') "
+    						//+ "and (o.obs_datetime between ':start_date' and ':end_date') "
     						+ "and c.concept_name_type = 'FULLY_SPECIFIED' "
     						+ "group by o.value_coded";
     	
 		SQLQuery query = session.createSQLQuery(SQL_Query);
 		// This sets the parameter coded_id to whatever we got from the number above (should be 6042)
 		query.setParameter("coded_id", num_coded);
-		query.setParameter("start_date", startDate);
-		query.setParameter("end_date", endDate);
+		//query.setParameter("start_date", startDate);
+		//query.setParameter("end_date", endDate);
 		
 		@SuppressWarnings("unchecked")
 		// This gets the list of records from our SQL statement each record is a row in the table
