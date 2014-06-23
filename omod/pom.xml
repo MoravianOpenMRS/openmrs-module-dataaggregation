@@ -73,6 +73,8 @@
 		<!-- End OpenMRS core -->
 
 	</dependencies>
+	
+	
 
 	<build>
 		<finalName>${project.parent.artifactId}-${project.parent.version}</finalName>
@@ -202,6 +204,7 @@
 	</build>
 
 	<profiles>
+	
   <profile>
     <id>deploy-web</id>
     <build>

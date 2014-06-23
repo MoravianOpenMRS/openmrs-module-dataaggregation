@@ -42,7 +42,7 @@ public class  DataAggregationManageController {
 		
 		//model.addAttribute("patients", service.getAllPatientNames());
 		
-		model.addAttribute("diseases", service.getDiseaseCounts());
+		model.addAttribute("diseases", service.getDiseaseCounts("1900-01-20 00:00:00", "2100-01-20 00:00:00"));
 		
 		DataAggregationService serv = Context.getService(DataAggregationService.class);
 		HashMap<String, Integer> diseaseBurden = serv.getDiseaseBurden();//I have no idea why it gives this error, the method exists
@@ -52,11 +52,10 @@ public class  DataAggregationManageController {
 	}
 	@RequestMapping(value = "/module/dataaggregation/names", method = RequestMethod.GET)
 	@ResponseBody
-	public Object names(@RequestParam("startDate") Integer startDate, @RequestParam("endDate") Integer endDate) {
-		HashMap<String, Integer> toReturn = Context.getService(DataAggregationService.class).getDiseaseBurden();
-		toReturn.put("startDate", startDate);	
-		toReturn.put("endDate", endDate);	
-		return hashMapToCSV(toReturn);
+	public String names(@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate) {
+		
+		String toReturn = Context.getService(DataAggregationService.class).getDiseaseCounts(startDate, endDate);	
+		return (toReturn);
 	}
 	
 	private String hashMapToCSV(HashMap<?,?> map){
