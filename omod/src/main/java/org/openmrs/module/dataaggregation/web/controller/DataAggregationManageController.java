@@ -54,15 +54,15 @@ public class  DataAggregationManageController {
 		//convert the data to a string that is roughly csv	
 		//model.addAttribute("diseaseBurden", diseaseBurden.toString());
 	}
-	
-	@RequestMapping(value = "/module/dataaggregation/diseasecounts", method = RequestMethod.GET)
+
+	@RequestMapping(value = "/module/dataaggregation/diseasecounts", method = RequestMethod.POST)
 	@ResponseBody
 	public String names(@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate) {		
 		//String toReturn = Context.getService(DataAggregationService.class).getDiseaseCounts(startDate, endDate);		
 		return ("");
 	}
 	
-	@RequestMapping(value = "/module/dataaggregation/diseasecounts", method = RequestMethod.GET)
+	@RequestMapping(value = "/module/dataaggregation/diseasecounts", method = RequestMethod.POST)
 	@ResponseBody
 	public String names(@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate, @RequestParam("diseaseList") List<String> diseaseList) {		
 		String toReturn = Context.getService(DataAggregationService.class).getDiseaseCounts(diseaseList, startDate, endDate);

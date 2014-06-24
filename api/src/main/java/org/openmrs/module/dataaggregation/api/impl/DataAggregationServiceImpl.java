@@ -167,27 +167,18 @@ public class DataAggregationServiceImpl extends BaseOpenmrsService implements Da
     	// The num_coded does not need to be gotten out from the list through indexing because the SQL statement returns one record with one column
     	int num_coded = (Integer) code_list.get(0);
     	
+    	// This is the HQL statement that is used with the database in order to get the data we want
     	StringBuilder SQL_Query = new StringBuilder();
     	
-    	// This is the HQL statement that is used with the database in order to get the data we want
     	SQL_Query.append("select o.value_coded, c.name, count(*) ");
     	SQL_Query.append("from obs o, concept_name c ");
     	SQL_Query.append("where o.value_coded = c.concept_id ");
     	SQL_Query.append("and o.concept_id = :coded_id ");
     	SQL_Query.append("and c.concept_name_type = 'FULLY_SPECIFIED' ");
-    	
-    						
+    				
     	//+ "and (o.obs_datetime between ' :start_date ' and ' :end_date ') "
     	// "group by o.value_coded";
-    	
-    	/*
-    	List<String> diseaseList = new LinkedList<String>();    	
-    	diseaseList.add("HEPATITIS");
-    	diseaseList.add("PNEUMONIA");
-    	diseaseList.add("MEASLES");
-    	diseaseList.add("ARTHRITIS");
-    	diseaseList.add("GINGIVITIS");
-    	*/
+
     	int count = 0;
     	
     	for (String disease : diseaseList) {
@@ -206,6 +197,7 @@ public class DataAggregationServiceImpl extends BaseOpenmrsService implements Da
     	
     	SQL_Query.append("group by o.value_coded");
     	
+    	/*
     	System.out.println();
     	System.out.println("######################");
     	System.out.println("OUR CODE BELOW");
@@ -217,8 +209,10 @@ public class DataAggregationServiceImpl extends BaseOpenmrsService implements Da
     	System.out.println("OUR CODE ABOVE");
     	System.out.println("######################");
     	System.out.println();
+    	*/
     	
 		SQLQuery query = session.createSQLQuery(SQL_Query.toString());
+
 		// This sets the parameter coded_id to whatever we got from the number above (should be 6042)
 		query.setParameter("coded_id", num_coded);
 		//query.setParameter("start_date", startDate);
@@ -239,18 +233,6 @@ public class DataAggregationServiceImpl extends BaseOpenmrsService implements Da
 			// vals[0] is just the concept_id of the disease which we may or may not need but that is why vals[0] is not used here
 			resultString.append(vals[1] + ":" + vals[2] + "\n");
 		}
-		
-		System.out.println();
-    	System.out.println("######################");
-    	System.out.println("OUR CODE BELOW");
-    	System.out.println();
-    	
-    	System.out.println("results = " + resultString.toString());
-    	
-    	System.out.println();
-    	System.out.println("OUR CODE ABOVE");
-    	System.out.println("######################");
-    	System.out.println();
 		
     	return resultString.toString();
     }
