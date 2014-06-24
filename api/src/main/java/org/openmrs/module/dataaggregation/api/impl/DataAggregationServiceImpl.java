@@ -70,16 +70,16 @@ public class DataAggregationServiceImpl extends BaseOpenmrsService implements Da
     	if (testName.equalsIgnoreCase("Disease")) {
     		
     	}
-    	else if (testName.equalsIgnoreCase("Goodbye")) {
+    	else if (testName.equalsIgnoreCase("Tests")) {
     		
     	}
-		else if (testName.equalsIgnoreCase("Goodbye")) {		    		
+		else if (testName.equalsIgnoreCase("Pulse")) {		    		
 		
 		}
-		else if (testName.equalsIgnoreCase("Goodbye")) {
+		else if (testName.equalsIgnoreCase("Weight")) {
 			
 		}
-		else if (testName.equalsIgnoreCase("Goodbye")) {
+		else if (testName.equalsIgnoreCase("etc..")) {
 			
 		}
 		else if (testName.equalsIgnoreCase("Goodbye")) {
@@ -159,7 +159,7 @@ public class DataAggregationServiceImpl extends BaseOpenmrsService implements Da
     	
     	// This code is to get the concept_id number that corresponds to PROBLEM ADDED concept
     	// For our instances the concept_id number is always 6042 but if a different concept map was used that number could change
-    	String problem_Query = "select concept_id from concept_name where name='PROBLEM ADDED'";   	
+    	String problem_Query = "SELECT concept_id FROM concept_name WHERE name='PROBLEM ADDED'";   	
     	SQLQuery problem_q = session.createSQLQuery(problem_Query);
     	
     	@SuppressWarnings("unchecked")
@@ -170,14 +170,13 @@ public class DataAggregationServiceImpl extends BaseOpenmrsService implements Da
     	// This is the HQL statement that is used with the database in order to get the data we want
     	StringBuilder SQL_Query = new StringBuilder();
     	
-    	SQL_Query.append("select o.value_coded, c.name, count(*) ");
-    	SQL_Query.append("from obs o, concept_name c ");
-    	SQL_Query.append("where o.value_coded = c.concept_id ");
-    	SQL_Query.append("and o.concept_id = :coded_id ");
-    	SQL_Query.append("and c.concept_name_type = 'FULLY_SPECIFIED' ");
+    	SQL_Query.append("SELECT o.value_coded, c.name, count(*) ");
+    	SQL_Query.append("FROM obs o, concept_name c ");
+    	SQL_Query.append("WHERE o.value_coded = c.concept_id ");
+    	SQL_Query.append("AND o.concept_id = :coded_id ");
+    	SQL_Query.append("AND c.concept_name_type = 'FULLY_SPECIFIED' ");
     				
     	//+ "and (o.obs_datetime between ' :start_date ' and ' :end_date ') "
-    	// "group by o.value_coded";
 
     	int count = 0;
     	
@@ -195,7 +194,7 @@ public class DataAggregationServiceImpl extends BaseOpenmrsService implements Da
     		SQL_Query.append(") ");
     	}    	
     	
-    	SQL_Query.append("group by o.value_coded");
+    	SQL_Query.append("GROUP BY o.value_coded ");
     	
     	/*
     	System.out.println();
