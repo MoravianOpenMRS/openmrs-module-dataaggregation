@@ -45,12 +45,12 @@ public class  DataAggregationManageController {
 		//model.addAttribute("patients", service.getAllPatientNames());
 		
 		// create a list that we had in the curl command and display to see which part is the problem
-		LinkedList<String> diseases = new LinkedList<String>();
-		diseases.add("hepatitis");
-		diseases.add("pneumonia");
-		diseases.add("measles");
-		diseases.add("arthritis");
-		diseases.add("gingivitis");
+		String[] diseases = new String[5];
+		diseases[0] = ("hepatitis");
+		diseases[1] = ("pneumonia");
+		diseases[2] = ("measles");
+		diseases[3] = ("arthritis");
+		diseases[4] = ("gingivitis");
 		
 		model.addAttribute("diseases", service.getDiseaseCounts(diseases, "1900-01-20 00:00:00", "2100-01-20 00:00:00"));
 		
@@ -60,18 +60,18 @@ public class  DataAggregationManageController {
 		//convert the data to a string that is roughly csv	
 		//model.addAttribute("diseaseBurden", diseaseBurden.toString());
 	}
-
+	/*
 	@RequestMapping(value = "/module/dataaggregation/diseasecounts", method = RequestMethod.POST)
 	@ResponseBody
 	public String names(@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate) {		
 		//String toReturn = Context.getService(DataAggregationService.class).getDiseaseCounts(startDate, endDate);		
 		return ("");
-	}
+	}*/
 	
-	@RequestMapping(value = "/module/dataaggregation/diseasecounts", method = RequestMethod.POST)
+	@RequestMapping(value = "/module/dataaggregation/diseasecounts", method = RequestMethod.GET)
 	@ResponseBody
-	public String names(@RequestParam("diseaseList") List<String> diseaseList, @RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate) {		
-		String toReturn = Context.getService(DataAggregationService.class).getDiseaseCounts(diseaseList, startDate, endDate);
+	public String names(@RequestParam("diseaseList") String diseaseList, @RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate) {		
+		String toReturn = Context.getService(DataAggregationService.class).getDiseaseCounts(diseaseList.split(":"), startDate, endDate);
 		return (toReturn);
 	}
 	

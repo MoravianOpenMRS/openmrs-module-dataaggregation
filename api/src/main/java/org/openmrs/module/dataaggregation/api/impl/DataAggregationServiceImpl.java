@@ -153,7 +153,7 @@ public class DataAggregationServiceImpl extends BaseOpenmrsService implements Da
     /**
      * 
      */
-    public String getDiseaseCounts(List<String> diseaseList, String startDate, String endDate) {
+    public String getDiseaseCounts(String[] diseaseList, String startDate, String endDate) {
     	
     	Session session = dao.getSessionFactory().openSession();
     	
@@ -196,7 +196,7 @@ public class DataAggregationServiceImpl extends BaseOpenmrsService implements Da
     	
     	SQL_Query.append("GROUP BY o.value_coded ");
     	
-    	/*
+    	
     	System.out.println();
     	System.out.println("######################");
     	System.out.println("OUR CODE BELOW");
@@ -208,7 +208,7 @@ public class DataAggregationServiceImpl extends BaseOpenmrsService implements Da
     	System.out.println("OUR CODE ABOVE");
     	System.out.println("######################");
     	System.out.println();
-    	*/
+    	
     	
 		SQLQuery query = session.createSQLQuery(SQL_Query.toString());
 
