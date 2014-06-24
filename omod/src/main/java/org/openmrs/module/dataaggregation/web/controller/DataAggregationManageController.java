@@ -14,6 +14,8 @@
 package org.openmrs.module.dataaggregation.web.controller;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -42,7 +44,9 @@ public class  DataAggregationManageController {
 		
 		//model.addAttribute("patients", service.getAllPatientNames());
 		
-		model.addAttribute("diseases", service.getDiseaseCounts("1900-01-20 00:00:00", "2100-01-20 00:00:00"));
+		// create a list that we had in the curl command and display to see which part is the problem
+		
+		model.addAttribute("diseases", service.getDiseaseCounts(new LinkedList<String>(), "1900-01-20 00:00:00", "2100-01-20 00:00:00"));
 		
 		//DataAggregationService serv = Context.getService(DataAggregationService.class);
 		//HashMap<String, Integer> diseaseBurden = serv.getDiseaseBurden();
@@ -50,13 +54,19 @@ public class  DataAggregationManageController {
 		//convert the data to a string that is roughly csv	
 		//model.addAttribute("diseaseBurden", diseaseBurden.toString());
 	}
+	
 	@RequestMapping(value = "/module/dataaggregation/diseasecounts", method = RequestMethod.GET)
 	@ResponseBody
-	public String names(@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate) {
-		
-		String toReturn = Context.getService(DataAggregationService.class).getDiseaseCounts(startDate, endDate);	
+	public String names(@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate) {		
+		//String toReturn = Context.getService(DataAggregationService.class).getDiseaseCounts(startDate, endDate);		
+		return ("");
+	}
+	
+	@RequestMapping(value = "/module/dataaggregation/diseasecounts", method = RequestMethod.GET)
+	@ResponseBody
+	public String names(@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate, @RequestParam("diseaseList") List<String> diseaseList) {		
+		String toReturn = Context.getService(DataAggregationService.class).getDiseaseCounts(diseaseList, startDate, endDate);
 		return (toReturn);
-
 	}
 	
 	private String hashMapToCSV(HashMap<?,?> map){

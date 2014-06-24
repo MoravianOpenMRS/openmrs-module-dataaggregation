@@ -13,6 +13,7 @@
  */
 package org.openmrs.module.dataaggregation.api.impl;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import org.hibernate.SQLQuery;
@@ -66,14 +67,13 @@ public class DataAggregationServiceImpl extends BaseOpenmrsService implements Da
     	
     	//String result = state.execute(testName, par1, par2, par3);
     	
-    	if (testName.equalsIgnoreCase("Hello")) {
+    	if (testName.equalsIgnoreCase("Disease")) {
     		
     	}
     	else if (testName.equalsIgnoreCase("Goodbye")) {
     		
     	}
-		else if (testName.equalsIgnoreCase("Goodbye")) {
-		    		
+		else if (testName.equalsIgnoreCase("Goodbye")) {		    		
 		
 		}
 		else if (testName.equalsIgnoreCase("Goodbye")) {
@@ -143,6 +143,9 @@ public class DataAggregationServiceImpl extends BaseOpenmrsService implements Da
     	String SQL_Query = "select o.value_coded, c.name, count(*) from obs o, concept_name c "
 				+ "where o.value_coded = c.concept_id and o. and o.concept_id= :coded_id and c.concept_name_type = 'FULLY_SPECIFIED'"
 				+ "group by o.value_coded";
+				
+				select o.value_coded, c.name, count(*) from obs o, concept_name c where o.value_coded = 
+				c.concept_id and c.concept_id = :coded_id and c.concept_name_type = 'FULLY_SPECIFIED' group by o.value_coded
     	
     	return "";
     }*/
@@ -150,7 +153,7 @@ public class DataAggregationServiceImpl extends BaseOpenmrsService implements Da
     /**
      * 
      */
-    public String getDiseaseCounts(String startDate, String endDate) {
+    public String getDiseaseCounts(List<String> diseaseList, String startDate, String endDate) {
     	
     	Session session = dao.getSessionFactory().openSession();
     	
@@ -164,20 +167,62 @@ public class DataAggregationServiceImpl extends BaseOpenmrsService implements Da
     	// The num_coded does not need to be gotten out from the list through indexing because the SQL statement returns one record with one column
     	int num_coded = (Integer) code_list.get(0);
     	
-    	// This is the HQL statement that is used with the database in order to get the data we want
-    	String SQL_Query = "select o.value_coded, c.name, count(*) "
-    						+ "from obs o, concept_name c "
-    						+ "where o.value_coded = c.concept_id "
-    						+ "and o.concept_id = :coded_id "
-    						+ "and (o.obs_datetime between ':start_date' and ':end_date') "
-    						+ "and c.concept_name_type = 'FULLY_SPECIFIED' "
-    						+ "group by o.value_coded";
+    	StringBuilder SQL_Query = new StringBuilder();
     	
-		SQLQuery query = session.createSQLQuery(SQL_Query);
+    	// This is the HQL statement that is used with the database in order to get the data we want
+    	SQL_Query.append("select o.value_coded, c.name, count(*) ");
+    	SQL_Query.append("from obs o, concept_name c ");
+    	SQL_Query.append("where o.value_coded = c.concept_id ");
+    	SQL_Query.append("and o.concept_id = :coded_id ");
+    	SQL_Query.append("and c.concept_name_type = 'FULLY_SPECIFIED' ");
+    	
+    						
+    	//+ "and (o.obs_datetime between ' :start_date ' and ' :end_date ') "
+    	// "group by o.value_coded";
+    	
+    	/*
+    	List<String> diseaseList = new LinkedList<String>();    	
+    	diseaseList.add("HEPATITIS");
+    	diseaseList.add("PNEUMONIA");
+    	diseaseList.add("MEASLES");
+    	diseaseList.add("ARTHRITIS");
+    	diseaseList.add("GINGIVITIS");
+    	*/
+    	int count = 0;
+    	
+    	for (String disease : diseaseList) {
+    		if (count == 0) {
+    			SQL_Query.append("AND (c.name = '" + disease + "'");
+    			count = 1;
+    		}
+    		else {
+    			SQL_Query.append(" OR c.name = '" + disease + "'"); 
+    		}
+    	}
+    	
+    	if (count == 1) {
+    		SQL_Query.append(") ");
+    	}    	
+    	
+    	SQL_Query.append("group by o.value_coded");
+    	
+    	System.out.println();
+    	System.out.println("######################");
+    	System.out.println("OUR CODE BELOW");
+    	System.out.println();
+    	
+    	System.out.println("query = " + SQL_Query.toString());
+    	
+    	System.out.println();
+    	System.out.println("OUR CODE ABOVE");
+    	System.out.println("######################");
+    	System.out.println();
+    	
+		SQLQuery query = session.createSQLQuery(SQL_Query.toString());
 		// This sets the parameter coded_id to whatever we got from the number above (should be 6042)
 		query.setParameter("coded_id", num_coded);
-		query.setParameter("start_date", startDate);
-		query.setParameter("end_date", endDate);
+		//query.setParameter("start_date", startDate);
+		//query.setParameter("end_date", endDate);
 		
 		@SuppressWarnings("unchecked")
 		// This gets the list of records from our SQL statement each record is a row in the table
@@ -194,6 +239,18 @@ public class DataAggregationServiceImpl extends BaseOpenmrsService implements Da
 			// vals[0] is just the concept_id of the disease which we may or may not need but that is why vals[0] is not used here
 			resultString.append(vals[1] + ":" + vals[2] + "\n");
 		}
+		
+		System.out.println();
+    	System.out.println("######################");
+    	System.out.println("OUR CODE BELOW");
+    	System.out.println();
+    	
+    	System.out.println("results = " + resultString.toString());
+    	
+    	System.out.println();
+    	System.out.println("OUR CODE ABOVE");
+    	System.out.println("######################");
+    	System.out.println();
 		
     	return resultString.toString();
     }
