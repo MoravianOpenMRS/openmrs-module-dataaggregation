@@ -80,6 +80,8 @@ public class  DataAggregationManageController {
 	public String names(@RequestParam("diseaseList") String diseaseList, @RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate, 
 						@RequestParam("minNumber") int minNumber, @RequestParam("maxNumber") int maxNumber) {
 		
+		endDate = "2100-01-20 00:00:00";
+		
 		List<String> diseases = Arrays.asList(diseaseList.split(":"));		
 		String toReturn = Context.getService(DataAggregationService.class).getDiseaseCounts(diseases, startDate, endDate, minNumber , maxNumber);
 		return (toReturn);
