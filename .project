@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
+<<<<<<< HEAD
 	<name>openmrs-module-dataaggregation</name>
+=======
+	<name>dataaggregation</name>
+>>>>>>> 25619da124cc8d31f72fbc78fea939fa60944a62
 	<comment></comment>
 	<projects>
 	</projects>

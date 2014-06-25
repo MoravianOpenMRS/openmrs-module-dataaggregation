@@ -6,6 +6,8 @@
 <p>Hello ${user.systemId}!</p>
 <p>${patients}</p>
 <p>${diseases}</p>
+<p>Tests Ordered:  ${testsOrdered}</p>
+<p>${weights}</p>
 
 <h1>The (Currently made up) disease burden data: </h1>
 
