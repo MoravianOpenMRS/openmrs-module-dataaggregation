@@ -153,10 +153,7 @@ public class DataAggregationServiceImpl extends BaseOpenmrsService implements Da
     /**
      * 
      */
-    public String getDiseaseCounts(List<String> diseaseList, String startDate, String endDate) {
-    	
-    	int min_num = -1;
-    	int max_num = -1;    	
+    public String getDiseaseCounts(List<String> diseaseList, String startDate, String endDate, int minNumber, int maxNumber) {   	
     	
     	Session session = dao.getSessionFactory().openSession();
     	
@@ -184,63 +181,38 @@ public class DataAggregationServiceImpl extends BaseOpenmrsService implements Da
     	
     	for (String disease : diseaseList) {
     		if (count == 0) {
-    			SQL_Query.append("AND (c.name = '" + disease + "'");
+    			SQL_Query.append("AND (c.name = '" + disease + "'"); // add the first disease with ( at beginning 
     			count = 1;
     		}
     		else {
-    			SQL_Query.append(" OR c.name = '" + disease + "'"); 
+    			SQL_Query.append(" OR c.name = '" + disease + "'"); // add the next disease
     		}
     	}
     	
     	if (count == 1) {
-    		SQL_Query.append(") ");
+    		SQL_Query.append(") "); // only add the ending ) if there was a starting one
     	}    	
     	
     	SQL_Query.append("GROUP BY o.value_coded "); // group by the value_coded (disease)
     	
-    	if (min_num > -1 && max_num > -1) {
-    		SQL_Query.append("HAVING COUNT(*) BETWEEN " + min_num + " AND " + max_num); // if they specify an upper AND lower bound
+    	if (minNumber > -1 && maxNumber > -1) {
+    		SQL_Query.append("HAVING COUNT(*) BETWEEN " + minNumber + " AND " + maxNumber); // if they specify an upper AND lower bound
     	}
-    	else if (min_num > -1) {
-    		SQL_Query.append("HAVING COUNT(*) >= " + min_num); // if they just want diseases above a certain number
+    	else if (minNumber > -1) {
+    		SQL_Query.append("HAVING COUNT(*) >= " + minNumber); // if they just want diseases above a certain number
     	}
-    	else if (max_num > -1) {
-    		SQL_Query.append("HAVING COUNT(*) <= " + max_num); // if they only want diseases below a certain number
+    	else if (maxNumber > -1) {
+    		SQL_Query.append("HAVING COUNT(*) <= " + maxNumber); // if they only want diseases below a certain number
     	}
     	
 		SQLQuery query = session.createSQLQuery(SQL_Query.toString());
 
 		// This sets the parameter coded_id to whatever we got from the number above (should be 6042)	
 		query.setParameter("coded_id", num_coded);	
-		
-		
-		System.out.println();
-		System.out.println("###########################");
-		System.out.println("Setting the end_date");
-		System.out.println();
-		
-		System.out.println("Start Date = " + startDate);
 		query.setParameter("start_date", startDate);
-		
-		System.out.println();
-		System.out.println("Setting the end_date");
-		System.out.println("###########################");		
-		System.out.println();
-		
-		
-		System.out.println();
-		System.out.println("###########################");
-		System.out.println("Setting the end_date");
-		System.out.println();
-		
-		System.out.println("End Date = " + endDate);
 		query.setParameter("end_date", endDate);
 		
-		System.out.println();
-		System.out.println("Setting the end_date");
-		System.out.println("###########################");		
-		System.out.println();
-
+		
 		@SuppressWarnings("unchecked")
 		// This gets the list of records from our SQL statement each record is a row in the table
 		List<Object> results = query.list();
@@ -253,7 +225,7 @@ public class DataAggregationServiceImpl extends BaseOpenmrsService implements Da
 			Object[] vals = (Object[]) o;
 			// vals[1] is the name of the disease
 			// vals[2] is the count for the disease
-			// vals[0] is just the concept_id of the disease which we may or may not need but that is why vals[0] is not used here
+			// vals[0] is just the concept_id of the disease which we may or may not need and that is why vals[0] is not used here
 			resultString.append(vals[1] + ":" + vals[2] + "\n");
 		}
 		
