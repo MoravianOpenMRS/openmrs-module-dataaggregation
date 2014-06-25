@@ -155,6 +155,9 @@ public class DataAggregationServiceImpl extends BaseOpenmrsService implements Da
      */
     public String getDiseaseCounts(List<String> diseaseList, String startDate, String endDate) {
     	
+    	int min_num = -1;
+    	int max_num = -1;    	
+    	
     	Session session = dao.getSessionFactory().openSession();
     	
     	// This code is to get the concept_id number that corresponds to PROBLEM ADDED concept
@@ -170,13 +173,12 @@ public class DataAggregationServiceImpl extends BaseOpenmrsService implements Da
     	// This is the HQL statement that is used with the database in order to get the data we want
     	StringBuilder SQL_Query = new StringBuilder();
     	
-    	SQL_Query.append("SELECT o.value_coded, c.name, count(*) ");
-    	SQL_Query.append("FROM obs o, concept_name c ");
-    	SQL_Query.append("WHERE o.value_coded = c.concept_id ");
-    	SQL_Query.append("AND o.concept_id = :coded_id ");
-    	SQL_Query.append("AND c.concept_name_type = 'FULLY_SPECIFIED' ");
-    				
-    	//+ "and (o.obs_datetime between ' :start_date ' and ' :end_date ') "
+    	SQL_Query.append("SELECT o.value_coded, c.name, count(*) "); // columns we want to have
+    	SQL_Query.append("FROM obs o, concept_name c "); // tables we need to join together
+    	SQL_Query.append("WHERE o.value_coded = c.concept_id "); // want the names of the concepts
+    	SQL_Query.append("AND o.concept_id = :coded_id "); // only get observations that have the PROBLEM ADDED concept (concept_id = 6042)
+    	SQL_Query.append("AND c.concept_name_type = 'FULLY_SPECIFIED' "); // this prevents the repeats in the concept_name table (multiple names for same concept_id)    				
+    	SQL_Query.append("AND ( o.obs_datetime BETWEEN :start_date AND :end_date ) "); // specifies the date range that we want
 
     	int count = 0;
     	
@@ -194,29 +196,51 @@ public class DataAggregationServiceImpl extends BaseOpenmrsService implements Da
     		SQL_Query.append(") ");
     	}    	
     	
-    	SQL_Query.append("GROUP BY o.value_coded ");
+    	SQL_Query.append("GROUP BY o.value_coded "); // group by the value_coded (disease)
     	
-    	/*
-    	System.out.println();
-    	System.out.println("######################");
-    	System.out.println("OUR CODE BELOW");
-    	System.out.println();
-    	
-    	System.out.println("query = " + SQL_Query.toString());
-    	
-    	System.out.println();
-    	System.out.println("OUR CODE ABOVE");
-    	System.out.println("######################");
-    	System.out.println();
-    	*/
+    	if (min_num > -1 && max_num > -1) {
+    		SQL_Query.append("HAVING COUNT(*) BETWEEN " + min_num + " AND " + max_num); // if they specify an upper AND lower bound
+    	}
+    	else if (min_num > -1) {
+    		SQL_Query.append("HAVING COUNT(*) >= " + min_num); // if they just want diseases above a certain number
+    	}
+    	else if (max_num > -1) {
+    		SQL_Query.append("HAVING COUNT(*) <= " + max_num); // if they only want diseases below a certain number
+    	}
     	
 		SQLQuery query = session.createSQLQuery(SQL_Query.toString());
 
-		// This sets the parameter coded_id to whatever we got from the number above (should be 6042)
-		query.setParameter("coded_id", num_coded);
-		//query.setParameter("start_date", startDate);
-		//query.setParameter("end_date", endDate);
+		// This sets the parameter coded_id to whatever we got from the number above (should be 6042)	
+		query.setParameter("coded_id", num_coded);	
 		
+		
+		System.out.println();
+		System.out.println("###########################");
+		System.out.println("Setting the end_date");
+		System.out.println();
+		
+		System.out.println("Start Date = " + startDate);
+		query.setParameter("start_date", startDate);
+		
+		System.out.println();
+		System.out.println("Setting the end_date");
+		System.out.println("###########################");		
+		System.out.println();
+		
+		
+		System.out.println();
+		System.out.println("###########################");
+		System.out.println("Setting the end_date");
+		System.out.println();
+		
+		System.out.println("End Date = " + endDate);
+		query.setParameter("end_date", endDate);
+		
+		System.out.println();
+		System.out.println("Setting the end_date");
+		System.out.println("###########################");		
+		System.out.println();
+
 		@SuppressWarnings("unchecked")
 		// This gets the list of records from our SQL statement each record is a row in the table
 		List<Object> results = query.list();

@@ -52,7 +52,8 @@ public class  DataAggregationManageController {
 		diseases.add("arthritis");
 		diseases.add("gingivitis");
 		
-		model.addAttribute("diseases", service.getDiseaseCounts(diseases, "1900-01-20 00:00:00", "2100-01-20 00:00:00"));
+		//model.addAttribute("diseases", service.getDiseaseCounts(diseases, "1900-01-20 00:00:00", "2100-01-20 00:00:00"));
+		model.addAttribute("diseases", service.getDiseaseCounts(new LinkedList<String>(), "1900-01-20 00:00:00", "2100-01-20 00:00:00"));
 		
 		//DataAggregationService serv = Context.getService(DataAggregationService.class);
 		//HashMap<String, Integer> diseaseBurden = serv.getDiseaseBurden();
@@ -60,20 +61,34 @@ public class  DataAggregationManageController {
 		//convert the data to a string that is roughly csv	
 		//model.addAttribute("diseaseBurden", diseaseBurden.toString());
 	}
-
-	@RequestMapping(value = "/module/dataaggregation/diseasecounts", method = RequestMethod.POST)
-	@ResponseBody
-	public String names(@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate) {		
-		//String toReturn = Context.getService(DataAggregationService.class).getDiseaseCounts(startDate, endDate);		
-		return ("");
-	}
 	
-	@RequestMapping(value = "/module/dataaggregation/diseasecounts", method = RequestMethod.POST)
+	/*
+	@RequestMapping(value = "/module/dataaggregation/diseasecounts", method = RequestMethod.GET)
 	@ResponseBody
-	public String names(@RequestParam("diseaseList") List<String> diseaseList, @RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate) {		
-		String toReturn = Context.getService(DataAggregationService.class).getDiseaseCounts(diseaseList, startDate, endDate);
+	public String names() {		
+		//String toReturn = Context.getService(DataAggregationService.class).getDiseaseCounts(new LinkedList<String>(), startDate, endDate);		
+		String toReturn = Context.getService(DataAggregationService.class).getDiseaseCounts(new LinkedList<String>(), "1900-01-20 00:00:00", "2100-01-20 00:00:00");
 		return (toReturn);
 	}
+	*/
+	
+	@RequestMapping(value = "/module/dataaggregation/diseasecounts", method = RequestMethod.GET)
+	@ResponseBody
+	public String names(@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate) {		
+		String toReturn = Context.getService(DataAggregationService.class).getDiseaseCounts(new LinkedList<String>(), startDate, endDate);		
+		//String toReturn = Context.getService(DataAggregationService.class).getDiseaseCounts(new LinkedList<String>(), "1900-01-20 00:00:00", "2100-01-20 00:00:00");
+		return (toReturn);
+	}
+	
+	/*
+	@RequestMapping(value = "/module/dataaggregation/diseasecounts", method = RequestMethod.GET)
+	@ResponseBody
+	public String names(@RequestParam("diseaseList") String diseaseList, @RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate) {		
+		//String toReturn = Context.getService(DataAggregationService.class).getDiseaseCounts(diseaseList.split(":"), startDate, endDate);
+		//return (toReturn);
+		return "";
+	}
+	*/
 	
 	private String hashMapToCSV(HashMap<?,?> map){
 		String toReturn = new String();
