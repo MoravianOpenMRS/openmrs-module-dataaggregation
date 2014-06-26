@@ -76,7 +76,7 @@ public class  DataAggregationManageController {
 		model.addAttribute("weights", service.getWeights());
 
 		DefaultCategoryDataset diseaseDataset = new DefaultCategoryDataset();
-		String diseaseData = service.getDiseaseCounts(new LinkedList<String>(), "1900-01-20 00:00:00", "2100-01-20 00:00:00", 100, 5000);
+		String diseaseData = service.getDiseaseCounts(new LinkedList<String>(), "1900-01-20 00:00:00", "2100-01-20 00:00:00", -1, -1);
 		
 		String[] list = diseaseData.split("\n");
 
