@@ -236,10 +236,7 @@ public class DataAggregationServiceImpl extends BaseOpenmrsService implements Da
     	return resultString.toString();
     }
 
-    public String getTestsOrdered(List<String> testsOrderedList, String startDate, String endDate) {
-    	
-    	int min = -1;
-    	int max = -1;
+    public String getTestsOrdered(List<String> testsOrderedList, String startDate, String endDate, int minNumber, int maxNumber) {
     	
     	Session session = dao.getSessionFactory().openSession();
     	
@@ -282,14 +279,14 @@ public class DataAggregationServiceImpl extends BaseOpenmrsService implements Da
     	
     	SQL_Query.append("GROUP BY o.value_coded ");
     	
-    	if (min != -1 && max != -1){
-    		SQL_Query.append("HAVING COUNT(*) BETWEEN " + min + "AND " + max);
+    	if (minNumber != -1 && maxNumber != -1){
+    		SQL_Query.append("HAVING COUNT(*) BETWEEN " + minNumber + "AND " + maxNumber);
     	}
-		else if (min > -1) {
-			SQL_Query.append("HAVING COUNT(*) >= " + min);
+		else if (minNumber > -1) {
+			SQL_Query.append("HAVING COUNT(*) >= " + minNumber);
 		}
-		else if (max > -1) {
-			SQL_Query.append("HAVING COUNT(*) <= " + max);
+		else if (maxNumber > -1) {
+			SQL_Query.append("HAVING COUNT(*) <= " + maxNumber);
 		}
     	
     	SQLQuery query = session.createSQLQuery(SQL_Query.toString());
@@ -318,10 +315,7 @@ public class DataAggregationServiceImpl extends BaseOpenmrsService implements Da
     	return resultString.toString();
     }
     
-    public String getWeights() {
-    	
-    	char male = 'M';
-    	//char female = 'F';
+    public String getWeights(char gender, int minAge, int maxAge) {
     	
     	Session session = dao.getSessionFactory().openSession();
     	
@@ -349,8 +343,6 @@ public class DataAggregationServiceImpl extends BaseOpenmrsService implements Da
     	DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
     	Calendar minCal = Calendar.getInstance();
     	Calendar maxCal = Calendar.getInstance();
-    	int minAge = 20;
-    	int maxAge = 30;
     	
     	if (minAge != -1 && maxAge != -1){
     		minCal.add(Calendar.YEAR, -minAge);
@@ -369,7 +361,7 @@ public class DataAggregationServiceImpl extends BaseOpenmrsService implements Da
     	SQLQuery query = session.createSQLQuery(SQL_Query.toString());
     	
     	query.setParameter("coded_id", num_coded);
-    	query.setParameter("gender", male);
+    	query.setParameter("gender", gender);
     	
     	@SuppressWarnings("unchecked")
 		// This gets the list of records from our SQL statement each record is a row in the table

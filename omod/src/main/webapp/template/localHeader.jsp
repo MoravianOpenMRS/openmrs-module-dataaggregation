@@ -11,6 +11,12 @@
 				code="dataaggregation.manage" /></a>
 	</li>
 	
+	<li <c:if test='<%= request.getRequestURI().contains("/queries") %>'>class="active"</c:if>>
+		<a href="queries.form">
+			<spring:message code="dataaggregation.queries"/>
+		</a>
+	</li>
+	
 	<!-- Add further links here -->
 </ul>
 <h2>
