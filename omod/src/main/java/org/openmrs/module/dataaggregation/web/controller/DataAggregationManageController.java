@@ -59,9 +59,9 @@ public class  DataAggregationManageController {
 		LinkedList<String> testsOrdered = new LinkedList<String>();
 		testsOrdered.add("X-RAY, CHEST");
 		testsOrdered.add("CD4 PANEL");		
-		model.addAttribute("testsOrdered", service.getTestsOrdered(testsOrdered, "1900-01-20 00:00:00", "2100-01-20 00:00:00"));
+		model.addAttribute("testsOrdered", service.getTestsOrdered(testsOrdered, "1900-01-20 00:00:00", "2100-01-20 00:00:00", -1, -1));
 		
-		model.addAttribute("weights", service.getWeights());
+		model.addAttribute("weights", service.getWeights('M', 20, 30));
 
 	}
 	
