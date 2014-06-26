@@ -9,8 +9,4 @@
 <p>Tests Ordered:  ${testsOrdered}</p>
 <p>${weights}</p>
 
-<h1>The (Currently made up) disease burden data: </h1>
-
-<p>${diseaseBurden}</p>
-
 <%@ include file="/WEB-INF/template/footer.jsp"%>
