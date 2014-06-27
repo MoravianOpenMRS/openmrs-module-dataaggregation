@@ -3,6 +3,8 @@
 
 <%@ include file="template/localHeader.jsp"%>
 
+<h2><spring:message code="dataaggregation.queries.title" /></h2>
+
 <p>Hello ${user.systemId}!</p>
 
 

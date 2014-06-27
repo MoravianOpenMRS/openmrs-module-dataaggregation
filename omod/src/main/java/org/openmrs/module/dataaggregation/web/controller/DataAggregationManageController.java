@@ -75,6 +75,7 @@ public class  DataAggregationManageController {
 		
 		//model.addAttribute("diseases", service.getDiseaseCounts(diseases, "1900-01-20 00:00:00", "2100-01-20 00:00:00", 10, 5000));
 		model.addAttribute("diseases", service.getDiseaseCounts(new LinkedList<String>(), cities, "1900-01-20 00:00:00", "2100-01-20 00:00:00", -1, -1));
+
 		
 		LinkedList<String> testsOrdered = new LinkedList<String>();
 		testsOrdered.add("X-RAY, CHEST");
