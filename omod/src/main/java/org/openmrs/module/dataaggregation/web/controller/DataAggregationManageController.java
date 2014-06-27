@@ -53,9 +53,9 @@ public class  DataAggregationManageController {
 		diseases.add("arthritis");
 		diseases.add("gingivitis");
 		
-		model.addAttribute("diseases", service.getDiseaseCounts(diseases, "1900-01-20 00:00:00", "2100-01-20 00:00:00", 10 , 5000));
+		model.addAttribute("diseases", service.getDiseaseCounts(new LinkedList<String>(), "1900-01-20 00:00:00", "2100-01-20 00:00:00", 11, -1));
 		//model.addAttribute("diseases", service.getDiseaseCounts(new LinkedList<String>(), "1900-01-20 00:00:00", "2100-01-20 00:00:00"));
-		
+				
 		LinkedList<String> testsOrdered = new LinkedList<String>();
 		testsOrdered.add("X-RAY, CHEST");
 		testsOrdered.add("CD4 PANEL");		
@@ -77,7 +77,8 @@ public class  DataAggregationManageController {
 	
 	@RequestMapping(value = "/module/dataaggregation/diseasecounts", method = RequestMethod.GET)
 	@ResponseBody
-	public String names(@RequestParam("diseaseList") String diseaseList, @RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate, 
+	public String names(@RequestParam("diseaseList") String diseaseList, 
+						@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate, 
 						@RequestParam("minNumber") int minNumber, @RequestParam("maxNumber") int maxNumber) {
 		
 		List<String> diseases = Arrays.asList(diseaseList.split(":"));		
@@ -94,7 +95,7 @@ public class  DataAggregationManageController {
 		return "";
 	}
 	*/
-	
+
 	private String hashMapToCSV(HashMap<?,?> map){
 		String toReturn = new String();
 		for(Object val:map.keySet()){

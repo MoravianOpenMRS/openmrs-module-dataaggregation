@@ -16,6 +16,7 @@ package org.openmrs.module.dataaggregation.api;
 import java.util.HashMap;
 import java.util.List;
 
+import org.jfree.chart.JFreeChart;
 import org.openmrs.api.OpenmrsService;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,6 +40,6 @@ public interface DataAggregationService extends OpenmrsService {
 	public String getTestsOrdered(List<String> testsOrderedList, String startDate, String endDate);
 	
 	public String getWeights();
-		
+			
 	public HashMap<String, Integer> getDiseaseBurden();
 }
