@@ -154,10 +154,28 @@ public class DataAggregationServiceImpl extends BaseOpenmrsService implements Da
     	return "";
     }*/
     
+    
     /**
      * 
      */
-    public String getDiseaseCounts(List<String> diseaseList, String startDate, String endDate, int minNumber, int maxNumber) {   	
+    public String getDiseaseCounts(List<String> diseaseList, List<String> cities, String startDate, String endDate, Integer minNumber, Integer maxNumber) {   	
+    	
+    	if (minNumber == null) {
+			minNumber = -1;
+		}
+		
+		if (maxNumber == null) {
+			maxNumber = -1;
+		}
+		
+		if (startDate == null) {
+			startDate = "1900-01-20 00:00:00";
+		}
+		
+		if (endDate == null) {
+			endDate = "2100-01-20 00:00:00";
+		}
+    	
     	
     	Session session = dao.getSessionFactory().openSession();
     	
@@ -176,13 +194,39 @@ public class DataAggregationServiceImpl extends BaseOpenmrsService implements Da
     	
     	SQL_Query.append("SELECT o.value_coded, c.name, count(*) "); // columns we want to have
     	SQL_Query.append("FROM obs o, concept_name c "); // tables we need to join together
+    	
+    	if (cities != null) { // make sure they specify locations
+    		SQL_Query.append(", person_address pa "); // only check where people come from one particular city
+    	}
+    	
     	SQL_Query.append("WHERE o.value_coded = c.concept_id "); // want the names of the concepts
+    	
+    	if (cities != null) { // make sure they specify locations
+    		SQL_Query.append("AND o.person_id=pa.person_id "); // get the addresses of the people with the observations
+    	}    	
+    	
     	SQL_Query.append("AND o.concept_id = :coded_id "); // only get observations that have the PROBLEM ADDED concept (concept_id = 6042)
     	SQL_Query.append("AND c.concept_name_type = 'FULLY_SPECIFIED' "); // this prevents the repeats in the concept_name table (multiple names for same concept_id)    				
     	SQL_Query.append("AND ( o.obs_datetime BETWEEN :start_date AND :end_date ) "); // specifies the date range that we want
-
-    	int count = 0;
     	
+    	
+    	// This is dealing with going through a list of cities to only include the specified ones
+    	int count = 0;    	
+    	for (String city : cities) {
+    		if (count == 0) {
+    			SQL_Query.append("AND (pa.city_village = '" + city + "' "); // add the first disease with ( at beginning 
+    			count = 1;
+    		}
+    		else {
+    			SQL_Query.append(" OR pa.city_village = '" + city + "' "); // add the next disease
+    		}
+    	}    	
+    	if (count == 1) {
+    		SQL_Query.append(") "); // only add the ending ) if there was a starting one
+    	}   	
+
+    	// This is dealing with going through a list of diseases to only include the specified ones
+    	count = 0;    	
     	for (String disease : diseaseList) {
     		if (count == 0) {
     			SQL_Query.append("AND (c.name = '" + disease + "'"); // add the first disease with ( at beginning 
@@ -191,11 +235,11 @@ public class DataAggregationServiceImpl extends BaseOpenmrsService implements Da
     		else {
     			SQL_Query.append(" OR c.name = '" + disease + "'"); // add the next disease
     		}
-    	}
-    	
+    	}    	
     	if (count == 1) {
     		SQL_Query.append(") "); // only add the ending ) if there was a starting one
     	}    	
+    	
     	
     	SQL_Query.append("GROUP BY o.value_coded "); // group by the value_coded (disease)
     	
@@ -208,6 +252,21 @@ public class DataAggregationServiceImpl extends BaseOpenmrsService implements Da
     	else if (maxNumber > -1) {
     		SQL_Query.append("HAVING COUNT(*) <= " + maxNumber); // if they only want diseases below a certain number
     	}
+    	
+    	
+    	
+		System.out.println();
+		System.out.println("###########################");
+		System.out.println("Setting the end_date");
+		System.out.println();
+		
+		System.out.println("Query is: " + SQL_Query);
+		
+		System.out.println();
+		System.out.println("Setting the end_date");
+		System.out.println("###########################");		
+		System.out.println();
+    	
     	
 		SQLQuery query = session.createSQLQuery(SQL_Query.toString());
 

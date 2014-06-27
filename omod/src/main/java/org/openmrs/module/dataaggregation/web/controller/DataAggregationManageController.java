@@ -65,7 +65,16 @@ public class  DataAggregationManageController {
 		diseases.add("arthritis");
 		diseases.add("gingivitis");
 		
-		model.addAttribute("diseases", service.getDiseaseCounts(diseases, "1900-01-20 00:00:00", "2100-01-20 00:00:00", 10, 5000));
+		List<String> cities = new LinkedList<String>();
+    	cities.add("Ziwa");
+    	cities.add("Yemit");
+    	cities.add("Yenga");
+    	cities.add("Yamubi");
+    	cities.add("West Indies");
+    	cities.add("Wet Indies");
+		
+		//model.addAttribute("diseases", service.getDiseaseCounts(diseases, "1900-01-20 00:00:00", "2100-01-20 00:00:00", 10, 5000));
+		model.addAttribute("diseases", service.getDiseaseCounts(new LinkedList<String>(), cities, "1900-01-20 00:00:00", "2100-01-20 00:00:00", -1, -1));
 		
 		LinkedList<String> testsOrdered = new LinkedList<String>();
 		testsOrdered.add("X-RAY, CHEST");
@@ -75,7 +84,7 @@ public class  DataAggregationManageController {
 		model.addAttribute("weights", service.getWeights('M', 20, 30));
 
 		DefaultCategoryDataset diseaseDataset = new DefaultCategoryDataset();
-		String diseaseData = service.getDiseaseCounts(new LinkedList<String>(), "1900-01-20 00:00:00", "2100-01-20 00:00:00", -1, -1);
+		String diseaseData = service.getDiseaseCounts(new LinkedList<String>(), cities, "1900-01-20 00:00:00", "2100-01-20 00:00:00", -1, -1);
 		
 		String[] list = diseaseData.split("\n");
 
@@ -121,12 +130,29 @@ public class  DataAggregationManageController {
 	
 	@RequestMapping(value = "/module/dataaggregation/diseasecounts", method = RequestMethod.GET)
 	@ResponseBody
-	public String names(@RequestParam(value = "diseaseList", required = false) String diseaseList,
+	public String names(@RequestParam(value = "diseaseList", required = false) String diseaseList, @RequestParam(value = "cityList", required = false) String cityList,
 						@RequestParam(value = "startDate", required = false) String startDate, @RequestParam(value = "endDate", required = false) String endDate,
-						@RequestParam(value = "minNumber", required = false) int minNumber, @RequestParam(value = "maxNumber", required = false) int maxNumber) {
-		List<String> diseases = Arrays.asList(diseaseList.split(":"));
-		endDate = "2100-01-20 00:00:00";
-		String toReturn = Context.getService(DataAggregationService.class).getDiseaseCounts(diseases, startDate, endDate, minNumber , maxNumber);
+						@RequestParam(value = "minNumber", required = false) Integer minNumber, @RequestParam(value = "maxNumber", required = false) Integer maxNumber) {
+		
+		List<String> diseases;
+		
+		if (diseaseList == null) {
+			diseases = new LinkedList<String>();
+		}		
+		else {
+			diseases = Arrays.asList(diseaseList.split(":"));
+		}
+		
+		List<String> cities;
+		
+		if (cityList == null) {
+			cities = new LinkedList<String>();
+		}		
+		else {
+			cities = Arrays.asList(cityList.split(":"));
+		}
+		
+		String toReturn = Context.getService(DataAggregationService.class).getDiseaseCounts(diseases, cities, startDate, endDate, minNumber , maxNumber);
 		return (toReturn);
 	}
 	
