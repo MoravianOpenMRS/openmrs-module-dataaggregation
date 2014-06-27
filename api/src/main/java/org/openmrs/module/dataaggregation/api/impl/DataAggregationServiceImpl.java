@@ -13,6 +13,10 @@
  */
 package org.openmrs.module.dataaggregation.api.impl;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -238,7 +242,7 @@ public class DataAggregationServiceImpl extends BaseOpenmrsService implements Da
     	return resultString.toString();
     }
 
-    public String getTestsOrdered(List<String> testsOrderedList, String startDate, String endDate) {
+    public String getTestsOrdered(List<String> testsOrderedList, String startDate, String endDate, int minNumber, int maxNumber) {
     	
     	Session session = dao.getSessionFactory().openSession();
     	
@@ -277,9 +281,19 @@ public class DataAggregationServiceImpl extends BaseOpenmrsService implements Da
     	
     	if (count == 1) {
     		SQL_Query.append(") ");
-    	}    	
+    	}
     	
     	SQL_Query.append("GROUP BY o.value_coded ");
+    	
+    	if (minNumber != -1 && maxNumber != -1){
+    		SQL_Query.append("HAVING COUNT(*) BETWEEN " + minNumber + "AND " + maxNumber);
+    	}
+		else if (minNumber > -1) {
+			SQL_Query.append("HAVING COUNT(*) >= " + minNumber);
+		}
+		else if (maxNumber > -1) {
+			SQL_Query.append("HAVING COUNT(*) <= " + maxNumber);
+		}
     	
     	SQLQuery query = session.createSQLQuery(SQL_Query.toString());
     	
@@ -307,12 +321,7 @@ public class DataAggregationServiceImpl extends BaseOpenmrsService implements Da
     	return resultString.toString();
     }
     
-    public String getWeights() {
-    	
-    	char male = 'M';
-    	//char female = 'F';
-    	String startDate = "2002-12-01";
-    	String endDate = "2003-01-15";
+    public String getWeights(char gender, int minAge, int maxAge) {
     	
     	Session session = dao.getSessionFactory().openSession();
     	
@@ -334,15 +343,31 @@ public class DataAggregationServiceImpl extends BaseOpenmrsService implements Da
     	SQL_Query.append("WHERE o.person_id = p.person_id ");
     	SQL_Query.append("AND p.gender = :gender ");
     	SQL_Query.append("AND o.concept_id = :coded_id ");
-    	SQL_Query.append("AND p.birthdate BETWEEN :startDate AND :endDate ");
-    	SQL_Query.append("AND o.obs_datetime = (SELECT MAX(obs_datetime) FROM obs AS obs1 WHERE obs1.person_id = o.person_id)");
+    	SQL_Query.append("AND o.obs_datetime = (SELECT MAX(obs_datetime) FROM obs AS obs1 WHERE obs1.person_id = o.person_id) ");
+    	
+    	// Formats the birthdate field based on given age
+    	DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+    	Calendar minCal = Calendar.getInstance();
+    	Calendar maxCal = Calendar.getInstance();
+    	
+    	if (minAge != -1 && maxAge != -1){
+    		minCal.add(Calendar.YEAR, -minAge);
+        	maxCal.add(Calendar.YEAR, -maxAge);
+        	SQL_Query.append("AND p.birthdate BETWEEN '" + dateFormat.format(maxCal.getTime()) + "' AND '" + dateFormat.format(minCal.getTime()) + "' ");
+    	}
+		else if (minAge > -1) {
+			minCal.add(Calendar.YEAR, -minAge);
+			SQL_Query.append("AND p.birthdate >= '" + dateFormat.format(minCal.getTime()) + "' ");
+		}
+		else if (maxAge > -1) {
+			maxCal.add(Calendar.YEAR, -maxAge);
+			SQL_Query.append("AND p.birthdate <= '" + dateFormat.format(maxCal.getTime()) + "' ");
+		}
     	
     	SQLQuery query = session.createSQLQuery(SQL_Query.toString());
     	
     	query.setParameter("coded_id", num_coded);
-    	query.setParameter("gender", male);
-    	query.setParameter("startDate", startDate);
-    	query.setParameter("endDate", endDate);
+    	query.setParameter("gender", gender);
     	
     	@SuppressWarnings("unchecked")
 		// This gets the list of records from our SQL statement each record is a row in the table
