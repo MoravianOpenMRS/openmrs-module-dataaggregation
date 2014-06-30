@@ -121,6 +121,16 @@ public class  DataAggregationManageController {
 		return (toReturn);
 	}
 	
+	@RequestMapping(value = "/module/dataaggregation/weights", method = RequestMethod.POST)
+	@ResponseBody
+	public String weights(@RequestParam(value = "gender", required = false) Character gender, 
+							@RequestParam(value = "minAge", required = false) Integer minAge,
+							@RequestParam(value = "maxAge", required = false) Integer maxAge)
+	{
+		String toReturn = Context.getService(DataAggregationService.class).getWeights(gender, minAge, maxAge);
+		return toReturn;
+	}
+	
 	private String hashMapToCSV(HashMap<?,?> map){
 		String toReturn = new String();
 		for(Object val:map.keySet()){
