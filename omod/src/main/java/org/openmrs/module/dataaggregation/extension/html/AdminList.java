@@ -46,6 +46,7 @@ public class AdminList extends AdministrationSectionExt {
 		LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
 		map.put("/module/dataaggregation/manage.form", "dataaggregation.manage");
 		map.put("/module/dataaggregation/queries.form", "dataaggregation.queries");
+		map.put("/module/dataaggregation/examples.form", "dataaggregation.examples");
 		return map;
 	}
 	

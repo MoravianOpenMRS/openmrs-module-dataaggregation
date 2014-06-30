@@ -8,17 +8,15 @@ import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.openmrs.module.dataaggregation.api.db.DataAggregationDAO;
 
-public class DiseaseBurdenQuery {
+public class DiseaseBurdenQuery extends DataAggregationQuery {
 	
 	private static final String  default_start_date = "1900-01-20 00:00:00";
 	private static final String  default_end_date   = "2100-01-20 00:00:00";
 	private static final Integer default_min_number = -1;
 	private static final Integer default_max_number = -1;	
-	
-	private DataAggregationDAO dao;
-	
+		
 	public DiseaseBurdenQuery(DataAggregationDAO dao) {
-		this.dao = dao;
+		super(dao);
 	}
 	
 	
@@ -72,15 +70,7 @@ public class DiseaseBurdenQuery {
     	
     	Session session = dao.getSessionFactory().openSession();
     	
-    	// This code is to get the concept_id number that corresponds to PROBLEM ADDED concept
-    	// For our instances the concept_id number is always 6042 but if a different concept map was used that number could change
-    	String problem_Query = "SELECT concept_id FROM concept_name WHERE name='PROBLEM ADDED'";   	
-    	SQLQuery problem_q = session.createSQLQuery(problem_Query);
-    	
-    	@SuppressWarnings("unchecked")
-		List<Object> code_list = problem_q.list();
-    	// The num_coded does not need to be gotten out from the list through indexing because the SQL statement returns one record with one column
-    	int num_coded = (Integer) code_list.get(0);
+    	int num_coded = getConceptIdOfKeyWord("PROBLEM ADDED");
     	
     	// This is the HQL statement that is used with the database in order to get the data we want
     	StringBuilder SQL_Query = new StringBuilder();
@@ -144,22 +134,7 @@ public class DiseaseBurdenQuery {
     	}
     	else if (maxNumber > -1) {
     		SQL_Query.append("HAVING COUNT(*) <= " + maxNumber); // if they only want diseases below a certain number
-    	}
-    	
-    	
-    	
-		System.out.println();
-		System.out.println("###########################");
-		System.out.println("Setting the end_date");
-		System.out.println();
-		
-		System.out.println("Query is: " + SQL_Query);
-		
-		System.out.println();
-		System.out.println("Setting the end_date");
-		System.out.println("###########################");		
-		System.out.println();
-    	
+    	}    	
     	
 		SQLQuery query = session.createSQLQuery(SQL_Query.toString());
 
