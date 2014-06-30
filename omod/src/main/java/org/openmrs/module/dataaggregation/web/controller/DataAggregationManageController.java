@@ -120,7 +120,6 @@ public class  DataAggregationManageController {
 	}
 	
 
-
 	@RequestMapping(value = "/module/dataaggregation/testsordered", method = RequestMethod.POST)
 	@ResponseBody
 	public String tests(@RequestParam(value = "testList", required = false) String diseaseList,
@@ -142,11 +141,4 @@ public class  DataAggregationManageController {
 
 	}
 	
-	private String hashMapToCSV(HashMap<?,?> map){
-		String toReturn = new String();
-		for(Object val:map.keySet()){
-			toReturn = toReturn + val + "," + map.get(val) + " \n";
-		}
-		return toReturn;
-	}
 }
