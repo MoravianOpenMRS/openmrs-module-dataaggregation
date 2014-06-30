@@ -109,7 +109,7 @@ public class  DataAggregationManageController {
 
 	}
 	
-	@RequestMapping(value = "/module/dataaggregation/diseasecounts", method = RequestMethod.GET)
+	@RequestMapping(value = "/module/dataaggregation/diseasecounts", method = RequestMethod.POST)
 	@ResponseBody
 	public String diseases(@RequestParam(value = "diseaseList", required = false) String diseaseList, @RequestParam(value = "cityList", required = false) String cityList,
 						@RequestParam(value = "startDate", required = false) String startDate, @RequestParam(value = "endDate", required = false) String endDate,

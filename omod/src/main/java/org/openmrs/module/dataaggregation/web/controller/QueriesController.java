@@ -41,9 +41,6 @@ public class  QueriesController {
 	public void manage(ModelMap model) {
 		model.addAttribute("user", Context.getAuthenticatedUser());
 	
-		DataAggregationService service = Context.getService(DataAggregationService.class);
-		
-
 
 	}
 	
