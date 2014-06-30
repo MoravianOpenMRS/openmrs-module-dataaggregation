@@ -80,28 +80,28 @@
 </tr>
 <tr>
   <td></td>
-  <td><i>int</i> maxNumber</td>		
+  <td><i>int</i> maxNumber</td>
   <td>Maximum number of cases</td>
 </tr>
 
 <tr>
   <td>Weights</td>
-  <td></td>		
+  <td></td>
   <td></td>
 </tr>
 <tr>
   <td></td>
-  <td><i>char</i> gender</td>		
+  <td><i>char</i> gender</td>
   <td>Gender of patients</td>
 </tr>
 <tr>
   <td></td>
-  <td><i>int</i> minAge</td>		
+  <td><i>int</i> minAge</td>
   <td>Minimum age of patients</td>
 </tr>
 <tr>
   <td></td>
-  <td><i>int</i> maxAge</td>		
+  <td><i>int</i> maxAge</td>
   <td>Maximum age of patients</td>
 </tr>
 
