@@ -17,6 +17,12 @@
 		</a>
 	</li>
 	
+	<li <c:if test='<%= request.getRequestURI().contains("/examples") %>'>class="active"</c:if>>
+		<a href="examples.form">
+			<spring:message code="dataaggregation.examples"/>
+		</a>
+	</li>
+	
 	<!-- Add further links here -->
 	
 </ul>
