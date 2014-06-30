@@ -41,17 +41,6 @@ public class  QueriesController {
 	public void manage(ModelMap model) {
 		model.addAttribute("user", Context.getAuthenticatedUser());
 	
-		DataAggregationService service = Context.getService(DataAggregationService.class);
-		
-		
-		LinkedList<String> diseases = new LinkedList<String>();
-		diseases.add("hepatitis");
-		diseases.add("pneumonia");
-		diseases.add("measles");
-		diseases.add("arthritis");
-		diseases.add("gingivitis");
-		
-		model.addAttribute("diseases", service.getDiseaseCounts(diseases, "1900-01-20 00:00:00", "2100-01-20 00:00:00", 10, 5000));
 
 	}
 	
