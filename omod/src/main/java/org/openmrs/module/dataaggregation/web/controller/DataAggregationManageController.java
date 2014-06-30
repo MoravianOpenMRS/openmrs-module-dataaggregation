@@ -121,6 +121,16 @@ public class  DataAggregationManageController {
 		return (toReturn);
 	}
 	
+	@RequestMapping(value = "/module/dataaggregation/testcounts", method = RequestMethod.POST)
+	@ResponseBody
+	public String testsOrdered(@RequestParam(value = "testList", required = false) String testList, @RequestParam(value = "startDate", required = false) String startDate, 
+							   @RequestParam(value = "endDate" , required = false) String endDate, @RequestParam(value = "minNumber", required = false) Integer minNumber,
+							   @RequestParam(value = "maxNumber", required = false) Integer maxNumber){
+		
+		String testsOrdered = Context.getService(DataAggregationService.class).getTestsOrdered(Arrays.asList(testList.split(":")), startDate, endDate, minNumber, maxNumber);
+		return (testsOrdered);
+	}
+			
 	private String hashMapToCSV(HashMap<?,?> map){
 		String toReturn = new String();
 		for(Object val:map.keySet()){
