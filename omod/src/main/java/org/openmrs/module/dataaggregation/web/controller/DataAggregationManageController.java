@@ -54,18 +54,13 @@ public class  DataAggregationManageController {
 		model.addAttribute("user", Context.getAuthenticatedUser());
 	
 		DataAggregationService service = Context.getService(DataAggregationService.class);
-		
-		//model.addAttribute("patients", service.getAllPatientNames());
-		
+				
 		// create a list that we had in the curl command and display to see which part is the problem
-		LinkedList<String> diseases = new LinkedList<String>();
-		diseases.add("hepatitis");
-		diseases.add("pneumonia");
-		diseases.add("measles");
-		diseases.add("arthritis");
-		diseases.add("gingivitis");
-		
-		model.addAttribute("diseases", service.getDiseaseCounts(diseases, "1900-01-20 00:00:00", "2100-01-20 00:00:00", 10, 5000));
+		String diseases = "hepatitis:pneumonia:measles:arthritis:gingivitis";		
+		String cities = "Ziwa:Yemit:Yenga:Yamubi:West Indies:Wet Indies";
+   
+		model.addAttribute("diseases", service.getDiseaseBurden(diseases, null, "1900-01-20 00:00:00", "2100-01-20 00:00:00", 10, 5000));
+		model.addAttribute("cities", service.getDiseaseBurden(null, cities, "1900-01-20 00:00:00", "2100-01-20 00:00:00", -1, -1));
 		
 		LinkedList<String> testsOrdered = new LinkedList<String>();
 		testsOrdered.add("X-RAY, CHEST");
@@ -74,8 +69,9 @@ public class  DataAggregationManageController {
 		
 		model.addAttribute("weights", service.getWeights('M', 20, 30));
 
+		/*
 		DefaultCategoryDataset diseaseDataset = new DefaultCategoryDataset();
-		String diseaseData = service.getDiseaseCounts(new LinkedList<String>(), "1900-01-20 00:00:00", "2100-01-20 00:00:00", 100, 5000);
+		String diseaseData = service.getDiseaseBurden(null, cities, "1900-01-20 00:00:00", "2100-01-20 00:00:00", -1, -1);
 		
 		String[] list = diseaseData.split("\n");
 
@@ -111,22 +107,17 @@ public class  DataAggregationManageController {
 			System.err.println("Problem occurred creating chart.");
 			e.printStackTrace();
 		}		
+		*/
 
-		//DataAggregationService serv = Context.getService(DataAggregationService.class);
-		//HashMap<String, Integer> diseaseBurden = serv.getDiseaseBurden();
-		
-		//convert the data to a string that is roughly csv	
-		//model.addAttribute("diseaseBurden", diseaseBurden.toString());
 	}
 	
 	@RequestMapping(value = "/module/dataaggregation/diseasecounts", method = RequestMethod.GET)
 	@ResponseBody
-	public String names(@RequestParam(value = "diseaseList", required = false) String diseaseList,
+	public String names(@RequestParam(value = "diseaseList", required = false) String diseaseList, @RequestParam(value = "cityList", required = false) String cityList,
 						@RequestParam(value = "startDate", required = false) String startDate, @RequestParam(value = "endDate", required = false) String endDate,
-						@RequestParam(value = "minNumber", required = false) int minNumber, @RequestParam(value = "maxNumber", required = false) int maxNumber) {
-		List<String> diseases = Arrays.asList(diseaseList.split(":"));
-		endDate = "2100-01-20 00:00:00";
-		String toReturn = Context.getService(DataAggregationService.class).getDiseaseCounts(diseases, startDate, endDate, minNumber , maxNumber);
+						@RequestParam(value = "minNumber", required = false) Integer minNumber, @RequestParam(value = "maxNumber", required = false) Integer maxNumber) {
+		
+		String toReturn = Context.getService(DataAggregationService.class).getDiseaseBurden(diseaseList, cityList, startDate, endDate, minNumber , maxNumber);
 		return (toReturn);
 	}
 	
