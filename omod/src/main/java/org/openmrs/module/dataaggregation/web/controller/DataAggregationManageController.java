@@ -59,15 +59,13 @@ public class  DataAggregationManageController {
 		String diseases = "hepatitis:pneumonia:measles:arthritis:gingivitis";		
 		String cities = "Ziwa:Yemit:Yenga:Yamubi:West Indies:Wet Indies";
    
+		String testsOrdered = "X-RAY, CHEST:CD4 PANEL";		
+		model.addAttribute("testsOrdered", service.getTestsOrdered(testsOrdered, "1900-01-20 00:00:00", "2100-01-20 00:00:00", -1, -1));
+		
 		model.addAttribute("diseases", service.getDiseaseBurden(diseases, null, "1900-01-20 00:00:00", "2100-01-20 00:00:00", 10, 5000));
 		model.addAttribute("cities", service.getDiseaseBurden(null, cities, "1900-01-20 00:00:00", "2100-01-20 00:00:00", -1, -1));
 		
-		LinkedList<String> testsOrdered = new LinkedList<String>();
-		testsOrdered.add("X-RAY, CHEST");
-		testsOrdered.add("CD4 PANEL");		
-		model.addAttribute("testsOrdered", service.getTestsOrdered(testsOrdered, "1900-01-20 00:00:00", "2100-01-20 00:00:00", -1, -1));
-		
-		model.addAttribute("weights", service.getWeights('M', 20, 30));
+		model.addAttribute("weights", service.getWeights('M', 25, 28));
 
 		/*
 		DefaultCategoryDataset diseaseDataset = new DefaultCategoryDataset();
@@ -113,11 +111,30 @@ public class  DataAggregationManageController {
 	
 	@RequestMapping(value = "/module/dataaggregation/diseasecounts", method = RequestMethod.GET)
 	@ResponseBody
-	public String names(@RequestParam(value = "diseaseList", required = false) String diseaseList, @RequestParam(value = "cityList", required = false) String cityList,
+	public String diseases(@RequestParam(value = "diseaseList", required = false) String diseaseList, @RequestParam(value = "cityList", required = false) String cityList,
 						@RequestParam(value = "startDate", required = false) String startDate, @RequestParam(value = "endDate", required = false) String endDate,
 						@RequestParam(value = "minNumber", required = false) Integer minNumber, @RequestParam(value = "maxNumber", required = false) Integer maxNumber) {
 		
 		String toReturn = Context.getService(DataAggregationService.class).getDiseaseBurden(diseaseList, cityList, startDate, endDate, minNumber , maxNumber);
+		return (toReturn);
+	}
+	
+	@RequestMapping(value = "/module/dataaggregation/testsordered", method = RequestMethod.GET)
+	@ResponseBody
+	public String tests(@RequestParam(value = "testList", required = false) String diseaseList,
+						@RequestParam(value = "startDate", required = false) String startDate, @RequestParam(value = "endDate", required = false) String endDate,
+						@RequestParam(value = "minNumber", required = false) Integer minNumber, @RequestParam(value = "maxNumber", required = false) Integer maxNumber) {
+		
+		String toReturn = Context.getService(DataAggregationService.class).getTestsOrdered(diseaseList, startDate, endDate, minNumber , maxNumber);
+		return (toReturn);
+	}
+	
+	@RequestMapping(value = "/module/dataaggregation/weights", method = RequestMethod.GET)
+	@ResponseBody
+	public String weights(@RequestParam(value = "gender", required = false) Character gender, 
+							@RequestParam(value = "minAge", required = false) Integer minAge, @RequestParam(value = "maxAge", required = false) Integer maxAge) {
+		
+		String toReturn = Context.getService(DataAggregationService.class).getWeights(gender, minAge, maxAge);
 		return (toReturn);
 	}
 	
