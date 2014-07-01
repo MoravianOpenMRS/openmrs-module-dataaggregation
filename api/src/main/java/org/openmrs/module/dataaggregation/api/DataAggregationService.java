@@ -37,9 +37,9 @@ public interface DataAggregationService extends OpenmrsService {
 	
 	public String getDiseaseBurden(String diseaseList, String cities, String startDate, String endDate, Integer minNumber, Integer maxNumber);
 	
-	public String getTestsOrdered(List<String> testsOrderedList, String startDate, String endDate, int minNumber, int maxNumber);
+	public String getTestsOrdered(String testsOrderedList, String startDate, String endDate, Integer minNumber, Integer maxNumber);
 
-	public String getWeights(char gender, int minAge, int maxAge);
+	public String getWeights(Character gender, Integer minAge, Integer maxAge);
 		
 	public HashMap<String, Integer> getDiseaseBurden();
 }

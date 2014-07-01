@@ -3,14 +3,9 @@
 <%@ include file="template/localHeader.jsp"%>
 
 <h2>
-	<spring:message code="dataaggregation.title" />
+	<spring:message code="dataaggregation.examples.title" />
 </h2>
 
-<p>Hello ${user.systemId}!</p>
-<p>${diseases}</p>
-<p>${cities}</p>
-<p>Tests Ordered:  ${testsOrdered}</p>
-<p>${weights}</p>
 
 
 <%@ include file="/WEB-INF/template/footer.jsp"%>
