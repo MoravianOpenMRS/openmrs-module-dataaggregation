@@ -76,13 +76,13 @@ public class DiseaseBurdenQuery extends DataAggregationQuery {
     	StringBuilder SQL_Query = new StringBuilder();
     	
     	SQL_Query.append("SELECT o.value_coded, c.name, count(*) "); // columns we want to have
-    	SQL_Query.append("FROM obs o, concept_name c "); // tables we need to join together
+    	SQL_Query.append("FROM obs o, concept_name c "); // tables we need to join together JOIN
     	
     	if (cities.size() != 0) { // make sure they specify locations
     		SQL_Query.append(", person_address pa "); // only check where people come from one particular city
     	}
     	
-    	SQL_Query.append("WHERE o.value_coded = c.concept_id "); // want the names of the concepts
+    	SQL_Query.append("WHERE o.value_coded = c.concept_id "); // want the names of the concepts ON
     	
     	if (cities.size() != 0) { // make sure they specify locations
     		SQL_Query.append("AND o.person_id=pa.person_id "); // get the addresses of the people with the observations
