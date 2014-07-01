@@ -29,15 +29,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
-
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.ChartUtilities;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.category.DefaultCategoryDataset;
-import org.jfree.data.general.DefaultPieDataset;
-
 import java.io.File;
 import java.io.IOException;
 
@@ -67,49 +58,10 @@ public class  DataAggregationManageController {
 		
 		model.addAttribute("weights", service.getWeights('M', 25, 28));
 
-		/*
-		DefaultCategoryDataset diseaseDataset = new DefaultCategoryDataset();
-		String diseaseData = service.getDiseaseBurden(null, cities, "1900-01-20 00:00:00", "2100-01-20 00:00:00", -1, -1);
-		
-		String[] list = diseaseData.split("\n");
-
-		for (String s : list) {			
-			String[] vals = s.split(":");		
-			diseaseDataset.setValue(Integer.valueOf(vals[1]), "Count", vals[0]);
-		}
-		
-		JFreeChart chart1 = ChartFactory.createBarChart("Disease comparison", "Disease", "Count", diseaseDataset, PlotOrientation.VERTICAL, false, true, false);
-		
-		try {
-			ChartUtilities.saveChartAsJPEG(new File("/Users/openmrs/workspace/openmrs-module-dataaggregation/omod/src/main/resources/diseaseChart.jpg"), chart1, 500, 300);
-		} 
-		catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
-
-		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-		dataset.setValue(6, "Profit", "Jane");
-		dataset.setValue(7, "Profit", "Tom");
-		dataset.setValue(8, "Profit", "Jill");
-		dataset.setValue(5, "Profit", "John");
-		dataset.setValue(12, "Profit", "Fred");
-		JFreeChart chart = ChartFactory.createBarChart("Comparison between Salesman", "Salesman", "Profit", dataset, PlotOrientation.VERTICAL, false, true, false);
-		
-		try {
-			//org.openmrs.module.dataaggregation
-			ChartUtilities.saveChartAsJPEG(new File("/Users/openmrs/workspace/openmrs-module-dataaggregation/omod/src/main/resources/chart.jpg"), chart, 500, 300);
-		} 
-		catch (IOException e) {
-			System.err.println("Problem occurred creating chart.");
-			e.printStackTrace();
-		}		
-		*/
 
 	}
 	
-	@RequestMapping(value = "/module/dataaggregation/diseasecounts", method = RequestMethod.POST)
+	@RequestMapping(value = "/module/dataaggregation/diseasecounts", method = RequestMethod.GET)
 	@ResponseBody
 	public String diseases(@RequestParam(value = "diseaseList", required = false) String diseaseList, @RequestParam(value = "cityList", required = false) String cityList,
 						@RequestParam(value = "startDate", required = false) String startDate, @RequestParam(value = "endDate", required = false) String endDate,
@@ -120,7 +72,7 @@ public class  DataAggregationManageController {
 	}
 	
 
-	@RequestMapping(value = "/module/dataaggregation/testsordered", method = RequestMethod.POST)
+	@RequestMapping(value = "/module/dataaggregation/testsordered", method = RequestMethod.GET)
 	@ResponseBody
 	public String tests(@RequestParam(value = "testList", required = false) String diseaseList,
 						@RequestParam(value = "startDate", required = false) String startDate, @RequestParam(value = "endDate", required = false) String endDate,
@@ -130,7 +82,7 @@ public class  DataAggregationManageController {
 		return (toReturn);
 	}
 	
-	@RequestMapping(value = "/module/dataaggregation/weights", method = RequestMethod.POST)
+	@RequestMapping(value = "/module/dataaggregation/weights", method = RequestMethod.GET)
 	@ResponseBody
 	public String weights(@RequestParam(value = "gender", required = false) Character gender, 
 							@RequestParam(value = "minAge", required = false) Integer minAge, 

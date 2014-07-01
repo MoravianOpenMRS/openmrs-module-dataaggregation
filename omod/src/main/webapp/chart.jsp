@@ -31,7 +31,7 @@ try {
 	byteStream = new byte[(int)fileLength];
 	// Read the chart image
 	fileInStream.read(byteStream, 0, (int)fileLength);
-	// returns the chart image whenever called
+	// Returns the chart image whenever called
 	response.setContentType("image/png");
 	response.setContentLength((int)fileLength);
 	fileInStream.close();
