@@ -7,10 +7,10 @@ This module allows for external access to anonymous aggregate data.
 
 Summer 2014 Students:
 Megan Biernat
-Jason Bocutti
+Jason Boccuti
 Steve Chakif
 Lewis Cooper
-Alec Gehrhard
+Alec Gerhart
 Charles McDonald
 Vincent Pillinger
 
