@@ -47,13 +47,15 @@ public class  DataAggregationManageController {
 		DataAggregationService service = Context.getService(DataAggregationService.class);
 				
 		// create a list that we had in the curl command and display to see which part is the problem
-		String diseases = "hepatitis:pneumonia:measles:arthritis:gingivitis";		
+		//String diseases = "hepatitis:pneumonia:measles:arthritis:gingivitis";	
+		String diseases = "anemia:gastroenteritis:malaria";
 		String cities = "Ziwa:Yemit:Yenga:Yamubi:West Indies:Wet Indies";
    
 		String testsOrdered = "X-RAY, CHEST:CD4 PANEL";		
 		model.addAttribute("testsOrdered", service.getTestsOrdered(testsOrdered, "1900-01-20 00:00:00", "2100-01-20 00:00:00", -1, -1));
 		
-		model.addAttribute("diseases", service.getDiseaseBurden(diseases, null, "1900-01-20 00:00:00", "2100-01-20 00:00:00", 10, 5000));
+		model.addAttribute("diseases", service.getDiseaseBurden(diseases, null, "2006-01-01 00:00:00", "2006-02-20 00:00:00", null, null));
+		//model.addAttribute("diseases", service.getDiseaseBurden(diseases, null, "1900-01-20 00:00:00", "2100-01-20 00:00:00", 10, 5000));
 		model.addAttribute("cities", service.getDiseaseBurden(null, cities, "1900-01-20 00:00:00", "2100-01-20 00:00:00", -1, -1));
 		
 		model.addAttribute("weights", service.getWeights('M', 25, 28));
