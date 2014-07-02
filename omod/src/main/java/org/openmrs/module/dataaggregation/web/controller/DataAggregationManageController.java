@@ -13,13 +13,20 @@
  */
 package org.openmrs.module.dataaggregation.web.controller;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
+
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObject;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.jdom2.Attribute;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.output.Format;
+import org.jdom2.output.XMLOutputter;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.dataaggregation.api.DataAggregationService;
 import org.springframework.stereotype.Controller;
@@ -29,9 +36,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.io.File;
-import java.io.IOException;
-import org.j
 /**
  * The main controller.
  */
@@ -65,36 +69,84 @@ public class  DataAggregationManageController {
 	@ResponseBody
 	public String diseases(@RequestParam(value = "diseaseList", required = false) String diseaseList, @RequestParam(value = "cityList", required = false) String cityList,
 						@RequestParam(value = "startDate", required = false) String startDate, @RequestParam(value = "endDate", required = false) String endDate,
-						@RequestParam(value = "minNumber", required = false) Integer minNumber, @RequestParam(value = "maxNumber", required = false) Integer maxNumber) {
+						@RequestParam(value = "minNumber", required = false) Integer minNumber, @RequestParam(value = "maxNumber", required = false) Integer maxNumber,
+						@RequestParam(value = "format", required = false) String format) {
 		
 		String toReturn = Context.getService(DataAggregationService.class).getDiseaseBurden(diseaseList, cityList, startDate, endDate, minNumber , maxNumber);
-		return (toReturn);
+		return selectFormat(format, toReturn);
 	}
 
 	@RequestMapping(value = "/module/dataaggregation/testsordered", method = RequestMethod.GET)
 	@ResponseBody
 	public String tests(@RequestParam(value = "testList", required = false) String diseaseList,
 						@RequestParam(value = "startDate", required = false) String startDate, @RequestParam(value = "endDate", required = false) String endDate,
-						@RequestParam(value = "minNumber", required = false) Integer minNumber, @RequestParam(value = "maxNumber", required = false) Integer maxNumber) {
+						@RequestParam(value = "minNumber", required = false) Integer minNumber, @RequestParam(value = "maxNumber", required = false) Integer maxNumber,
+						@RequestParam(value = "format", required = false) String format) {
 		
 		String toReturn = Context.getService(DataAggregationService.class).getTestsOrdered(diseaseList, startDate, endDate, minNumber , maxNumber);
-		return (toReturn);
+		return selectFormat(format, toReturn);
 	}
 	
 	@RequestMapping(value = "/module/dataaggregation/weights", method = RequestMethod.GET)
 	@ResponseBody
 	public String weights(@RequestParam(value = "gender", required = false) Character gender, 
-							@RequestParam(value = "minAge", required = false) Integer minAge, @RequestParam(value = "maxAge", required = false) Integer maxAge) {
+							@RequestParam(value = "minAge", required = false) Integer minAge, @RequestParam(value = "maxAge", required = false) Integer maxAge,
+							@RequestParam(value = "format", required = false) String format) {
 		
 		String toReturn = Context.getService(DataAggregationService.class).getWeights(gender, minAge, maxAge);
-		return (toReturn);
+		return selectFormat(format, toReturn);
+	}
+		
+	private String selectFormat(String format, String toReturn){
+		if(format == null){
+			return toReturn;
+		}else if(format.equals("CSV")){
+			return toReturn;
+		}else if (format.equals("JSON")){
+			return convertToJSON(toReturn);
+		}else if (format.equals("XML")){
+			return convertToXML(toReturn);
+		}
+			return toReturn;
 	}
 	
-	private String hashMapToCSV(HashMap<?,?> map){
-		String toReturn = new String();
-		for(Object val:map.keySet()){
-			toReturn = toReturn + val + "," + map.get(val) + " \n";
+	private String convertToJSON(String csvString) {
+		JsonArrayBuilder table = Json.createArrayBuilder();
+		String[] rows = csvString.split("\n");//split by rows
+		
+		for(String row:rows){
+			JsonArrayBuilder jsonRow = Json.createArrayBuilder();
+			String[] cols = row.split(":");//split by cols
+			for(String col:cols){
+				jsonRow.add(col);
+			}
+			table.add(jsonRow.build());
 		}
-		return toReturn;
+		JsonArray toReturn = table.build();
+		return toReturn.toString();		
+	}
+
+	private String convertToXML(String csvString){
+		String [] rows = csvString.split("\n");
+		Element table = new Element("table");
+		Document doc = new Document(table);
+		int i = 0;
+		while(i < rows.length){
+			Element row = new Element("row" + i);
+			String [] cols = rows[i].split(":");
+			int j =0;
+			for(String rowS:cols){
+				row.setAttribute(new Attribute("col" + j,rowS));
+				j++;
+			}
+						
+			doc.getRootElement().addContent(row);
+			
+			i++;
+		}
+
+		XMLOutputter xmlOutput = new XMLOutputter();
+		xmlOutput.setFormat(Format.getPrettyFormat());
+		return xmlOutput.outputString(doc);
 	}
 }
