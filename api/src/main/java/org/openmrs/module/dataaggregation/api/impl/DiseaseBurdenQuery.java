@@ -1,6 +1,9 @@
 package org.openmrs.module.dataaggregation.api.impl;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -10,8 +13,7 @@ import org.openmrs.module.dataaggregation.api.db.DataAggregationDAO;
 
 public class DiseaseBurdenQuery extends DataAggregationQuery {
 	
-	private static final String  default_start_date = "1900-01-20 00:00:00";
-	private static final String  default_end_date   = "2100-01-20 00:00:00";
+	private static final String  default_start_date =  "0000-00-00 00:00:00";
 	private static final Integer default_min_number = -1;
 	private static final Integer default_max_number = -1;	
 		
@@ -75,7 +77,9 @@ public class DiseaseBurdenQuery extends DataAggregationQuery {
 		}
 		
 		if (endDate == null) { 
-			endDate = default_end_date; // default: time after everything
+			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+			Date date = new Date();
+			endDate = dateFormat.format(date); // default: current date
 		}
 		
 		return getDiseaseCounts(diseases, cities, startDate, endDate, minNumber , maxNumber);
