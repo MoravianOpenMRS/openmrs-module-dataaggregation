@@ -1,6 +1,9 @@
 package org.openmrs.module.dataaggregation.api.impl;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -10,8 +13,7 @@ import org.openmrs.module.dataaggregation.api.db.DataAggregationDAO;
 
 public class TestsOrderedQuery extends DataAggregationQuery {
 	
-	private static final String  default_start_date = "1900-01-20 00:00:00";
-	private static final String  default_end_date   = "2100-01-20 00:00:00";
+	private static final String  default_start_date = "0000-00-00 00:00:00";
 	private static final Integer default_min_number = -1;
 	private static final Integer default_max_number = -1;	
 	
@@ -45,7 +47,9 @@ public class TestsOrderedQuery extends DataAggregationQuery {
 		}
 		
 		if (endDate == null) { 
-			endDate = default_end_date; // default: time after everything
+			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+			Date date = new Date();
+			endDate = dateFormat.format(date); // default: current date
 		}
 	
 		return getTestsOrdered(tests, startDate, endDate, minNumber , maxNumber);
@@ -97,7 +101,7 @@ public class TestsOrderedQuery extends DataAggregationQuery {
 				SQL_Query.append("HAVING COUNT(*) <= " + maxNumber);
 			}
 	    	
-	    	SQLQuery query = session.createSQLQuery(SQL_Query.toString());
+	    	SQLQuery query = session.createSQLQuery(SQL_Query.toString());	    	
 	    	
 	    	// This sets the parameter coded_id to whatever we got from the number above (should be 1271)
 	    	query.setParameter("coded_id", num_coded);

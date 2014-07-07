@@ -14,6 +14,8 @@
 package org.openmrs.module.dataaggregation.api;
 
 import static org.junit.Assert.*;
+
+import org.junit.Before;
 import org.junit.Test;
 import org.openmrs.api.context.Context;
 import org.openmrs.test.BaseModuleContextSensitiveTest;
@@ -21,10 +23,42 @@ import org.openmrs.test.BaseModuleContextSensitiveTest;
 /**
  * Tests {@link ${DataAggregationService}}.
  */
-public class  DataAggregationServiceTest extends BaseModuleContextSensitiveTest {
-	
+public class  DataAggregationServiceTest extends BaseModuleContextSensitiveTest {	
+
+	@Before
+	public void setup() throws Exception {
+		executeDataSet("DataAggregationDiseaseBurdenTestDataset.xml");
+	}
+
 	@Test
-	public void shouldSetupContext() {
+	public void testSchmig() {		
+		
+		String testsOrdered = "X-RAY, CHEST:CD4 PANEL";		
+		
+		String diseases = "MALARIA:SCABIES:ANEMIA:MENINGITIS, CRYPTOCOCCAL";
+		
+		DataAggregationService service = Context.getService(DataAggregationService.class);
+		
+		System.out.println();
+		System.out.println("Thing = " + service.getDiseaseBurden(diseases, null, "1900-01-20 00:00:00", "2100-01-20 00:00:00", -1, -1));
+		
+		String thing = service.getDiseaseBurden(null, null, "1900-01-20 00:00:00", "2100-01-20 00:00:00", -1, -1);
+		
+		System.out.println("Thing = " + thing);
+		System.out.println();
+		
+		String[] things = thing.split("\n");
+		/*
+		assertEquals("MALARIA:3", things[0]);
+		
+		assertEquals("SCABIES:2", things[1]);
+		
+		assertEquals("ANEMIA:4", things[2]);
+		
+		assertEquals("MENINGITIS, CRYPTOCOCCAL:1", things[3]);
+		*/
+		
 		assertNotNull(Context.getService(DataAggregationService.class));
+		
 	}
 }
