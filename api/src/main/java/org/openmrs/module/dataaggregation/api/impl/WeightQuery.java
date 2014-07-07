@@ -20,9 +20,21 @@ public class WeightQuery extends DataAggregationQuery {
 	}
 	
 	
+	/**
+	 * This method returns a string containing the weight of people in a desired age group and/or gender.
+	 * @param gender 
+	 * @param minAge a positive integer
+	 * 				This integer bounds the query only to weights of people at least a certain age (inclusive or exclusive?).
+	 * 				If this parameter is null or negative, there will be no lower age bound. 
+	 * @param maxAge a positive integer
+	 * 				This integer bounds the query only to weights of people at a maximum age (inclusive or exclusive?).
+	 * 				If this parameter is null or negative, there will be no upper age bound.
+	 * @return a string in the format "personID:weight"
+	 * 				If there are no results the string will be empty
+	 */
 	public String getQueryInfo(Character gender, Integer minAge, Integer maxAge) {
 		
-		if (gender == null) {
+		if (gender == null) { 
 			gender = default_gender;
 		}
 		

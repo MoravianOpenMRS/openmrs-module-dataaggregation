@@ -19,7 +19,29 @@ public class DiseaseBurdenQuery extends DataAggregationQuery {
 		super(dao);
 	}
 	
-	
+	/**
+	 * This method returns a string containing the count of the desired disease.
+	 * @param diseaseList a string in the format "desiredDisease1:desiredDisease2:...:desiredDiseaseN"
+	 * 					This method will only list the results of the disease specified in the string.
+	 * 					If this parameter is null, then all the diseases will be included in the result.
+	 * @param cityList a string in the format "desiredCity1:desiredCity2:...:desiredCityN"
+	 * 					This method will only list the results of the diseases in the city specified in the string.
+	 * 				   	If the parameter in null, then all the diseases will be included in the result.
+	 * @param startDate a string in the format "YYYY-MM-DD HH:MM:SS" for example : "2006-01-30 00:00:00"
+	 * 					This string bounds the query only to tests ordered after a specific date (inclusive or exclusive?).
+	 * 					If this parameter is null, then no lower bound will exist.
+	 * @param endDate a string in the format "YYYY-MM-DD HH:MM:SS" for example : "2006-01-30 00:00:00"
+	 * 					This string bounds the query only to tests ordered before a certain date (inclusive or exclusive?).
+	 * 					If this parameter is null, the no upper bound will exist.
+	 * @param minNumber a positive integer
+	 * 					This integer bounds the query only to tests ordered at least a certain amount of times (inclusive or exclusive?).
+	 * 					If this parameter is null or negative, there will be no lower bound.
+	 * @param maxNumber a positive integer
+	 * 					This integer bounds the query only to tests ordered less than a certain amount of times (inclusive or exclusive?).
+	 * 					If this parameter is null or negative, there will be no upper bound.
+	 * @return a string in the format "diseaseName:count \n diseaseName:count \n"
+	 * 					if there are no results the string will be empty
+	 */
 	public String getQueryInfo(String diseaseList, String cityList, 
 									String startDate, String endDate, 
 									Integer minNumber, Integer maxNumber) {

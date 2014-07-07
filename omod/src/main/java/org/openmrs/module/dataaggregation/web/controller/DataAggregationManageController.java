@@ -13,13 +13,9 @@
  */
 package org.openmrs.module.dataaggregation.web.controller;
 
-import java.util.HashMap;
-
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
-import javax.json.JsonObject;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jdom2.Attribute;
@@ -98,7 +94,8 @@ public class  DataAggregationManageController {
 		String toReturn = Context.getService(DataAggregationService.class).getWeights(gender, minAge, maxAge);
 		return selectFormat(format, toReturn);
 	}
-		
+	
+
 	private String selectFormat(String format, String toReturn){
 		if(format == null){
 			return toReturn;
@@ -112,6 +109,11 @@ public class  DataAggregationManageController {
 			return toReturn;
 	}
 	
+	/**
+	 * Converts a cvs file to JSON
+	 * @param csvString a string that is a cvs file separated by colons
+	 * @return a string is a JSON file
+	 */
 	private String convertToJSON(String csvString) {
 		JsonArrayBuilder table = Json.createArrayBuilder();
 		String[] rows = csvString.split("\n");//split by rows
@@ -128,6 +130,11 @@ public class  DataAggregationManageController {
 		return toReturn.toString();		
 	}
 
+	/**
+	 * Converts a cvs file to XML
+	 * @param csvString a string that is a cvs file separated by colons
+	 * @return a string is a XML file
+	 */
 	private String convertToXML(String csvString){
 		String [] rows = csvString.split("\n");
 		Element table = new Element("table");

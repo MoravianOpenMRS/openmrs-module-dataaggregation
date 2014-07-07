@@ -78,9 +78,7 @@ public class DataAggregationServiceImpl extends BaseOpenmrsService implements Da
 		
     }
 
-    /**
-     * 
-     */
+
     public String getTestsOrdered(String testsOrderedList,
     								String startDate, String endDate, 
     								Integer minNumber, Integer maxNumber) {

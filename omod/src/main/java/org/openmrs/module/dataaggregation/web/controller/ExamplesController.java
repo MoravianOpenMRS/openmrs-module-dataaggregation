@@ -13,11 +13,6 @@
  */
 package org.openmrs.module.dataaggregation.web.controller;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.context.Context;
@@ -25,8 +20,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * The queries controller.
@@ -41,13 +34,5 @@ public class  ExamplesController {
 		model.addAttribute("user", Context.getAuthenticatedUser());
 	
 
-	}
-	
-	private String hashMapToCSV(HashMap<?,?> map){
-		String toReturn = new String();
-		for(Object val:map.keySet()){
-			toReturn = toReturn + val + "," + map.get(val) + " \n";
-		}
-		return toReturn;
 	}
 }
