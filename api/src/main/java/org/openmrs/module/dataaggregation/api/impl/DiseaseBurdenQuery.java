@@ -175,7 +175,7 @@ public class DiseaseBurdenQuery extends DataAggregationQuery {
 		List<Object> results = query.list();
 
 		StringBuilder resultString = new StringBuilder();
-		
+		resultString.append("diseaseName:count\n");
 		// Each object in results is another record from our SQL statement
 		for (Object o : results) {
 			// Cast each object into an array where each column is another index into the array

@@ -22,10 +22,19 @@ import java.util.List;
 
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
+import org.jdom2.Attribute;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.output.Format;
+import org.jdom2.output.XMLOutputter;
 import org.openmrs.Patient;
 import org.openmrs.api.context.Context;
 
 import java.util.HashMap;
+
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
 
 import org.openmrs.api.impl.BaseOpenmrsService;
 import org.apache.commons.logging.Log;
@@ -106,5 +115,59 @@ public class DataAggregationServiceImpl extends BaseOpenmrsService implements Da
 		
 		return diseaseBurden;
 	}
+	
+	/**
+	 * Converts a csv file to JSON
+	 * @param csvString a string that is a csv file separated by colons
+	 * @return a string is a JSON file
+	 */
+	public String convertToJSON(String csvString) {
+		JsonArrayBuilder table = Json.createArrayBuilder();
+		String[] rows = csvString.split("\n");//split by rows
+		String[] fieldNames = rows[0].split(":");
+		for(int j = 1; j < rows.length; j++){
+			JsonArrayBuilder jsonRow = Json.createArrayBuilder();
+			String[] cols = rows[j].split(":");//split by cols
+			int i = 0;
+			for(String col:cols){
+				jsonRow.add(fieldNames[i] + "=" + col);
+				i++;
+			}
+			table.add(jsonRow.build());
+		}
+		JsonArray toReturn = table.build();
+		return toReturn.toString();		
+	}
+
+	/**
+	 * Converts a csv file to XML
+	 * @param csvString a string that is a csv file separated by colons
+	 * @return a string is a XML file
+	 */
+	public String convertToXML(String csvString){
+		String [] rows = csvString.split("\n");
+		String[] fieldNames = rows[0].split(":");
+		Element table = new Element("table");
+		Document doc = new Document(table);
+		int i = 1;
+		while(i < rows.length){
+			Element row = new Element("row" + (i-1));
+			String [] cols = rows[i].split(":");
+			int j =0;
+			for(String rowS:cols){
+				row.setAttribute(new Attribute(fieldNames[j],rowS));
+				j++;
+			}
+						
+			doc.getRootElement().addContent(row);
+			
+			i++;
+		}
+
+		XMLOutputter xmlOutput = new XMLOutputter();
+		xmlOutput.setFormat(Format.getPrettyFormat());
+		return xmlOutput.outputString(doc);
+	}
+
 	
 }

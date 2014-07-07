@@ -100,5 +100,21 @@ public interface DataAggregationService extends OpenmrsService {
 	 */
 	public String getWeights(Character gender, Integer minAge, Integer maxAge);
 	 
+	/**
+	 * Converts a cvs file to JSON
+	 * @param csvString a string that is a cvs file separated by colons
+	 * @return a string is a JSON file
+	 */
+	public String convertToJSON(String csvString);
+	/**
+	 * Converts a cvs file to XML
+	 * @param csvString a string that is a cvs file separated by colons
+	 * @return a string is a XML file
+	 */
+	public String convertToXML(String csvString);
+	
+	
 	public HashMap<String, Integer> getDiseaseBurden();
+	
+	
 }
