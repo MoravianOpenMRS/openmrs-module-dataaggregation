@@ -18,28 +18,28 @@
 		</tr>
 	</thead>
 	<tr>
-	  <td><i>List< String></i> diseases</td>
-	  <td>A list of diseases</td>
+	  <td><i>List< String></i> diseases<br><i style="color:gray">(optional)</i></td>
+	  <td style="vertical-align:top">A list of diseases</td>
 	</tr>
 	<tr>
-	  <td><i>List< String></i> cities</td>
-	  <td>A list of cities</td>
+	  <td><i>List< String></i> cities<br><i style="color:gray">(optional)</i></td>
+	  <td style="vertical-align:top">A list of cities</td>
 	</tr>
 	<tr>
-	  <td><i>String</i> startDate</td>
-	  <td>Start date</td>
+	  <td><i>String</i> startDate<br><i style="color:gray">(optional)</i></td>
+	  <td style="vertical-align:top">Start date</td>
 	</tr>
 	<tr>
-	  <td><i>String</i> endDate</td>
-	  <td>End date</td>
+	  <td><i>String</i> endDate<br><i style="color:gray">(optional)</i></td>
+	  <td style="vertical-align:top">End date</td>
 	</tr>
 	<tr>
-	  <td><i>int</i> minNumber</td>
-	  <td>Minimum number of cases</td>
+	  <td><i>int</i> minNumber<br><i style="color:gray">(optional)</i></td>
+	  <td style="vertical-align:top">Minimum number of cases</td>
 	</tr>
 	<tr>
-	  <td><i>int</i> maxNumber</td>
-	  <td>Maximum number of cases</td>
+	  <td><i>int</i> maxNumber<br><i style="color:gray">(optional)</i></td>
+	  <td style="vertical-align:top">Maximum number of cases</td>
 	</tr>
 </table>
 
@@ -56,24 +56,24 @@
 		</tr>
 	</thead>
 	<tr>
-	  <td><i>List< String></i> testsOrdered</td>
-	  <td>A list of tests ordered</td>
+	  <td><i>List< String></i> testsOrdered<br><i style="color:gray">(optional)</i></td>
+	  <td style="vertical-align:top">A list of tests ordered</td>
 	</tr>
 	<tr>
-	  <td><i>String</i> startDate</td>
-	  <td>Start date</td>
+	  <td><i>String</i> startDate<br><i style="color:gray">(optional)</i></td>
+	  <td style="vertical-align:top">Start date</td>
 	</tr>
 	<tr>
-	  <td><i>String</i> endDate</td>
-	  <td>End date</td>
+	  <td><i>String</i> endDate<br><i style="color:gray">(optional)</i></td>
+	  <td style="vertical-align:top">End date</td>
 	</tr>
 	<tr>
-	  <td><i>int</i> minNumber</td>
-	  <td>Minimum number of cases</td>
+	  <td><i>int</i> minNumber<br><i style="color:gray">(optional)</i></td>
+	  <td style="vertical-align:top">Minimum number of cases</td>
 	</tr>
 	<tr>
-	  <td><i>int</i> maxNumber</td>
-	  <td>Maximum number of cases</td>
+	  <td><i>int</i> maxNumber<br><i style="color:gray">(optional)</i></td>
+	  <td style="vertical-align:top">Maximum number of cases</td>
 	</tr>
 </table>
 
@@ -90,16 +90,16 @@
 		</tr>
 	</thead>
 	<tr>
-	  <td><i>char</i> gender</td>
-	  <td>Gender of patients</td>
+	  <td><i>char</i> gender<br><i style="color:gray">(optional)</i></td>
+	  <td style="vertical-align:top">Gender of patients</td>
 	</tr>
 	<tr>
-	  <td><i>int</i> minAge</td>
-	  <td>Minimum age of patients</td>
+	  <td><i>int</i> minAge<br><i style="color:gray">(optional)</i></td>
+	  <td style="vertical-align:top">Minimum age of patients</td>
 	</tr>
 	<tr>
-	  <td><i>int</i> maxAge</td>
-	  <td>Maximum age of patients</td>
+	  <td><i>int</i> maxAge<br><i style="color:gray">(optional)</i></td>
+	  <td style="vertical-align:top">Maximum age of patients</td>
 	</tr>
 </table>
 
