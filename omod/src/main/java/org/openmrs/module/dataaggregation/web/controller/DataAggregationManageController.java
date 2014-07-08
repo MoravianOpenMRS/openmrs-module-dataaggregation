@@ -15,6 +15,7 @@ package org.openmrs.module.dataaggregation.web.controller;
 
 import java.util.HashMap;
 import java.util.List;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.context.Context;
@@ -77,6 +78,7 @@ public class  DataAggregationManageController {
 		}
 		return resultString.toString();
 		//return selectFormat(format, resultString.toString());
+
 	}
 
 	@RequestMapping(value = "/module/dataaggregation/testsordered", method = RequestMethod.GET)
