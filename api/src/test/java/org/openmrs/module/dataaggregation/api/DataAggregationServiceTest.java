@@ -25,40 +25,34 @@ import org.openmrs.test.BaseModuleContextSensitiveTest;
  */
 public class  DataAggregationServiceTest extends BaseModuleContextSensitiveTest {	
 
+	private static final String DATASET_XML_PATH_NAME = "DataAggregationDiseaseBurdenTestDataset.xml";
+	//
 	@Before
 	public void setup() throws Exception {
-		executeDataSet("DataAggregationDiseaseBurdenTestDataset.xml");
+		executeDataSet(DATASET_XML_PATH_NAME);
 	}
 
 	@Test
-	public void testSchmig() {		
-		
-		String testsOrdered = "X-RAY, CHEST:CD4 PANEL";		
-		
+	public void testDiseaseQuery() {		
+				
 		String diseases = "MALARIA:SCABIES:ANEMIA:MENINGITIS, CRYPTOCOCCAL";
 		
 		DataAggregationService service = Context.getService(DataAggregationService.class);
+
+		String thing = service.getDiseaseBurden(null, null, "1900-01-20 00:00:00", "2100-01-20 00:00:00", 0, 1000);
 		
 		System.out.println();
-		System.out.println("Thing = " + service.getDiseaseBurden(diseases, null, "1900-01-20 00:00:00", "2100-01-20 00:00:00", -1, -1));
-		
-		String thing = service.getDiseaseBurden(null, null, "1900-01-20 00:00:00", "2100-01-20 00:00:00", -1, -1);
-		
 		System.out.println("Thing = " + thing);
 		System.out.println();
 		
 		String[] things = thing.split("\n");
-		/*
-		assertEquals("MALARIA:3", things[0]);
 		
-		assertEquals("SCABIES:2", things[1]);
-		
-		assertEquals("ANEMIA:4", things[2]);
-		
-		assertEquals("MENINGITIS, CRYPTOCOCCAL:1", things[3]);
-		*/
-		
-		assertNotNull(Context.getService(DataAggregationService.class));
+		assertEquals("ANEMIA:1", things[0]);		
+		assertEquals("BRONCHITIS:2", things[1]);		
+		assertEquals("ECZEMA:3", things[2]);		
+		assertEquals("GINGIVITIS:4", things[3]);
+		assertEquals("MALARIA:5", things[4]);
+
 		
 	}
 }

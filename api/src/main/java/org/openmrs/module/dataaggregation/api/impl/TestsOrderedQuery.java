@@ -89,7 +89,8 @@ public class TestsOrderedQuery extends DataAggregationQuery {
 	    		SQL_Query.append(") ");
 	    	}
 	    	
-	    	SQL_Query.append("GROUP BY o.value_coded ");
+	    	//SQL_Query.append("GROUP BY o.value_coded ");
+	    	SQL_Query.append("GROUP BY c.name ");
 	    	
 	    	if (minNumber != -1 && maxNumber != -1){
 	    		SQL_Query.append("HAVING COUNT(*) BETWEEN " + minNumber + "AND " + maxNumber);
@@ -100,6 +101,8 @@ public class TestsOrderedQuery extends DataAggregationQuery {
 			else if (maxNumber > -1) {
 				SQL_Query.append("HAVING COUNT(*) <= " + maxNumber);
 			}
+	    	
+	    	SQL_Query.append(" ORDER BY c.name ");
 	    	
 	    	SQLQuery query = session.createSQLQuery(SQL_Query.toString());	    	
 	    	
