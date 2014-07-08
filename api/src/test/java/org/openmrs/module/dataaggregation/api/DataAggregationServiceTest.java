@@ -29,7 +29,9 @@ public class  DataAggregationServiceTest extends BaseModuleContextSensitiveTest 
 	//
 	@Before
 	public void setup() throws Exception {
+		deleteAllData();
 		executeDataSet(DATASET_XML_PATH_NAME);
+		executeDataSet("ExtraTestDataset.xml");
 	}
 
 	@Test
@@ -47,11 +49,12 @@ public class  DataAggregationServiceTest extends BaseModuleContextSensitiveTest 
 		
 		String[] things = thing.split("\n");
 		
-		//assertEquals("ANEMIA:1", things[0]);		
-		//assertEquals("BRONCHITIS:2", things[1]);		
-		//assertEquals("ECZEMA:3", things[2]);		
-		//assertEquals("GINGIVITIS:4", things[3]);
-		//assertEquals("MALARIA:5", things[4]);
+		assertEquals("ANEMIA:1", things[1]);		
+		assertEquals("BRONCHITIS:2", things[2]);		
+		assertEquals("ECZEMA:3", things[3]);		
+		assertEquals("GINGIVITIS:4", things[4]);
+		assertEquals("MALARIA:10", things[5]);
+
 
 		
 	}
