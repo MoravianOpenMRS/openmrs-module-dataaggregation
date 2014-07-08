@@ -13,13 +13,9 @@
  */
 package org.openmrs.module.dataaggregation.web.controller;
 
-import java.util.HashMap;
-
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
-import javax.json.JsonObject;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jdom2.Attribute;
@@ -103,57 +99,21 @@ public class  DataAggregationManageController {
 		String toReturn = Context.getService(DataAggregationService.class).getWeights(gender, minAge, maxAge);
 		return selectFormat(format, toReturn);
 	}
-		
+	
+
 	private String selectFormat(String format, String toReturn){
 		if(format == null){
-			return toReturn;
-		}else if(format.equals("CSV")){
-			return toReturn;
-		}else if (format.equals("JSON")){
-			return convertToJSON(toReturn);
-		}else if (format.equals("XML")){
-			return convertToXML(toReturn);
+			return Context.getService(DataAggregationService.class).convertToJSON(toReturn);
 		}
+		String form = format.toLowerCase();//make case insensitive
+		if(form.equals("csv")){
 			return toReturn;
-	}
-	
-	private String convertToJSON(String csvString) {
-		JsonArrayBuilder table = Json.createArrayBuilder();
-		String[] rows = csvString.split("\n");//split by rows
-		
-		for(String row:rows){
-			JsonArrayBuilder jsonRow = Json.createArrayBuilder();
-			String[] cols = row.split(":");//split by cols
-			for(String col:cols){
-				jsonRow.add(col);
-			}
-			table.add(jsonRow.build());
+		}else if (form.equals("json")){
+			return Context.getService(DataAggregationService.class).convertToJSON(toReturn);
+		}else if (form.equals("xml")){
+			return Context.getService(DataAggregationService.class).convertToXML(toReturn);
 		}
-		JsonArray toReturn = table.build();
-		return toReturn.toString();		
+			return Context.getService(DataAggregationService.class).convertToJSON(toReturn);
 	}
 
-	private String convertToXML(String csvString){
-		String [] rows = csvString.split("\n");
-		Element table = new Element("table");
-		Document doc = new Document(table);
-		int i = 0;
-		while(i < rows.length){
-			Element row = new Element("row" + i);
-			String [] cols = rows[i].split(":");
-			int j =0;
-			for(String rowS:cols){
-				row.setAttribute(new Attribute("col" + j,rowS));
-				j++;
-			}
-						
-			doc.getRootElement().addContent(row);
-			
-			i++;
-		}
-
-		XMLOutputter xmlOutput = new XMLOutputter();
-		xmlOutput.setFormat(Format.getPrettyFormat());
-		return xmlOutput.outputString(doc);
-	}
 }

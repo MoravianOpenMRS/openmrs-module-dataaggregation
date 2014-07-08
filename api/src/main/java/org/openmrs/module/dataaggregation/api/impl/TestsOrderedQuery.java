@@ -21,7 +21,26 @@ public class TestsOrderedQuery extends DataAggregationQuery {
 		super(dao);
 	}	
 	
-	
+	/**
+	 * This method returns a string containing the count of the desired tests.
+	 * @param testList a string in the format "desiredTest0:desiredTest1:...:desiredTestN"
+	 * 					This method will only list the results of the test specified in this string.
+	 * 					If this parameter is null, then all tests will be included in the result.
+	 * @param startDate a string in the format "YYYY-MM-DD HH:MM:SS" for example : "2006-01-30 00:00:00"
+	 * 					This string bounds the query only to tests ordered after a specific date (inclusive or exclusive?).
+	 * 					If this parameter is null, then no lower bound will exist.
+	 * @param endDate a string in the format "YYYY-MM-DD HH:MM:SS" for example : "2006-01-30 00:00:00"
+	 * 					This string bounds the query only to tests ordered before a certain date (inclusive or exclusive?).
+	 * 					If this parameter is null, the no upper bound will exist.
+	 * @param minNumber a positive integer
+	 * 					This integer bounds the query only to tests ordered at least a certain amount of times (inclusive or exclusive?).
+	 * 					If this parameter is null or negative, there will be no lower bound.
+	 * @param maxNumber a positive integer
+	 * 					This integer bounds the query only to tests ordered less than a certain amount of times (inclusive or exclusive?).
+	 * 					If this parameter is null or negative, there will be no upper bound.
+	 * @return a string in the format "testName:count \n testName:count \n"
+	 * 					if there are no results the string will be empty
+	 */
 	public String getQueryInfo(String testList,
 								String startDate, String endDate, 
 								Integer minNumber, Integer maxNumber) {
@@ -55,7 +74,7 @@ public class TestsOrderedQuery extends DataAggregationQuery {
 		return getTestsOrdered(tests, startDate, endDate, minNumber , maxNumber);
 	}
 	
-	
+
 	private String getTestsOrdered(List<String> testsOrderedList, String startDate, String endDate, Integer minNumber, Integer maxNumber) {
 	    	
 	    	Session session = dao.getSessionFactory().openSession();
@@ -116,7 +135,7 @@ public class TestsOrderedQuery extends DataAggregationQuery {
 			List<Object> results = query.list();
 	    	
 	    	StringBuilder resultString = new StringBuilder();
-			
+	    	resultString.append("testName:count\n");
 			// Each object in results is another record from our SQL statement
 			for (Object o : results) {
 				// Cast each object into an array where each column is another index into the array
