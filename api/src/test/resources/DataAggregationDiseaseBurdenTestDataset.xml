@@ -1,47 +1,47 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <dataset>
 
-  <concept_name concept_id="6042" name="PROBLEM ADDED" locale="en" creator="1" date_created="2004-08-12 00:00:00"   concept_name_id="6042" voided="false" uuid="bed2781e-1691-11df-97a5-7038c432aabf" locale_preferred="true"/>
-  <concept_name concept_id="1271" name="TESTS ORDERED" locale="en" creator="1" date_created="2005-02-22 20:43:57"   concept_name_id="1271" voided="false" uuid="bec62fed-1691-11df-97a5-7038c432aabf" locale_preferred="true"/>
-  <concept_name concept_id="5089" name="WEIGHT (KG)" locale="en" creator="1" date_created="2004-08-12 00:00:00.0" concept_name_id="1439" concept_name_type="FULLY_SPECIFIED" locale_preferred="1" voided="false" uuid="9bc5693a-f558-40c9-8177-145a4b119ca7"/>
+  <concept_name concept_id="6042" name="PROBLEM ADDED"            locale="en" creator="1" date_created="2004-08-12 00:00:00"   concept_name_id="6042" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false" />
+  <concept_name concept_id="1271" name="TESTS ORDERED"            locale="en" creator="1" date_created="2005-02-22 20:43:57"   concept_name_id="1271" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false" />
+  <concept_name concept_id="5089" name="WEIGHT (KG)"              locale="en" creator="1" date_created="2004-08-12 00:00:00.0" concept_name_id="1439" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false"/>
    
   <!-- These are the concept_ids/names of the diseases -->
-  <concept_name concept_id="333"  name="ANEMIA"                   locale="en" creator="1" date_created="2005-02-22 20:43:57"   concept_name_id="3"    concept_name_type="FULLY_SPECIFIED" voided="false" uuid="beb1165c-1691-11df-97a5-7038c432aabf"/>
-  <concept_name concept_id="123"  name="MALARIA"                  locale="en" creator="1" date_created="2005-02-22 20:43:57"   concept_name_id="123"  concept_name_type="FULLY_SPECIFIED" voided="false" uuid="beb1a8dc-1691-11df-97a5-7038c432aabf"/>
-  <concept_name concept_id="1294" name="MENINGITIS, CRYPTOCOCCAL" locale="en" creator="1" date_created="2005-02-22 20:43:57"   concept_name_id="1294" concept_name_type="FULLY_SPECIFIED" voided="false" uuid="bec648bd-1691-11df-97a5-7038c432aabf"/>
-  <concept_name concept_id="140"  name="SCABIES"                  locale="en" creator="1" date_created="2005-02-22 20:43:57"   concept_name_id="140"  concept_name_type="FULLY_SPECIFIED" voided="false" uuid="beb7eb63-1691-11df-97a5-7038c432aabf"/>
-  <concept_name concept_id="147"  name="BRONCHITIS"               locale="en" creator="1" date_created="2004-08-12 00:00:00.0" concept_name_id="1847" concept_name_type="FULLY_SPECIFIED" voided="false" uuid="6e77e374-18a1-4ec6-8ed4-4152a5a7d6a1"/>
-  <concept_name concept_id="829"  name="ECZEMA"                   locale="en" creator="1" date_created="2008-08-15 13:52:53.0" concept_name_id="2449" concept_name_type="FULLY_SPECIFIED" voided="false" uuid="ef7ac747-7980-443c-b11f-4617aa587703"/>
-  <concept_name concept_id="126"  name="GINGIVITIS"               locale="en" creator="1" date_created="2008-08-15 13:53:31.0" concept_name_id="2450" concept_name_type="FULLY_SPECIFIED" voided="false" uuid="b98a6ed4-77e7-4cee-aae2-81957fcd7f48"/>
-  <concept_name concept_id="63"   name="MEASLES"                  locale="en" creator="1" date_created="2008-08-15 13:57:57.0" concept_name_id="2451" concept_name_type="FULLY_SPECIFIED" voided="false" uuid="dcf41b94-f1af-45fd-8cb9-5ef8c15bab37"/>
-  <concept_name concept_id="44"   name="PREGNANCY"                locale="en" creator="1" date_created="2008-08-15 13:58:36.0" concept_name_id="2452" concept_name_type="FULLY_SPECIFIED" voided="false" uuid="01d9f62c-c96d-46f0-a7ba-75337fd149bf"/>
-  <concept_name concept_id="5009" name="SPLENOMEGALY"             locale="en" creator="1" date_created="2008-08-15 14:04:20.0" concept_name_id="2453" concept_name_type="FULLY_SPECIFIED" voided="false" uuid="0e61fcd8-10ac-431f-9e96-70ab0b5b2385"/>
+  <concept_name concept_id="3"    name="ANEMIA"                   locale="en" creator="1" date_created="2005-02-22 20:43:57"   concept_name_id="3"    concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false"/>
+  <concept_name concept_id="123"  name="MALARIA"                  locale="en" creator="1" date_created="2005-02-22 20:43:57"   concept_name_id="123"  concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false"/>
+  <concept_name concept_id="1294" name="MENINGITIS, CRYPTOCOCCAL" locale="en" creator="1" date_created="2005-02-22 20:43:57"   concept_name_id="1294" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false"/>
+  <concept_name concept_id="140"  name="SCABIES"                  locale="en" creator="1" date_created="2005-02-22 20:43:57"   concept_name_id="140"  concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false"/>
+  <concept_name concept_id="147"  name="BRONCHITIS"               locale="en" creator="1" date_created="2004-08-12 00:00:00.0" concept_name_id="1847" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false"/>
+  <concept_name concept_id="829"  name="ECZEMA"                   locale="en" creator="1" date_created="2008-08-15 13:52:53.0" concept_name_id="2449" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false"/>
+  <concept_name concept_id="126"  name="GINGIVITIS"               locale="en" creator="1" date_created="2008-08-15 13:53:31.0" concept_name_id="2450" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false"/>
+  <concept_name concept_id="63"   name="MEASLES"                  locale="en" creator="1" date_created="2008-08-15 13:57:57.0" concept_name_id="2451" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false"/>
+  <concept_name concept_id="44"   name="PREGNANCY"                locale="en" creator="1" date_created="2008-08-15 13:58:36.0" concept_name_id="2452" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false"/>
+  <concept_name concept_id="5009" name="SPLENOMEGALY"             locale="en" creator="1" date_created="2008-08-15 14:04:20.0" concept_name_id="2453" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false"/>
   <!-- These are the concept_ids/names of the diseases -->
  
   <!-- One case of ANEMIA -->
-  <obs obs_id="6"  person_id="7" concept_id="6042" encounter_id="3" obs_datetime="2008-08-15 00:00:00.0" location_id="1" value_coded="333"   comments="" creator="1" date_created="2008-08-19 12:32:59.0" voided="false" uuid="1ce473c8-3fac-440d-9f92-e22facab194f"/>
+  <obs obs_id="1"  person_id="7" concept_id="6042" obs_datetime="2008-08-15 00:00:00.0" value_coded="3" creator="1" date_created="2008-08-19 12:32:59.0" voided="false"/>
   
   <!-- Two cases of BRONCHITIS -->
-  <obs obs_id="7"  person_id="7" concept_id="6042" encounter_id="3" obs_datetime="2008-08-01 00:00:00.0" location_id="1" value_coded="147" comments="" creator="1" date_created="2008-08-18 14:09:35.0" voided="false" uuid="39fb7f47-e80a-4056-9285-bd798be13c63"/>
-  <obs obs_id="9"  person_id="7" concept_id="6042" encounter_id="3" obs_datetime="2008-08-01 00:00:00.0" location_id="1" value_coded="147" comments="" creator="1" date_created="2008-08-18 14:11:13.0" voided="false" uuid="be48cdcb-6a76-47e3-9f2e-2635032f3a9a"/>
+  <obs obs_id="2"  person_id="7" concept_id="6042" obs_datetime="2008-08-01 00:00:00.0" value_coded="147" creator="1" date_created="2008-08-18 14:09:35.0" voided="false"/>
+  <obs obs_id="3"  person_id="7" concept_id="6042" obs_datetime="2008-08-01 00:00:00.0" value_coded="147" creator="1" date_created="2008-08-18 14:11:13.0" voided="false"/>
   
   <!-- Three cases of ECZEMA -->
-  <obs obs_id="10" person_id="7" concept_id="6042" encounter_id="4" obs_datetime="2008-08-15 00:00:00.0" location_id="1" value_coded="829" comments="" creator="1" date_created="2008-08-18 14:22:47.0" voided="false" uuid="2f616900-5e7c-4667-9a7f-dcb260abf1de"/>
-  <obs obs_id="11" person_id="7" concept_id="6042" encounter_id="4" obs_datetime="2008-08-15 00:00:00.0" location_id="1" value_coded="829" comments="" creator="1" date_created="2008-08-18 14:25:29.0" voided="false" uuid="f6ec1267-8eac-415f-a3f0-e47be2c8bb67"/>
-  <obs obs_id="12" person_id="7" concept_id="6042" encounter_id="4" obs_datetime="2008-08-15 00:00:00.0" location_id="1" value_coded="829" comments="" creator="1" date_created="2008-08-19 12:32:03.0" voided="false" uuid="e26cea2c-1b9f-4afe-b211-f3ef6c88af6f"/>
+  <obs obs_id="4"  person_id="7" concept_id="6042" obs_datetime="2008-08-15 00:00:00.0" value_coded="829" creator="1" date_created="2008-08-18 14:22:47.0" voided="false"/>
+  <obs obs_id="5"  person_id="7" concept_id="6042" obs_datetime="2008-08-15 00:00:00.0" value_coded="829" creator="1" date_created="2008-08-18 14:25:29.0" voided="false"/>
+  <obs obs_id="6"  person_id="7" concept_id="6042" obs_datetime="2008-08-15 00:00:00.0" value_coded="829" creator="1" date_created="2008-08-19 12:32:03.0" voided="false"/>
   
   <!-- Four cases of GINGIVITIS -->
-  <obs obs_id="13" person_id="7" concept_id="6042" encounter_id="4" obs_datetime="2008-08-15 00:00:00.0" location_id="1" value_coded="126" comments="" creator="1" date_created="2008-08-19 12:32:20.0" voided="false" uuid="b6521c32-47b6-47da-9c6f-3673ddfb74f9"/>
-  <obs obs_id="14" person_id="7" concept_id="6042" encounter_id="4" obs_datetime="2008-08-15 00:00:00.0" location_id="1" value_coded="126" comments="" creator="1" date_created="2008-08-19 12:32:38.0" voided="false" uuid="99b92980-db62-40cd-8bca-733357c48126"/>
-  <obs obs_id="15" person_id="7" concept_id="6042" encounter_id="4" obs_datetime="2008-08-15 00:00:00.0" location_id="1" value_coded="126" comments="" creator="1" date_created="2008-08-19 12:32:59.0" voided="false" uuid="1ce473c8-3fac-440d-9f92-e10facab194f"/>
-  <obs obs_id="16" person_id="7" concept_id="6042" encounter_id="5" obs_datetime="2008-08-19 00:00:00.0" location_id="2" value_coded="126" comments="" creator="1" date_created="2008-08-19 12:35:30.0" voided="false" uuid="2ed1e57d-9f18-41d3-b067-2eeaf4b30fb0"/>
+  <obs obs_id="7"  person_id="7" concept_id="6042" obs_datetime="2008-08-15 00:00:00.0" value_coded="126" creator="1" date_created="2008-08-19 12:32:20.0" voided="false"/>
+  <obs obs_id="8"  person_id="7" concept_id="6042" obs_datetime="2008-08-15 00:00:00.0" value_coded="126" creator="1" date_created="2008-08-19 12:32:38.0" voided="false"/>
+  <obs obs_id="9"  person_id="7" concept_id="6042" obs_datetime="2008-08-15 00:00:00.0" value_coded="126" creator="1" date_created="2008-08-19 12:32:59.0" voided="false"/>
+  <obs obs_id="10" person_id="7" concept_id="6042" obs_datetime="2008-08-19 00:00:00.0" value_coded="126" creator="1" date_created="2008-08-19 12:35:30.0" voided="false"/>
   
   <!-- Five cases of MALARIA -->
-  <obs obs_id="17" person_id="7" concept_id="6042" encounter_id="5" obs_datetime="2008-08-19 00:00:00.0" location_id="2" value_coded="123" comments="" creator="1" date_created="2008-08-19 12:35:30.0" voided="false" uuid="aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"/>
-  <obs obs_id="18" person_id="7" concept_id="6042" encounter_id="5" obs_datetime="2008-08-19 00:00:00.0" location_id="2" value_coded="123" comments="" creator="1" date_created="2008-08-19 12:35:30.0" voided="false" uuid="aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaab"/>
-  <obs obs_id="19" person_id="7" concept_id="6042" encounter_id="5" obs_datetime="2008-08-19 00:00:00.0" location_id="2" value_coded="123" comments="" creator="1" date_created="2008-08-19 12:35:30.0" voided="false" uuid="aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaac"/>
-  <obs obs_id="20" person_id="7" concept_id="6042" encounter_id="5" obs_datetime="2008-08-19 00:00:00.0" location_id="2" value_coded="123" comments="" creator="1" date_created="2008-08-19 12:35:30.0" voided="false" uuid="aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaad"/>
-  <obs obs_id="21" person_id="7" concept_id="6042" encounter_id="5" obs_datetime="2008-08-19 00:00:00.0" location_id="2" value_coded="123" comments="" creator="1" date_created="2008-08-19 12:35:30.0" voided="false" uuid="aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaae"/>
+  <obs obs_id="11" person_id="7" concept_id="6042" obs_datetime="2008-08-19 00:00:00.0" value_coded="123" creator="1" date_created="2008-08-19 12:35:30.0" voided="false"/>
+  <obs obs_id="12" person_id="7" concept_id="6042" obs_datetime="2008-08-19 00:00:00.0" value_coded="123" creator="1" date_created="2008-08-19 12:35:30.0" voided="false"/>
+  <obs obs_id="13" person_id="7" concept_id="6042" obs_datetime="2008-08-19 00:00:00.0" value_coded="123" creator="1" date_created="2008-08-19 12:35:30.0" voided="false"/>
+  <obs obs_id="14" person_id="7" concept_id="6042" obs_datetime="2008-08-19 00:00:00.0" value_coded="123" creator="1" date_created="2008-08-19 12:35:30.0" voided="false"/>
+  <obs obs_id="15" person_id="7" concept_id="6042" obs_datetime="2008-08-19 00:00:00.0" value_coded="123" creator="1" date_created="2008-08-19 12:35:30.0" voided="false"/>
   
 
   
