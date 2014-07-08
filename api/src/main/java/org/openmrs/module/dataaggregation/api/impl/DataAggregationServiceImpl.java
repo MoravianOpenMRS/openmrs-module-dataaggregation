@@ -69,7 +69,7 @@ public class DataAggregationServiceImpl extends BaseOpenmrsService implements Da
     /**
      * 
      */
-    public String getDiseaseBurden(String diseaseList, String cityList,
+    public List<Object> getDiseaseBurden(String diseaseList, String cityList,
     								String startDate, String endDate,
     								Integer minNumber, Integer maxNumber) {  
     	

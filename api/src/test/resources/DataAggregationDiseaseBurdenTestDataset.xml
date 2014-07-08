@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+
+  <concept_name concept_id="6042" name="PROBLEM ADDED"            locale="en" creator="1" date_created="2004-08-12 00:00:00"   concept_name_id="6042" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false" />
+  <concept_name concept_id="1271" name="TESTS ORDERED"            locale="en" creator="1" date_created="2005-02-22 20:43:57"   concept_name_id="1271" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false" />
+  <concept_name concept_id="5089" name="WEIGHT (KG)"              locale="en" creator="1" date_created="2004-08-12 00:00:00.0" concept_name_id="1439" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false"/>
+   
+  <!-- These are the concept_ids/names of the diseases -->
+  <concept_name concept_id="3"    name="ANEMIA"                   locale="en" creator="1" date_created="2005-02-22 20:43:57"   concept_name_id="3"    concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false"/>
+  <concept_name concept_id="123"  name="MALARIA"                  locale="en" creator="1" date_created="2005-02-22 20:43:57"   concept_name_id="123"  concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false"/>
+  <concept_name concept_id="1294" name="MENINGITIS, CRYPTOCOCCAL" locale="en" creator="1" date_created="2005-02-22 20:43:57"   concept_name_id="1294" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false"/>
+  <concept_name concept_id="140"  name="SCABIES"                  locale="en" creator="1" date_created="2005-02-22 20:43:57"   concept_name_id="140"  concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false"/>
+  <concept_name concept_id="147"  name="BRONCHITIS"               locale="en" creator="1" date_created="2004-08-12 00:00:00.0" concept_name_id="1847" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false"/>
+  <concept_name concept_id="829"  name="ECZEMA"                   locale="en" creator="1" date_created="2008-08-15 13:52:53.0" concept_name_id="2449" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false"/>
+  <concept_name concept_id="126"  name="GINGIVITIS"               locale="en" creator="1" date_created="2008-08-15 13:53:31.0" concept_name_id="2450" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false"/>
+  <concept_name concept_id="63"   name="MEASLES"                  locale="en" creator="1" date_created="2008-08-15 13:57:57.0" concept_name_id="2451" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false"/>
+  <concept_name concept_id="44"   name="PREGNANCY"                locale="en" creator="1" date_created="2008-08-15 13:58:36.0" concept_name_id="2452" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false"/>
+  <concept_name concept_id="5009" name="SPLENOMEGALY"             locale="en" creator="1" date_created="2008-08-15 14:04:20.0" concept_name_id="2453" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false"/>
+  <!-- These are the concept_ids/names of the diseases -->
+ 
+  <!-- One case of ANEMIA -->
+  <obs obs_id="1"  person_id="7" concept_id="6042" obs_datetime="2008-08-15 00:00:00.0" value_coded="3" creator="1" date_created="2008-08-19 12:32:59.0" voided="false"/>
+  
+  <!-- Two cases of BRONCHITIS -->
+  <obs obs_id="2"  person_id="7" concept_id="6042" obs_datetime="2008-08-01 00:00:00.0" value_coded="147" creator="1" date_created="2008-08-18 14:09:35.0" voided="false"/>
+  <obs obs_id="3"  person_id="7" concept_id="6042" obs_datetime="2008-08-01 00:00:00.0" value_coded="147" creator="1" date_created="2008-08-18 14:11:13.0" voided="false"/>
+  
+  <!-- Three cases of ECZEMA -->
+  <obs obs_id="4"  person_id="9" concept_id="6042" obs_datetime="2008-08-15 00:00:00.0" value_coded="829" creator="1" date_created="2008-08-18 14:22:47.0" voided="false"/>
+  <obs obs_id="5"  person_id="9" concept_id="6042" obs_datetime="2008-08-15 00:00:00.0" value_coded="829" creator="1" date_created="2008-08-18 14:25:29.0" voided="false"/>
+  <obs obs_id="6"  person_id="9" concept_id="6042" obs_datetime="2008-08-15 00:00:00.0" value_coded="829" creator="1" date_created="2008-08-19 12:32:03.0" voided="false"/>
+  
+  <!-- Four cases of GINGIVITIS -->
+  <obs obs_id="7"  person_id="7" concept_id="6042" obs_datetime="2008-08-15 00:00:00.0" value_coded="126" creator="1" date_created="2008-08-19 12:32:20.0" voided="false"/>
+  <obs obs_id="8"  person_id="7" concept_id="6042" obs_datetime="2008-08-15 00:00:00.0" value_coded="126" creator="1" date_created="2008-08-19 12:32:38.0" voided="false"/>
+  <obs obs_id="9"  person_id="7" concept_id="6042" obs_datetime="2008-08-15 00:00:00.0" value_coded="126" creator="1" date_created="2008-08-19 12:32:59.0" voided="false"/>
+  <obs obs_id="10" person_id="7" concept_id="6042" obs_datetime="2008-08-19 00:00:00.0" value_coded="126" creator="1" date_created="2008-08-19 12:35:30.0" voided="false"/>
+  
+  <!-- Five cases of MALARIA -->
+  <obs obs_id="11" person_id="7" concept_id="6042" obs_datetime="2008-08-19 00:00:00.0" value_coded="123" creator="1" date_created="2008-08-19 12:35:30.0" voided="false"/>
+  <obs obs_id="12" person_id="7" concept_id="6042" obs_datetime="2008-08-19 00:00:00.0" value_coded="123" creator="1" date_created="2008-08-19 12:35:30.0" voided="false"/>
+  <obs obs_id="13" person_id="7" concept_id="6042" obs_datetime="2008-08-19 00:00:00.0" value_coded="123" creator="1" date_created="2008-08-19 12:35:30.0" voided="false"/>
+  <obs obs_id="14" person_id="7" concept_id="6042" obs_datetime="2008-08-19 00:00:00.0" value_coded="123" creator="1" date_created="2008-08-19 12:35:30.0" voided="false"/>
+  <obs obs_id="15" person_id="7" concept_id="6042" obs_datetime="2008-08-19 00:00:00.0" value_coded="123" creator="1" date_created="2008-08-19 12:35:30.0" voided="false"/>
+  
+  
+  <person_address person_address_id="2"    person_id="2"   preferred="false" city_village="Indianapolis" creator="1" date_created="2005-09-22 00:00:00.0" voided="false"/>
+  <person_address person_address_id="7"    person_id="7"   preferred="false" city_village="Philadelphia" creator="1" date_created="2006-01-18 00:00:00.0" voided="false"/>
+  <person_address person_address_id="8"    person_id="8"   preferred="false" city_village="New York"     creator="1" date_created="2006-01-18 00:00:00.0" voided="false"/>
+  <person_address person_address_id="9"    person_id="9"   preferred="false" city_village="Chicago"      creator="1" date_created="2006-01-18 00:00:00.0" voided="false"/>
+  <person_address person_address_id="9348" person_id="501" preferred="false" city_village="Detroit"      creator="1" date_created="2008-08-15 15:46:47.0" voided="false"/>
+  <person_address person_address_id="9349" person_id="502" preferred="false" city_village="Los Angeles"  creator="1" date_created="2008-08-15 15:57:09.0" voided="false"/>
+  <person_address person_address_id="9350" person_id="6"   preferred="false" city_village="San Diego"    creator="1" date_created="2008-08-18 11:44:02.0" voided="false"/>
+ 
+ 
+  <person person_id="2"  gender="M" birthdate="1975-04-08 00:00:00.0" dead="false" creator="1" date_created="2005-09-22 00:00:00.0" voided="false"/>
+  <person person_id="6"  gender="M" birthdate="2007-05-27 00:00:00.0" dead="false" creator="1" date_created="2006-01-18 00:00:00.0" voided="false"/>
+  <person person_id="7"  gender="F" birthdate="1976-08-25 00:00:00.0" dead="false" creator="1" date_created="2006-01-18 00:00:00.0" voided="false"/>
+  <person person_id="8"  gender="F" birthdate="1976-08-25 00:00:00.0" dead="false" creator="1" date_created="2006-01-18 00:00:00.0" voided="false"/>
+  <person person_id="9"  gender="M" birthdate="1976-08-25 00:00:00.0" dead="false" creator="1" date_created="2006-01-18 00:00:00.0" voided="false"/>
+  <person person_id="20" gender="F" birthdate="1925-02-08 00:00:00.0" dead="true"  creator="1" date_created="2009-01-18 00:00:00.0" voided="false"/>
+  <person person_id="21" gender="M" birthdate="1959-06-08 00:00:00.0" dead="false" creator="1" date_created="2009-01-18 00:00:00.0" voided="false"/>
+  <person person_id="22" gender="F" birthdate="1997-07-08 00:00:00.0" dead="false" creator="1" date_created="2009-01-18 00:00:00.0" voided="false"/>
+  <person person_id="23" gender=""  birthdate="2000-11-08 00:00:00.0" dead="true"  creator="1" date_created="2009-01-18 00:00:00.0" voided="false"/>
+  <person person_id="24" gender="F" birthdate="2006-12-08 00:00:00.0" dead="false" creator="1" date_created="2009-01-18 00:00:00.0" voided="false"/>
+ 
+  
+ 
+  
+</dataset>

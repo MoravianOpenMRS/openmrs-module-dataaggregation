@@ -13,11 +13,8 @@
  */
 package org.openmrs.module.dataaggregation.web.controller;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.context.Context;
@@ -28,9 +25,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.io.File;
-import java.io.IOException;
 
 /**
  * The main controller.
@@ -67,8 +61,22 @@ public class  DataAggregationManageController {
 						@RequestParam(value = "startDate", required = false) String startDate, @RequestParam(value = "endDate", required = false) String endDate,
 						@RequestParam(value = "minNumber", required = false) Integer minNumber, @RequestParam(value = "maxNumber", required = false) Integer maxNumber) {
 		
-		String toReturn = Context.getService(DataAggregationService.class).getDiseaseBurden(diseaseList, cityList, startDate, endDate, minNumber , maxNumber);
-		return (toReturn);
+
+		List<Object> results = Context.getService(DataAggregationService.class).getDiseaseBurden(diseaseList, cityList, startDate, endDate, minNumber , maxNumber);
+		
+		StringBuilder resultString = new StringBuilder();
+		resultString.append("diseaseName:count\n");
+		// Each object in results is another record from our SQL statement
+		for (Object o : results) {
+			// Cast each object into an array where each column is another index into the array
+			Object[] vals = (Object[]) o;
+			// vals[1] is the name of the disease
+			// vals[2] is the count for the disease
+			// vals[0] is just the concept_id of the disease which we may or may not need and that is why vals[0] is not used here
+			resultString.append(vals[1] + ":" + vals[2] + "\n");
+		}
+		return resultString.toString();
+		//return selectFormat(format, resultString.toString());
 	}
 
 	@RequestMapping(value = "/module/dataaggregation/testsordered", method = RequestMethod.GET)
@@ -87,7 +95,8 @@ public class  DataAggregationManageController {
 							@RequestParam(value = "minAge", required = false) Integer minAge, @RequestParam(value = "maxAge", required = false) Integer maxAge) {
 		
 		String toReturn = Context.getService(DataAggregationService.class).getWeights(gender, minAge, maxAge);
-		return (toReturn);
+		return toReturn;
+		//return selectFormat(format, toReturn);
 	}
 	
 	private String hashMapToCSV(HashMap<?,?> map){

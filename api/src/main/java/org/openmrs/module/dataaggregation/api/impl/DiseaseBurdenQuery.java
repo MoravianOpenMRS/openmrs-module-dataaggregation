@@ -19,8 +19,31 @@ public class DiseaseBurdenQuery extends DataAggregationQuery {
 		super(dao);
 	}
 	
-	
-	public String getQueryInfo(String diseaseList, String cityList, 
+
+	/**
+	 * This method returns a string containing the count of the desired disease.
+	 * @param diseaseList a string in the format "desiredDisease1:desiredDisease2:...:desiredDiseaseN"
+	 * 					This method will only list the results of the disease specified in the string.
+	 * 					If this parameter is null, then all the diseases will be included in the result.
+	 * @param cityList a string in the format "desiredCity1:desiredCity2:...:desiredCityN"
+	 * 					This method will only list the results of the diseases in the city specified in the string.
+	 * 				   	If the parameter in null, then all the diseases will be included in the result.
+	 * @param startDate a string in the format "YYYY-MM-DD HH:MM:SS" for example : "2006-01-30 00:00:00"
+	 * 					This string bounds the query only to tests ordered after a specific date (inclusive or exclusive?).
+	 * 					If this parameter is null, then no lower bound will exist.
+	 * @param endDate a string in the format "YYYY-MM-DD HH:MM:SS" for example : "2006-01-30 00:00:00"
+	 * 					This string bounds the query only to tests ordered before a certain date (inclusive or exclusive?).
+	 * 					If this parameter is null, the no upper bound will exist.
+	 * @param minNumber a positive integer
+	 * 					This integer bounds the query only to tests ordered at least a certain amount of times (inclusive or exclusive?).
+	 * 					If this parameter is null or negative, there will be no lower bound.
+	 * @param maxNumber a positive integer
+	 * 					This integer bounds the query only to tests ordered less than a certain amount of times (inclusive or exclusive?).
+	 * 					If this parameter is null or negative, there will be no upper bound.
+	 * @return a List<Obect> It is the list of records coming back from the database, each object representing a row in the table which
+	 * 						index 1 is the name of the disease, index 2 is the count for the disease, index 0 is the concept_id of the disease
+	 */
+	public List<Object> getQueryInfo(String diseaseList, String cityList, 
 									String startDate, String endDate, 
 									Integer minNumber, Integer maxNumber) {
 		
@@ -63,7 +86,8 @@ public class DiseaseBurdenQuery extends DataAggregationQuery {
 	 /**
      * 
      */
-    private String getDiseaseCounts(List<String> diseaseList, List<String> cities, 
+    @SuppressWarnings("unchecked")
+	private List<Object> getDiseaseCounts(List<String> diseaseList, List<String> cities, 
     								String startDate, String endDate, 
     								Integer minNumber, Integer maxNumber) {   	
     	
@@ -96,6 +120,7 @@ public class DiseaseBurdenQuery extends DataAggregationQuery {
     	// This is dealing with going through a list of cities to only include the specified ones
     	int count = 0;    	
     	for (String city : cities) {
+    		city = city.substring(0, 1).toUpperCase() + city.substring(1).toLowerCase();
     		if (count == 0) {
     			SQL_Query.append("AND (pa.city_village = '" + city + "' "); // add the first disease with ( at beginning 
     			count = 1;
@@ -111,6 +136,7 @@ public class DiseaseBurdenQuery extends DataAggregationQuery {
     	// This is dealing with going through a list of diseases to only include the specified ones
     	count = 0;    	
     	for (String disease : diseaseList) {
+    		disease = disease.toUpperCase();
     		if (count == 0) {
     			SQL_Query.append("AND (c.name = '" + disease + "'"); // add the first disease with ( at beginning 
     			count = 1;
@@ -144,22 +170,9 @@ public class DiseaseBurdenQuery extends DataAggregationQuery {
 		query.setParameter("end_date", endDate);
 		
 		
-		@SuppressWarnings("unchecked")
-		// This gets the list of records from our SQL statement each record is a row in the table
-		List<Object> results = query.list();
+		// The list method returns a List (without the generic specified).  We cast to the desired return
+		// type.  Note the "suppressWarning" command on this method.
+		return (List<Object>)query.list();
 
-		StringBuilder resultString = new StringBuilder();
-		
-		// Each object in results is another record from our SQL statement
-		for (Object o : results) {
-			// Cast each object into an array where each column is another index into the array
-			Object[] vals = (Object[]) o;
-			// vals[1] is the name of the disease
-			// vals[2] is the count for the disease
-			// vals[0] is just the concept_id of the disease which we may or may not need and that is why vals[0] is not used here
-			resultString.append(vals[1] + ":" + vals[2] + "\n");
-		}
-		
-    	return resultString.toString();
     }
 }
