@@ -1,6 +1,5 @@
 package org.openmrs.module.dataaggregation.api;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,11 +55,11 @@ public class JSONFormatter {
 		JsonArrayBuilder results = Json.createArrayBuilder();
 		for(Object row: data){
 			Object[] columns = (Object[]) row;
+			JsonObjectBuilder outputRow = Json.createObjectBuilder();
 			for(String value:fieldNames.keySet()){
-				JsonObjectBuilder outputRow = Json.createObjectBuilder();
 				outputRow.add(value, columns[fieldNames.get(value)].toString());
-				results.add(outputRow.build());
 			}
+			results.add(outputRow.build());
 		}
 		table.add("Entries", results.build());
 		return table.build().toString();
