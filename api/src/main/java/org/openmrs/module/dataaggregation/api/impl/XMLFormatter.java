@@ -1,4 +1,4 @@
-package org.openmrs.module.dataaggregation.api;
+package org.openmrs.module.dataaggregation.api.impl;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -18,8 +18,8 @@ public class XMLFormatter {
 		// vals[2] is the count for the disease
 		
 		LinkedHashMap<String, Integer> data = new LinkedHashMap<String, Integer>();
-		data.put("DiseaseName", 1);
-		data.put("Count", 2);
+		data.put("diseaseName", 1);
+		data.put("count", 2);
 		
 		String toReturn = formatCounts(diseases, data);
 		
@@ -33,8 +33,8 @@ public class XMLFormatter {
 		// vals[2] is the count for the disease
 				
 		LinkedHashMap<String, Integer> data = new LinkedHashMap<String, Integer>();
-		data.put("TestName", 1);
-		data.put("Count", 2);
+		data.put("testName", 1);
+		data.put("count", 2);
 				
 		String toReturn = formatCounts(tests, data);
 				
@@ -50,8 +50,8 @@ public class XMLFormatter {
 		// vals[4] is the observation/encounter datetime
 		
 		LinkedHashMap<String, Integer> data = new LinkedHashMap<String, Integer>();
-		data.put("PatientID", 0);
-		data.put("Weight", 3);
+		data.put("patientID", 0);
+		data.put("weight", 3);
 				
 		String toReturn = formatCounts(weights, data);
 				

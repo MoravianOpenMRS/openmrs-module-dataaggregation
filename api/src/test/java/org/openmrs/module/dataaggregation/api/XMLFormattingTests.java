@@ -10,6 +10,7 @@ import org.junit.Test;
  * These tests will fail in JUnit when run, but they output the expected String
  * There must be an issue the specific type of spacing used
  */
+import org.openmrs.module.dataaggregation.api.impl.XMLFormatter;
 
 public class XMLFormattingTests {
 
@@ -25,8 +26,8 @@ public class XMLFormattingTests {
 		String expectedResult = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + "\n"+  
 "<results>" + "\n"+ "  "+
   "<result>" + "\n" + "\t"+
-    "<DiseaseName>badDisease</DiseaseName>" + "\n" + "\t"+
-    "<Count>10123</Count>" + "\n" + "  "+
+    "<diseaseName>badDisease</diseaseName>" + "\n" + "\t"+
+    "<count>10123</count>" + "\n" + "  "+
   "</result>" + "\n" +
  "</results>";
 		assertEquals(expectedResult, XMLFormatter.formatDiseaseBurden(data));
@@ -44,8 +45,8 @@ public class XMLFormattingTests {
 		String expectedResult = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + "\n"+
 				"<results>" + "\n"+ "  "+
 				  "<result>" + "\n" + "\t"+ 
-				    "<TestName>cancerTest</TestName>" + "\n" + "\t"+
-				    "<Count>10123</Count>" + "\n" + "  "+
+				    "<testName>cancerTest</testName>" + "\n" + "\t"+
+				    "<count>10123</count>" + "\n" + "  "+
 				  "</result>" + "\n" +
 				 "</results>";
 		assertEquals(expectedResult, XMLFormatter.formatTestsOrdered(data));
@@ -61,8 +62,8 @@ public class XMLFormattingTests {
 		String expectedResult = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + "\n"+
 				"<results>" + "\n"+ "  "+
 				  "<result>" + "\n" + "\t"+
-				    "<PatientID>1</PatientID>" + "\n" + "\t"+
-				    "<Weight>50</Weight>" + "\n" + "  "+
+				    "<patientID>1</patientID>" + "\n" + "\t"+
+				    "<weight>50</weight>" + "\n" + "  "+
 				  "</result>" + "\n" +
 				 "</results>";
 		assertEquals(expectedResult, XMLFormatter.formatWeights(data));

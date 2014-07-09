@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
+import org.openmrs.module.dataaggregation.api.impl.CSVFormatter;
 
 
 public class CSVFormatterTest{
@@ -20,7 +21,7 @@ public class CSVFormatterTest{
 		
 		data.add(row1);
 		String expectedResult = "diseaseName:count\n" + "badDisease" + ":" + "10123" + "\n";
-		assertEquals(expectedResult, CSVFormatter.diseaseQueryFormatter(data));
+		assertEquals(expectedResult, CSVFormatter.formatDiseaseBurden(data));
 	
 	} 
 	@Test
@@ -33,7 +34,7 @@ public class CSVFormatterTest{
 		
 		data.add(row1);
 		String expectedResult = "testName:count\n" + "cancerTest" + ":" + "10123" + "\n";
-		assertEquals(expectedResult, CSVFormatter.testQueryFormatter(data));
+		assertEquals(expectedResult, CSVFormatter.formatTestsOrdered(data));
 	}
 	@Test
 	public void testCSVFormatterWeights(){
@@ -43,7 +44,7 @@ public class CSVFormatterTest{
 		row1[3] = new String("50");
 		
 		data.add(row1);
-		String expectedResult = "personId:personWeight(KG)\n" + "1" + ":" + "50" + "(KG)" + "\n";
-		assertEquals(expectedResult, CSVFormatter.weightQueryFormatter(data));
+		String expectedResult = "personId:weightKG\n" + "1" + ":" + "50" + "\n";
+		assertEquals(expectedResult, CSVFormatter.formatWeights(data));
 	}
 }

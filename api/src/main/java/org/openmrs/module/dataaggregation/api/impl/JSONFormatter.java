@@ -1,4 +1,4 @@
-package org.openmrs.module.dataaggregation.api;
+package org.openmrs.module.dataaggregation.api.impl;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -17,8 +17,8 @@ public class JSONFormatter {
 		// vals[0] is just the concept_id of the disease
 		
 		Map<String, Integer> fieldNames = new LinkedHashMap<String,Integer>();
-		fieldNames.put("DiseaseName", 1);
-		fieldNames.put("Count", 2);
+		fieldNames.put("diseaseName", 1);
+		fieldNames.put("count", 2);
 		
 		return formatCounts(data, fieldNames);
 		
@@ -29,8 +29,8 @@ public class JSONFormatter {
 		// vals[0] is just the concept_id of the test which we may or may not need but that is why vals[0] is not used here
 		
 		Map<String, Integer> fieldNames = new LinkedHashMap<String,Integer>();
-		fieldNames.put("TestName", 1);
-		fieldNames.put("Count", 2);
+		fieldNames.put("testName", 1);
+		fieldNames.put("count", 2);
 		
 		return formatCounts(data, fieldNames);
 			
@@ -43,8 +43,8 @@ public class JSONFormatter {
 					// vals[4] is the observation/encounter datetime (representing the most recent encounter,
 					// due to the MAX() function, allowing for patient's current weight.
 		Map<String, Integer> fieldNames = new LinkedHashMap<String,Integer>();
-		fieldNames.put("PersonId", 0);
-		fieldNames.put("WeightKG", 3);
+		fieldNames.put("personId", 0);
+		fieldNames.put("weightKG", 3);
 		
 		return formatCounts(data,fieldNames);
 		
@@ -63,28 +63,5 @@ public class JSONFormatter {
 		}
 		table.add("Entries", results.build());
 		return table.build().toString();
-	}
-	
-	/**
-	 * Converts a csv file to JSON
-	 * @param csvString a string that is a csv file separated by colons
-	 * @return a string is a JSON file
-	 */
-	public String convertToJSON(String csvString) {
-		JsonArrayBuilder table = Json.createArrayBuilder();
-		String[] rows = csvString.split("\n");//split by rows
-		String[] fieldNames = rows[0].split(":");
-		for(int j = 1; j < rows.length; j++){
-			JsonArrayBuilder jsonRow = Json.createArrayBuilder();
-			String[] cols = rows[j].split(":");//split by cols
-			int i = 0;
-			for(String col:cols){
-				jsonRow.add(fieldNames[i] + "=" + col);
-				i++;
-			}
-			table.add(jsonRow.build());
-		}
-		JsonArray toReturn = table.build();
-		return toReturn.toString();		
 	}
 }
