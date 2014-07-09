@@ -13,9 +13,12 @@
  */
 package org.openmrs.module.dataaggregation.web.controller;
 
+import java.util.List;
+
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jdom2.Attribute;
@@ -25,6 +28,9 @@ import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.dataaggregation.api.DataAggregationService;
+import org.openmrs.module.dataaggregation.api.impl.CSVFormatter;
+import org.openmrs.module.dataaggregation.api.impl.JSONFormatter;
+import org.openmrs.module.dataaggregation.api.impl.XMLFormatter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -75,8 +81,20 @@ public class  DataAggregationManageController {
 						@RequestParam(value = "minNumber", required = false) Integer minNumber, @RequestParam(value = "maxNumber", required = false) Integer maxNumber,
 						@RequestParam(value = "format", required = false) String format) {
 		
-		String toReturn = Context.getService(DataAggregationService.class).getDiseaseBurden(diseaseList, cityList, startDate, endDate, minNumber , maxNumber);
-		return selectFormat(format, toReturn);
+		List<Object> toReturn = Context.getService(DataAggregationService.class).getDiseaseBurden(diseaseList, cityList, startDate, endDate, minNumber , maxNumber);
+		
+		if(format == null){
+			return JSONFormatter.formatDiseaseBurden(toReturn);
+		}
+		String form = format.toLowerCase();//make case insensitive
+		if(form.equals("csv")){
+			return CSVFormatter.formatDiseaseBurden(toReturn);
+		}else if (form.equals("json")){
+			return JSONFormatter.formatDiseaseBurden(toReturn);
+		}else if (form.equals("xml")){
+			return XMLFormatter.formatDiseaseBurden(toReturn);
+		}
+			return JSONFormatter.formatDiseaseBurden(toReturn);
 	}
 
 	@RequestMapping(value = "/module/dataaggregation/testsordered", method = RequestMethod.GET)
@@ -86,8 +104,20 @@ public class  DataAggregationManageController {
 						@RequestParam(value = "minNumber", required = false) Integer minNumber, @RequestParam(value = "maxNumber", required = false) Integer maxNumber,
 						@RequestParam(value = "format", required = false) String format) {
 		
-		String toReturn = Context.getService(DataAggregationService.class).getTestsOrdered(diseaseList, startDate, endDate, minNumber , maxNumber);
-		return selectFormat(format, toReturn);
+		List<Object> toReturn = Context.getService(DataAggregationService.class).getTestsOrdered(diseaseList, startDate, endDate, minNumber , maxNumber);
+
+		if(format == null){
+			return JSONFormatter.formatTestsOrdered(toReturn);
+		}
+		String form = format.toLowerCase();//make case insensitive
+		if(form.equals("csv")){
+			return CSVFormatter.formatTestsOrdered(toReturn);
+		}else if (form.equals("json")){
+			return JSONFormatter.formatTestsOrdered(toReturn);
+		}else if (form.equals("xml")){
+			return XMLFormatter.formatTestsOrdered(toReturn);
+		}
+			return JSONFormatter.formatTestsOrdered(toReturn);
 	}
 	
 	@RequestMapping(value = "/module/dataaggregation/weights", method = RequestMethod.GET)
@@ -96,24 +126,19 @@ public class  DataAggregationManageController {
 							@RequestParam(value = "minAge", required = false) Integer minAge, @RequestParam(value = "maxAge", required = false) Integer maxAge,
 							@RequestParam(value = "format", required = false) String format) {
 		
-		String toReturn = Context.getService(DataAggregationService.class).getWeights(gender, minAge, maxAge);
-		return selectFormat(format, toReturn);
-	}
-	
-
-	private String selectFormat(String format, String toReturn){
+		List<Object> toReturn = Context.getService(DataAggregationService.class).getWeights(gender, minAge, maxAge);
+		
 		if(format == null){
-			return Context.getService(DataAggregationService.class).convertToJSON(toReturn);
+			return JSONFormatter.formatWeights(toReturn);
 		}
 		String form = format.toLowerCase();//make case insensitive
 		if(form.equals("csv")){
-			return toReturn;
+			return CSVFormatter.formatWeights(toReturn);
 		}else if (form.equals("json")){
-			return Context.getService(DataAggregationService.class).convertToJSON(toReturn);
+			return JSONFormatter.formatWeights(toReturn);
 		}else if (form.equals("xml")){
-			return Context.getService(DataAggregationService.class).convertToXML(toReturn);
+			return XMLFormatter.formatWeights(toReturn);
 		}
-			return Context.getService(DataAggregationService.class).convertToJSON(toReturn);
+			return JSONFormatter.formatWeights(toReturn);
 	}
-
 }
