@@ -15,9 +15,6 @@ package org.openmrs.module.dataaggregation.api;
 
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.openmrs.api.context.Context;
@@ -28,7 +25,7 @@ import org.openmrs.test.BaseModuleContextSensitiveTest;
  */
 public class  DataAggregationServiceTest extends BaseModuleContextSensitiveTest {	
 
-	private static final String DATASET_XML_PATH_NAME = "DataAggregationDiseaseBurdenTestDataset.xml";
+	private static final String DATASET_XML_PATH_NAME = "sampleDiseases.xml";
 	//
 	@Before
 	public void setup() throws Exception {
@@ -58,6 +55,4 @@ public class  DataAggregationServiceTest extends BaseModuleContextSensitiveTest 
 		assertEquals("GINGIVITIS:4", things[4]);
 		assertEquals("MALARIA:10", things[5]);		
 	}
-	
-	
 }
