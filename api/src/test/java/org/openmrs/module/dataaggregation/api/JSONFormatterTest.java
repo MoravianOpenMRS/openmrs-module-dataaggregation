@@ -6,13 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
+import org.openmrs.test.BaseModuleContextSensitiveTest;
 
-public class JSONFormatterTest {
-
-	@Test
-	public void test() {
-		fail("Not yet implemented");
-	}
+public class JSONFormatterTest extends BaseModuleContextSensitiveTest{
 
 	@Test
 	public void testJSONFormatterDiseaseBurden(){
@@ -23,8 +19,9 @@ public class JSONFormatterTest {
 		row1[2] = new String("10123");
 		
 		data.add(row1);
-		
-		System.out.println(JSONFormatter.formatDiseaseBurden(data));
+		String expectedResult = "{\"Entries\":[{\"DiseaseName\":\"badDisease\"},{\"Count\":\"10123\"}]}";
+		assertEquals(expectedResult, JSONFormatter.formatDiseaseBurden(data));
+	
 	} 
 	@Test
 	public void testJSONFormatterTestsOrdered(){
@@ -35,8 +32,8 @@ public class JSONFormatterTest {
 		row1[2] = new String("10123");
 		
 		data.add(row1);
-		
-		System.out.println(JSONFormatter.formatDiseaseBurden(data));
+		String expectedResult = "{\"Entries\":[{\"TestName\":\"cancerTest\"},{\"Count\":\"10123\"}]}";
+		assertEquals(expectedResult, JSONFormatter.formatTestsOrdered(data));
 	}
 	@Test
 	public void testJSONFormatterWeights(){
@@ -46,7 +43,7 @@ public class JSONFormatterTest {
 		row1[3] = new String("50");
 		
 		data.add(row1);
-		
-		System.out.println(JSONFormatter.formatWeights(data));
+		String expectedResult = "{\"Entries\":[{\"PersonId\":\"1\"},{\"WeightKG\":\"50\"}]}";
+		assertEquals(expectedResult, JSONFormatter.formatWeights(data));
 	}
 }
