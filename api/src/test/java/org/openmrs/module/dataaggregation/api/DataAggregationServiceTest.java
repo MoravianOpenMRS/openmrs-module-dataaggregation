@@ -15,6 +15,9 @@ package org.openmrs.module.dataaggregation.api;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import java.util.logging.XMLFormatter;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.openmrs.api.context.Context;
@@ -55,7 +58,7 @@ public class  DataAggregationServiceTest extends BaseModuleContextSensitiveTest 
 		assertEquals("GINGIVITIS:4", things[4]);
 		assertEquals("MALARIA:10", things[5]);
 
-
-		
 	}
+	
+
 }
