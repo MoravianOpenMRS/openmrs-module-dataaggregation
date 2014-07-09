@@ -124,7 +124,6 @@ public class DiseaseBurdenQuery extends DataAggregationQuery {
     	// This is dealing with going through a list of cities to only include the specified ones
     	int count = 0;    	
     	for (String city : cities) {
-    		//city = city.substring(0, 1).toUpperCase() + city.substring(1).toLowerCase();
     		if (count == 0) {
     			SQL_Query.append("AND (pa.city_village = '" + city + "' "); // add the first disease with ( at beginning 
     			count = 1;
@@ -140,7 +139,6 @@ public class DiseaseBurdenQuery extends DataAggregationQuery {
     	// This is dealing with going through a list of diseases to only include the specified ones
     	count = 0;    	
     	for (String disease : diseaseList) {
-    		//disease = disease.toUpperCase();
     		if (count == 0) {
     			SQL_Query.append("AND (c.name = '" + disease + "'"); // add the first disease with ( at beginning 
     			count = 1;

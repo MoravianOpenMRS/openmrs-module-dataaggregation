@@ -62,7 +62,7 @@ public class  DataAggregationServiceTest extends BaseModuleContextSensitiveTest 
 		
 		// testing to see if just putting null into the disease list will make it get all the diseases
 		
-		String cityList = "Indianapolis:Philadelphia:NewYork:Chicago:Detroit:LosAngeles:San Diego";
+		String cityList = "Indianapolis:Philadelphia:New York:Chicago:Detroit:Los Angeles:San Diego";
 		DataAggregationService service = Context.getService(DataAggregationService.class);
 		List<Object> results = service.getDiseaseBurden(null, cityList, "0000-01-01", "2114-07-01", 1, 15000);
 		
@@ -111,7 +111,7 @@ public class  DataAggregationServiceTest extends BaseModuleContextSensitiveTest 
 		DataCounts map = new DataCounts(results);
 				
 		assertEquals("5", map.getValue("MALARIA"));		
-		assertEquals(null, map.getValue("ANEMIA"));
+		assertNull(map.getValue("ANEMIA"));
 	}
 	
 	@Test
@@ -129,7 +129,7 @@ public class  DataAggregationServiceTest extends BaseModuleContextSensitiveTest 
 				
 		assertEquals("5", map.getValue("MALARIA"));
 		assertEquals("3", map.getValue("ECZEMA"));
-		assertEquals(null, map.getValue("ANEMIA"));
+		assertNull(map.getValue("ANEMIA"));
 	}
 	
 	@Test
@@ -146,7 +146,7 @@ public class  DataAggregationServiceTest extends BaseModuleContextSensitiveTest 
 		DataCounts map = new DataCounts(results);
 				
 		assertEquals(null, map.getValue("COOTIES"));
-		assertEquals(null, map.getValue("ANEMIA"));
+		assertNull(map.getValue("ANEMIA"));
 		
 	}
 	
@@ -164,8 +164,8 @@ public class  DataAggregationServiceTest extends BaseModuleContextSensitiveTest 
 		DataCounts map = new DataCounts(results);
 				
 		assertEquals("3", map.getValue("ECZEMA"));
-		assertEquals(null, map.getValue("COOTIES"));
-		assertEquals(null, map.getValue("ANEMIA"));
+		assertNull(map.getValue("COOTIES"));
+		assertNull(map.getValue("ANEMIA"));
 	}
 	
 	@Test
@@ -183,14 +183,14 @@ public class  DataAggregationServiceTest extends BaseModuleContextSensitiveTest 
 				
 		assertEquals(null, map.getValue("ROOSTER-POX"));
 		assertEquals(null, map.getValue("COOTIES"));
-		assertEquals(null, map.getValue("ANEMIA"));
+		assertNull(map.getValue("ANEMIA"));
 	}
 	
 	@Test
 	@SkipBaseSetup
 	public void testMinNumberOfCases() {
 		
-		// testing that with multiple diseases it will not get a cases for either of them
+		// testing that it will only get diseases with the certain cases above a threshold (inclusive at the threshold)
 		
 		
 		DataAggregationService service = Context.getService(DataAggregationService.class);
@@ -201,13 +201,14 @@ public class  DataAggregationServiceTest extends BaseModuleContextSensitiveTest 
 		assertEquals("3", map.getValue("ECZEMA"));
 		assertEquals("4", map.getValue("GINGIVITIS"));
 		assertEquals("5", map.getValue("MALARIA"));
+		assertNull(map.getValue("ANEMIA"));
 	}
 	
 	@Test
 	@SkipBaseSetup
 	public void testMaxNumberOfCases() {
 		
-		// testing that with multiple diseases it will not get a cases for either of them
+		// testing that it will only get diseases with certain cases below a threshold (inclusive at the threshold)
 		
 		DataAggregationService service = Context.getService(DataAggregationService.class);
 		List<Object> results = service.getDiseaseBurden(null, null, null, null, -1, 3);
@@ -217,13 +218,14 @@ public class  DataAggregationServiceTest extends BaseModuleContextSensitiveTest 
 		assertEquals("1", map.getValue("ANEMIA"));		
 		assertEquals("2", map.getValue("BRONCHITIS"));	
 		assertEquals("3", map.getValue("ECZEMA"));
+		assertNull(map.getValue("MALARIA"));
 	}
 	
 	@Test
 	@SkipBaseSetup
 	public void testOneCity() {
 		
-		// testing that with multiple diseases it will not get a cases for either of them
+		// testing that uses only one city to get the diseases from just that city
 		
 		String cities = "Indianapolis";
 		
@@ -233,14 +235,14 @@ public class  DataAggregationServiceTest extends BaseModuleContextSensitiveTest 
 		DataCounts map = new DataCounts(results);
 				
 		assertEquals("1", map.getValue("MALARIA"));
-		assertEquals(null, map.getValue("ANEMIA"));
+		assertNull(map.getValue("ANEMIA"));
 	}
 	
 	@Test
 	@SkipBaseSetup
 	public void testSomeCities() {
 		
-		// testing that with multiple diseases it will not get a cases for either of them
+		// testing that uses two cities and gets the diseases of those cities
 		
 		String cities = "Indianapolis:Philadelphia";
 		
@@ -261,7 +263,7 @@ public class  DataAggregationServiceTest extends BaseModuleContextSensitiveTest 
 	@SkipBaseSetup
 	public void testCityDoesNotExist() {
 		
-		// testing that with multiple diseases it will not get a cases for either of them
+		// testing that a city that does not exist will not return results
 		
 		String cities = "Jeffersonville";
 		
@@ -270,14 +272,14 @@ public class  DataAggregationServiceTest extends BaseModuleContextSensitiveTest 
 		
 		DataCounts map = new DataCounts(results);
 
-		assertEquals(null, map.getValue("ANEMIA"));
+		assertNull(map.getValue("ANEMIA"));
 	}
 	
 	@Test
 	@SkipBaseSetup
 	public void testAllCities() {
 		
-		// testing that with multiple diseases it will not get a cases for either of them
+		// testing that it will do the same with a list of all the cities same as the null
 		
 		String cities = "Indianapolis:Philadelphia:New York:Chicago:Detroit:Los Angeles:San Diego";
 		

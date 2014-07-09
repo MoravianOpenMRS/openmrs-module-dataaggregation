@@ -50,15 +50,12 @@ public class  DataAggregationManageController {
 		String diseases = "anemia:gastroenteritis:malaria";
 		String cities = "ZiWa:YemIt:YeNga:YamuBi:WeSt Indies:WEt Indies";
 
-		
-
-   
 		String testsOrdered = "X-RAY, CHEST:CD4 PANEL";		
 		model.addAttribute("testsOrdered", service.getTestsOrdered(testsOrdered, "1900-01-20 00:00:00", "2100-01-20 00:00:00", -1, -1));
 		
 		model.addAttribute("diseases", service.getDiseaseBurden(diseases, null, "2006-01-01 00:00:00", "2006-02-20 00:00:00", null, null));
 		//model.addAttribute("diseases", service.getDiseaseBurden(diseases, null, "1900-01-20 00:00:00", "2100-01-20 00:00:00", 10, 5000));
-		model.addAttribute("cities", service.getDiseaseBurden(null, null, "1900-01-20 00:00:00", "2100-01-20 00:00:00", -1, -1));
+		model.addAttribute("cities", service.getDiseaseBurden(null, cities, "1900-01-20 00:00:00", "2100-01-20 00:00:00", -1, -1));
 
 		model.addAttribute("start", service.getDiseaseBurden(diseases, null, null, "2100-01-20 00:00:00", -1, -1));
 		model.addAttribute("end", service.getDiseaseBurden(diseases, null, "1900-01-20 00:00:00", null, -1, -1));
