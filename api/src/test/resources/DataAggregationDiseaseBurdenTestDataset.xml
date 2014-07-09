@@ -34,11 +34,11 @@
   <obs obs_id="9"  person_id="7" concept_id="6042" obs_datetime="2008-08-15 00:00:00.0" value_coded="126" creator="1" date_created="2008-08-19 12:32:59.0" voided="false"/>
   <obs obs_id="10" person_id="7" concept_id="6042" obs_datetime="2008-08-19 00:00:00.0" value_coded="126" creator="1" date_created="2008-08-19 12:35:30.0" voided="false"/>
   <!-- Five cases of MALARIA -->
-  <obs obs_id="11" person_id="7"    concept_id="6042" obs_datetime="2008-08-19 00:00:00.0" value_coded="123" creator="1" date_created="2008-08-19 12:35:30.0" voided="false"/>
-  <obs obs_id="12" person_id="501"  concept_id="6042" obs_datetime="2008-08-19 00:00:00.0" value_coded="123" creator="1" date_created="2008-08-19 12:35:30.0" voided="false"/>
-  <obs obs_id="13" person_id="9"    concept_id="6042" obs_datetime="2008-08-19 00:00:00.0" value_coded="123" creator="1" date_created="2008-08-19 12:35:30.0" voided="false"/>
-  <obs obs_id="14" person_id="8"    concept_id="6042" obs_datetime="2008-08-19 00:00:00.0" value_coded="123" creator="1" date_created="2008-08-19 12:35:30.0" voided="false"/>
-  <obs obs_id="15" person_id="2"    concept_id="6042" obs_datetime="2008-08-19 00:00:00.0" value_coded="123" creator="1" date_created="2008-08-19 12:35:30.0" voided="false"/>
+  <obs obs_id="11" person_id="7"   concept_id="6042" obs_datetime="2008-08-19 00:00:00.0" value_coded="123" creator="1" date_created="2008-08-19 12:35:30.0" voided="false"/>
+  <obs obs_id="12" person_id="501" concept_id="6042" obs_datetime="2008-08-19 00:00:00.0" value_coded="123" creator="1" date_created="2008-08-19 12:35:30.0" voided="false"/>
+  <obs obs_id="13" person_id="9"   concept_id="6042" obs_datetime="2008-08-19 00:00:00.0" value_coded="123" creator="1" date_created="2008-08-19 12:35:30.0" voided="false"/>
+  <obs obs_id="14" person_id="8"   concept_id="6042" obs_datetime="2008-08-19 00:00:00.0" value_coded="123" creator="1" date_created="2008-08-19 12:35:30.0" voided="false"/>
+  <obs obs_id="15" person_id="2"   concept_id="6042" obs_datetime="2008-08-19 00:00:00.0" value_coded="123" creator="1" date_created="2008-08-19 12:35:30.0" voided="false"/>
   <!-- Observations for diseases -->
   
   <person_address person_address_id="2"    person_id="2"   preferred="false" city_village="Indianapolis" creator="1" date_created="2005-09-22 00:00:00.0" voided="false"/>
