@@ -1,6 +1,9 @@
 package org.openmrs.module.dataaggregation.api.impl;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -10,15 +13,13 @@ import org.openmrs.module.dataaggregation.api.db.DataAggregationDAO;
 
 public class DiseaseBurdenQuery extends DataAggregationQuery {
 	
-	private static final String  default_start_date = "1900-01-20 00:00:00";
-	private static final String  default_end_date   = "2100-01-20 00:00:00";
+	private static final String  default_start_date =  "0000-01-01 00:00:00";
 	private static final Integer default_min_number = -1;
 	private static final Integer default_max_number = -1;	
 		
 	public DiseaseBurdenQuery(DataAggregationDAO dao) {
 		super(dao);
 	}
-	
 
 	/**
 	 * This method returns a string containing the count of the desired disease.
@@ -44,6 +45,7 @@ public class DiseaseBurdenQuery extends DataAggregationQuery {
 	 * 						index 1 is the name of the disease, index 2 is the count for the disease, index 0 is the concept_id of the disease
 	 */
 	public List<Object> getQueryInfo(String diseaseList, String cityList, 
+
 									String startDate, String endDate, 
 									Integer minNumber, Integer maxNumber) {
 		
@@ -76,7 +78,9 @@ public class DiseaseBurdenQuery extends DataAggregationQuery {
 		}
 		
 		if (endDate == null) { 
-			endDate = default_end_date; // default: time after everything
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			Date date = new Date();
+			endDate = dateFormat.format(date); // default: current date
 		}
 		
 		return getDiseaseCounts(diseases, cities, startDate, endDate, minNumber , maxNumber);
@@ -150,7 +154,9 @@ public class DiseaseBurdenQuery extends DataAggregationQuery {
     	}    	
     	
     	
-    	SQL_Query.append("GROUP BY o.value_coded "); // group by the value_coded (disease)
+    	//SQL_Query.append("GROUP BY o.value_coded "); // group by the value_coded (disease)
+    	SQL_Query.append("GROUP BY c.name "); // this makes it possible to test apparently grouping by the value_coded does not allow for testing
+    	
     	
     	if (minNumber > -1 && maxNumber > -1) {
     		SQL_Query.append("HAVING COUNT(*) BETWEEN " + minNumber + " AND " + maxNumber); // if they specify an upper AND lower bound
@@ -161,6 +167,8 @@ public class DiseaseBurdenQuery extends DataAggregationQuery {
     	else if (maxNumber > -1) {
     		SQL_Query.append("HAVING COUNT(*) <= " + maxNumber); // if they only want diseases below a certain number
     	}    	
+    	
+    	SQL_Query.append(" ORDER BY c.name "); // this way the diseases are sorted alphabetically 
     	
 		SQLQuery query = session.createSQLQuery(SQL_Query.toString());
 

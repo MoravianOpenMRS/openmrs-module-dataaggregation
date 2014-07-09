@@ -18,6 +18,11 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.jdom2.Attribute;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.output.Format;
+import org.jdom2.output.XMLOutputter;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.dataaggregation.api.DataAggregationService;
 import org.springframework.stereotype.Controller;
@@ -42,14 +47,23 @@ public class  DataAggregationManageController {
 		DataAggregationService service = Context.getService(DataAggregationService.class);
 				
 		// create a list that we had in the curl command and display to see which part is the problem
-		String diseases = "hepatitis:pneumonia:measles:arthritis:gingivitis";		
+		String diseases = "anemia:gastroenteritis:malaria";
 		String cities = "ZiWa:YemIt:YeNga:YamuBi:WeSt Indies:WEt Indies";
+
+		
+
    
 		String testsOrdered = "X-RAY, CHEST:CD4 PANEL";		
 		model.addAttribute("testsOrdered", service.getTestsOrdered(testsOrdered, "1900-01-20 00:00:00", "2100-01-20 00:00:00", -1, -1));
 		
-		model.addAttribute("diseases", service.getDiseaseBurden(diseases, null, "1900-01-20 00:00:00", "2100-01-20 00:00:00", 10, 5000));
-		model.addAttribute("cities", service.getDiseaseBurden(null, cities, "1900-01-20 00:00:00", "2100-01-20 00:00:00", -1, -1));
+		model.addAttribute("diseases", service.getDiseaseBurden(diseases, null, "2006-01-01 00:00:00", "2006-02-20 00:00:00", null, null));
+		//model.addAttribute("diseases", service.getDiseaseBurden(diseases, null, "1900-01-20 00:00:00", "2100-01-20 00:00:00", 10, 5000));
+		model.addAttribute("cities", service.getDiseaseBurden(null, null, "1900-01-20 00:00:00", "2100-01-20 00:00:00", -1, -1));
+
+		model.addAttribute("start", service.getDiseaseBurden(diseases, null, null, "2100-01-20 00:00:00", -1, -1));
+		model.addAttribute("end", service.getDiseaseBurden(diseases, null, "1900-01-20 00:00:00", null, -1, -1));
+		model.addAttribute("min", service.getDiseaseBurden(diseases, null, "1900-01-20 00:00:00", "2100-01-20 00:00:00", null, -1));
+		model.addAttribute("max", service.getDiseaseBurden(diseases, null, "1900-01-20 00:00:00", "2100-01-20 00:00:00", -1, null));
 		
 		model.addAttribute("weights", service.getWeights('M', 25, 28));
 
@@ -60,7 +74,8 @@ public class  DataAggregationManageController {
 	@ResponseBody
 	public String diseases(@RequestParam(value = "diseaseList", required = false) String diseaseList, @RequestParam(value = "cityList", required = false) String cityList,
 						@RequestParam(value = "startDate", required = false) String startDate, @RequestParam(value = "endDate", required = false) String endDate,
-						@RequestParam(value = "minNumber", required = false) Integer minNumber, @RequestParam(value = "maxNumber", required = false) Integer maxNumber) {
+						@RequestParam(value = "minNumber", required = false) Integer minNumber, @RequestParam(value = "maxNumber", required = false) Integer maxNumber,
+						@RequestParam(value = "format", required = false) String format) {
 		
 
 		List<Object> results = Context.getService(DataAggregationService.class).getDiseaseBurden(diseaseList, cityList, startDate, endDate, minNumber , maxNumber);
@@ -76,36 +91,45 @@ public class  DataAggregationManageController {
 			// vals[0] is just the concept_id of the disease which we may or may not need and that is why vals[0] is not used here
 			resultString.append(vals[1] + ":" + vals[2] + "\n");
 		}
-		return resultString.toString();
-		//return selectFormat(format, resultString.toString());
-
+		return selectFormat(format, resultString.toString());
 	}
 
 	@RequestMapping(value = "/module/dataaggregation/testsordered", method = RequestMethod.GET)
 	@ResponseBody
 	public String tests(@RequestParam(value = "testList", required = false) String diseaseList,
 						@RequestParam(value = "startDate", required = false) String startDate, @RequestParam(value = "endDate", required = false) String endDate,
-						@RequestParam(value = "minNumber", required = false) Integer minNumber, @RequestParam(value = "maxNumber", required = false) Integer maxNumber) {
+						@RequestParam(value = "minNumber", required = false) Integer minNumber, @RequestParam(value = "maxNumber", required = false) Integer maxNumber,
+						@RequestParam(value = "format", required = false) String format) {
 		
 		String toReturn = Context.getService(DataAggregationService.class).getTestsOrdered(diseaseList, startDate, endDate, minNumber , maxNumber);
-		return (toReturn);
+		return selectFormat(format, toReturn);
 	}
 	
 	@RequestMapping(value = "/module/dataaggregation/weights", method = RequestMethod.GET)
 	@ResponseBody
 	public String weights(@RequestParam(value = "gender", required = false) Character gender, 
-							@RequestParam(value = "minAge", required = false) Integer minAge, @RequestParam(value = "maxAge", required = false) Integer maxAge) {
+							@RequestParam(value = "minAge", required = false) Integer minAge, @RequestParam(value = "maxAge", required = false) Integer maxAge,
+							@RequestParam(value = "format", required = false) String format) {
 		
 		String toReturn = Context.getService(DataAggregationService.class).getWeights(gender, minAge, maxAge);
-		return toReturn;
-		//return selectFormat(format, toReturn);
+
+		return selectFormat(format, toReturn);
 	}
 	
-	private String hashMapToCSV(HashMap<?,?> map){
-		String toReturn = new String();
-		for(Object val:map.keySet()){
-			toReturn = toReturn + val + "," + map.get(val) + " \n";
+
+	private String selectFormat(String format, String toReturn){
+		if(format == null){
+			return Context.getService(DataAggregationService.class).convertToJSON(toReturn);
 		}
-		return toReturn;
+		String form = format.toLowerCase();//make case insensitive
+		if(form.equals("csv")){
+			return toReturn;
+		}else if (form.equals("json")){
+			return Context.getService(DataAggregationService.class).convertToJSON(toReturn);
+		}else if (form.equals("xml")){
+			return Context.getService(DataAggregationService.class).convertToXML(toReturn);
+		}
+			return Context.getService(DataAggregationService.class).convertToJSON(toReturn);
 	}
+
 }

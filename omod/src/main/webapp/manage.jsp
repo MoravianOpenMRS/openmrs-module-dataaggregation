@@ -11,6 +11,10 @@
 <p>${cities}</p>
 <p>Tests Ordered:  ${testsOrdered}</p>
 <p>${weights}</p>
+<p>${start}</p>
+<p>${end}</p>
+<p>${min}</p>
+<p>${max}</p>
 
 
 <%@ include file="/WEB-INF/template/footer.jsp"%>
