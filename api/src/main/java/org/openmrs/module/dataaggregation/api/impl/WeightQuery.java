@@ -32,7 +32,7 @@ public class WeightQuery extends DataAggregationQuery {
 	 * @return a string in the format "personID:weight"
 	 * 				If there are no results the string will be empty
 	 */
-	public String getQueryInfo(Character gender, Integer minAge, Integer maxAge) {
+	public List<Object> getQueryInfo(Character gender, Integer minAge, Integer maxAge) {
 		
 		if (gender == null) { 
 			gender = default_gender;
@@ -50,7 +50,8 @@ public class WeightQuery extends DataAggregationQuery {
 	}
 	
 	
-    private String getWeights(Character gender, Integer minAge, Integer maxAge) {
+    @SuppressWarnings("unchecked")
+	private List<Object> getWeights(Character gender, Integer minAge, Integer maxAge) {
     	
     	Session session = dao.getSessionFactory().openSession();
     	
@@ -90,25 +91,10 @@ public class WeightQuery extends DataAggregationQuery {
     	query.setParameter("coded_id", num_coded);
     	query.setParameter("gender", gender);
     	
-    	@SuppressWarnings("unchecked")
-		// This gets the list of records from our SQL statement each record is a row in the table
-		List<Object> results = query.list();
     	
-    	StringBuilder resultString = new StringBuilder();
-    	resultString.append("personId:personWeight(KG)\n");
-		// Each object in results is another record from our SQL statement
-		for (Object o : results) {
-			// Cast each object into an array where each column is another index into the array
-			Object[] vals = (Object[]) o;
-			// vals[0] is the person id.
-			// vals[1] is the gender.
-			// vals[2] is the birthdate.
-			// vals[3] is the weight in KG.
-			// vals[4] is the observation/encounter datetime (representing the most recent encounter,
-			// due to the MAX() function, allowing for patient's current weight.
-			resultString.append(vals[0] + ": " + vals[3] + "(KG)" + "\n");
-		}
-		
-    	return resultString.toString();
+		// This gets the list of records from our SQL statement each record is a row in the table
+		return query.list();
+    	
+    	
     }
 }

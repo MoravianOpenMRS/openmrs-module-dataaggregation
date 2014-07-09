@@ -44,7 +44,7 @@ public class DiseaseBurdenQuery extends DataAggregationQuery {
 	 * @return a string in the format "diseaseName:count \n diseaseName:count \n"
 	 * 					if there are no results the string will be empty
 	 */
-	public String getQueryInfo(String diseaseList, String cityList, 
+	public List<Object> getQueryInfo(String diseaseList, String cityList, 
 									String startDate, String endDate, 
 									Integer minNumber, Integer maxNumber) {
 		
@@ -89,7 +89,9 @@ public class DiseaseBurdenQuery extends DataAggregationQuery {
 	 /**
      * 
      */
-    private String getDiseaseCounts(List<String> diseaseList, List<String> cities, 
+   
+	@SuppressWarnings("unchecked")
+	private List<Object> getDiseaseCounts(List<String> diseaseList, List<String> cities, 
     								String startDate, String endDate, 
     								Integer minNumber, Integer maxNumber) {   	
     	
@@ -174,22 +176,7 @@ public class DiseaseBurdenQuery extends DataAggregationQuery {
 		query.setParameter("end_date", endDate);
 		
 		
-		@SuppressWarnings("unchecked")
 		// This gets the list of records from our SQL statement each record is a row in the table
-		List<Object> results = query.list();
-
-		StringBuilder resultString = new StringBuilder();
-		resultString.append("diseaseName:count\n");
-		// Each object in results is another record from our SQL statement
-		for (Object o : results) {
-			// Cast each object into an array where each column is another index into the array
-			Object[] vals = (Object[]) o;
-			// vals[1] is the name of the disease
-			// vals[2] is the count for the disease
-			// vals[0] is just the concept_id of the disease which we may or may not need and that is why vals[0] is not used here
-			resultString.append(vals[1] + ":" + vals[2] + "\n");
-		}
-		
-    	return resultString.toString();
+		return query.list();
     }
 }
