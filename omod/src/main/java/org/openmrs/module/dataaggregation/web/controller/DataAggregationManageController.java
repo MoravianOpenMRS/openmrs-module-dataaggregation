@@ -43,7 +43,7 @@ public class  DataAggregationManageController {
 				
 		// create a list that we had in the curl command and display to see which part is the problem
 		String diseases = "hepatitis:pneumonia:measles:arthritis:gingivitis";		
-		String cities = "Ziwa:Yemit:Yenga:Yamubi:West Indies:Wet Indies";
+		String cities = "ZiWa:YemIt:YeNga:YamuBi:WeSt Indies:WEt Indies";
    
 		String testsOrdered = "X-RAY, CHEST:CD4 PANEL";		
 		model.addAttribute("testsOrdered", service.getTestsOrdered(testsOrdered, "1900-01-20 00:00:00", "2100-01-20 00:00:00", -1, -1));

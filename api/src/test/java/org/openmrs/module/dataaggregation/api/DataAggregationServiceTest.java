@@ -15,10 +15,7 @@ package org.openmrs.module.dataaggregation.api;
 
 import static org.junit.Assert.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.openmrs.api.context.Context;
@@ -39,44 +36,63 @@ public class  DataAggregationServiceTest extends BaseModuleContextSensitiveTest 
 		executeDataSet(DATASET_XML_PATH_NAME);
 	}
 	
-	private Map<String, Integer> getMapData(List<Object> records) {
-
-		Map<String, Integer> map = new HashMap<String, Integer>();
-		
-		// Each object in results is another record from our SQL statement
-		for (Object o : records) {
-			// Cast each object into an array where each column is another index into the array
-			Object[] vals = (Object[]) o;
-			// vals[1] is the name of the disease
-			// vals[2] is the count for the disease
-			// vals[0] is just the concept_id of the disease which we may or may not need and that is why vals[0] is not used here
-			
-			map.put((String) vals[1], (Integer) vals[2]);
-		}
-		
-		
-		return map;
-	}
-
 	@Test
 	@SkipBaseSetup
-	public void testAllDiseases() {		
-				
-		String diseases = "Malaria:BRONCHITIS:anemia:GIngIVITIS";
-		String cityList = "Philadelphia";
+	public void testAllParametersNull() {	
+		
+		// testing to see if all the null will default to everything
 		
 		DataAggregationService service = Context.getService(DataAggregationService.class);
-		List<Object> results = service.getDiseaseBurden(diseases, cityList, null, null, -1, -1);
+		List<Object> results = service.getDiseaseBurden(null, null, null, null, null, null);
 		
 		DataCounts map = new DataCounts(results);
+				
+		assertEquals("1", map.getValue("ANEMIA"));		
+		assertEquals("2", map.getValue("BRONCHITIS"));	
+		assertEquals("3", map.getValue("ECZEMA"));
+		assertEquals("4", map.getValue("GINGIVITIS"));
+		assertEquals("5", map.getValue("MALARIA"));
+	
+	}
+	
+	@Test
+	@SkipBaseSetup
+	public void testDiseaseParameterNull() {	
 		
+		// testing to see if just putting null into the disease list will make it get all the diseases
 		
-		//Map<String, Integer> map = getMapData(results);
+		String cityList = "Indianapolis:Philadelphia:NewYork:Chicago:Detroit:LosAngeles:San Diego";
+		DataAggregationService service = Context.getService(DataAggregationService.class);
+		List<Object> results = service.getDiseaseBurden(null, cityList, "0000-01-01", "2114-07-01", 1, 15000);
 		
-		assertEquals(1, map.get("ANEMIA"));		
-		assertEquals(2, map.get("BRONCHITIS").intValue());				
-		assertEquals(4, map.get("GINGIVITIS").intValue());
-		assertEquals(5, map.get("MALARIA").intValue());
+		DataCounts map = new DataCounts(results);
+				
+		assertEquals("1", map.getValue("ANEMIA"));		
+		assertEquals("2", map.getValue("BRONCHITIS"));	
+		assertEquals("3", map.getValue("ECZEMA"));
+		assertEquals("4", map.getValue("GINGIVITIS"));
+		assertEquals("5", map.getValue("MALARIA"));
+	
+	}
+	
+	@Test
+	@SkipBaseSetup
+	public void testAllDiseases() {
+		
+		// testing that if all the diseases are in the list then it will get each one
+				
+		String diseases = "MALARIA:BRONCHITIS:ECZEMA:ANEMIA:GINGIVITIS";
+		
+		DataAggregationService service = Context.getService(DataAggregationService.class);
+		List<Object> results = service.getDiseaseBurden(diseases, null, null, null, -1, -1);
+		
+		DataCounts map = new DataCounts(results);
+				
+		assertEquals("1", map.getValue("ANEMIA"));		
+		assertEquals("2", map.getValue("BRONCHITIS"));	
+		assertEquals("3", map.getValue("ECZEMA"));
+		assertEquals("4", map.getValue("GINGIVITIS"));
+		assertEquals("5", map.getValue("MALARIA"));
 		
 	}
 	
@@ -84,44 +100,52 @@ public class  DataAggregationServiceTest extends BaseModuleContextSensitiveTest 
 	@SkipBaseSetup
 	public void testOneDisease() {
 		
+		// testing to make sure that if one particular disease is wanted it will return just that disease
+		
 		String diseases = "MALARIA";
 		
 		DataAggregationService service = Context.getService(DataAggregationService.class);
-		String resultString = service.getDiseaseBurden(diseases, null, null, null, -1, -1);
+		List<Object> results = service.getDiseaseBurden(diseases, null, null, null, -1, -1);
 		
-		String[] results = resultString.split("\n");
-		
-		assertEquals("MALARIA:5", results[0]);
-		
+		DataCounts map = new DataCounts(results);
+				
+		assertEquals("5", map.getValue("MALARIA"));		
+		assertEquals(null, map.getValue("ANEMIA"));
 	}
 	
 	@Test
 	@SkipBaseSetup
 	public void testCoupleOfDiseases() {
 		
-		String diseases = "MALARIA:ANEMIA:ECZEMA";
+		// testing to make sure that it can also get a few diseases but not all 
+		
+		String diseases = "MALARIA:ECZEMA";
 		
 		DataAggregationService service = Context.getService(DataAggregationService.class);
-		String resultString = service.getDiseaseBurden(diseases, null, null, null, -1, -1);
+		List<Object> results = service.getDiseaseBurden(diseases, null, null, null, -1, -1);
 		
-		String[] results = resultString.split("\n");
-		
-		assertEquals("ANEMIA:1", results[0]);
-		assertEquals("ECZEMA:3", results[1]);
-		assertEquals("MALARIA:5", results[2]);
-		
+		DataCounts map = new DataCounts(results);
+				
+		assertEquals("5", map.getValue("MALARIA"));
+		assertEquals("3", map.getValue("ECZEMA"));
+		assertEquals(null, map.getValue("ANEMIA"));
 	}
 	
 	@Test
 	@SkipBaseSetup
 	public void testDiseaseNotExists() {
 		
-		String diseases = "BI-POLAR";
+		// testing to make sure that if a disease is specified it will not return anything for that disease if there are no cases of it
+		
+		String diseases = "COOTIES";
 		
 		DataAggregationService service = Context.getService(DataAggregationService.class);
-		String resultString = service.getDiseaseBurden(diseases, null, null, null, -1, -1);
+		List<Object> results = service.getDiseaseBurden(diseases, null, null, null, -1, -1);
 		
-		assertEquals("", resultString);
+		DataCounts map = new DataCounts(results);
+				
+		assertEquals(null, map.getValue("COOTIES"));
+		assertEquals(null, map.getValue("ANEMIA"));
 		
 	}
 	
@@ -129,12 +153,142 @@ public class  DataAggregationServiceTest extends BaseModuleContextSensitiveTest 
 	@SkipBaseSetup
 	public void testOneDiseaseNotExistsOtherDoes() {
 		
+		// testing that with a disease that does not exist it will still get the disease that does exist
+		
+		String diseases = "ECZEMA:COOTIES";
+		
+		DataAggregationService service = Context.getService(DataAggregationService.class);
+		List<Object> results = service.getDiseaseBurden(diseases, null, null, null, -1, -1);
+		
+		DataCounts map = new DataCounts(results);
+				
+		assertEquals("3", map.getValue("ECZEMA"));
+		assertEquals(null, map.getValue("COOTIES"));
+		assertEquals(null, map.getValue("ANEMIA"));
 	}
 	
 	@Test
 	@SkipBaseSetup
-	public void testNeitherExist() {
+	public void testNeitherDiseaseExists() {
 		
->>>>>>> Stashed changes
+		// testing that with multiple diseases it will not get a cases for either of them
+		
+		String diseases = "ROOSTER-POX:COOTIES";
+		
+		DataAggregationService service = Context.getService(DataAggregationService.class);
+		List<Object> results = service.getDiseaseBurden(diseases, null, null, null, -1, -1);
+		
+		DataCounts map = new DataCounts(results);
+				
+		assertEquals(null, map.getValue("ROOSTER-POX"));
+		assertEquals(null, map.getValue("COOTIES"));
+		assertEquals(null, map.getValue("ANEMIA"));
+	}
+	
+	@Test
+	@SkipBaseSetup
+	public void testMinNumberOfCases() {
+		
+		// testing that with multiple diseases it will not get a cases for either of them
+		
+		
+		DataAggregationService service = Context.getService(DataAggregationService.class);
+		List<Object> results = service.getDiseaseBurden(null, null, null, null, 3, -1);
+		
+		DataCounts map = new DataCounts(results);
+		
+		assertEquals("3", map.getValue("ECZEMA"));
+		assertEquals("4", map.getValue("GINGIVITIS"));
+		assertEquals("5", map.getValue("MALARIA"));
+	}
+	
+	@Test
+	@SkipBaseSetup
+	public void testMaxNumberOfCases() {
+		
+		// testing that with multiple diseases it will not get a cases for either of them
+		
+		DataAggregationService service = Context.getService(DataAggregationService.class);
+		List<Object> results = service.getDiseaseBurden(null, null, null, null, -1, 3);
+		
+		DataCounts map = new DataCounts(results);
+				
+		assertEquals("1", map.getValue("ANEMIA"));		
+		assertEquals("2", map.getValue("BRONCHITIS"));	
+		assertEquals("3", map.getValue("ECZEMA"));
+	}
+	
+	@Test
+	@SkipBaseSetup
+	public void testOneCity() {
+		
+		// testing that with multiple diseases it will not get a cases for either of them
+		
+		String cities = "Indianapolis";
+		
+		DataAggregationService service = Context.getService(DataAggregationService.class);
+		List<Object> results = service.getDiseaseBurden(null, cities, null, null, -1, -1);
+		
+		DataCounts map = new DataCounts(results);
+				
+		assertEquals("1", map.getValue("MALARIA"));
+		assertEquals(null, map.getValue("ANEMIA"));
+	}
+	
+	@Test
+	@SkipBaseSetup
+	public void testSomeCities() {
+		
+		// testing that with multiple diseases it will not get a cases for either of them
+		
+		String cities = "Indianapolis:Philadelphia";
+		
+		DataAggregationService service = Context.getService(DataAggregationService.class);
+		List<Object> results = service.getDiseaseBurden(null, cities, null, null, -1, -1);
+		
+		DataCounts map = new DataCounts(results);
+		
+		assertEquals("1", map.getValue("ANEMIA"));		
+		assertEquals("2", map.getValue("BRONCHITIS"));	
+		assertEquals("3", map.getValue("ECZEMA"));
+		assertEquals("4", map.getValue("GINGIVITIS"));
+		assertEquals("2", map.getValue("MALARIA"));
+
+	}
+	
+	@Test
+	@SkipBaseSetup
+	public void testCityDoesNotExist() {
+		
+		// testing that with multiple diseases it will not get a cases for either of them
+		
+		String cities = "Jeffersonville";
+		
+		DataAggregationService service = Context.getService(DataAggregationService.class);
+		List<Object> results = service.getDiseaseBurden(null, cities, null, null, -1, -1);
+		
+		DataCounts map = new DataCounts(results);
+
+		assertEquals(null, map.getValue("ANEMIA"));
+	}
+	
+	@Test
+	@SkipBaseSetup
+	public void testAllCities() {
+		
+		// testing that with multiple diseases it will not get a cases for either of them
+		
+		String cities = "Indianapolis:Philadelphia:New York:Chicago:Detroit:Los Angeles:San Diego";
+		
+		DataAggregationService service = Context.getService(DataAggregationService.class);
+		List<Object> results = service.getDiseaseBurden(null, cities, null, null, -1, -1);
+		
+		DataCounts map = new DataCounts(results);
+				
+		assertEquals("1", map.getValue("ANEMIA"));		
+		assertEquals("2", map.getValue("BRONCHITIS"));	
+		assertEquals("3", map.getValue("ECZEMA"));
+		assertEquals("4", map.getValue("GINGIVITIS"));
+		assertEquals("5", map.getValue("MALARIA"));
 	}
 }

@@ -7,11 +7,11 @@ import java.util.Set;
 
 public class DataCounts {
 	
-	Map<String, Integer> map;
+	Map<String, String> map;
 	
 	public DataCounts(List<Object> records) {
 		
-		map = new HashMap<String, Integer>();
+		map = new HashMap<String, String>();
 		
 		// Each object in results is another record from our SQL statement
 		for (Object o : records) {
@@ -21,15 +21,16 @@ public class DataCounts {
 			// vals[2] is the count for the disease
 			// vals[0] is just the concept_id of the disease which we may or may not need and that is why vals[0] is not used here
 			
-			map.put((String) vals[1], (Integer) vals[2]);
+			map.put(vals[1].toString(), vals[2].toString());
 		}
+
 	}
 	
 	public Set<String> getKeys() {
 		return map.keySet();
 	}
 	
-	public int getValue(String key) {
+	public String getValue(String key) {
 		return map.get(key);
 	}
 
