@@ -13,25 +13,11 @@
  */
 package org.openmrs.module.dataaggregation.web.controller;
 
-<<<<<<< HEAD
-import java.util.HashMap;
+
 import java.util.List;
 
-=======
-import java.util.List;
-
-import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.JsonArrayBuilder;
-
->>>>>>> OUTPUT
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.jdom2.Attribute;
-import org.jdom2.Document;
-import org.jdom2.Element;
-import org.jdom2.output.Format;
-import org.jdom2.output.XMLOutputter;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.dataaggregation.api.DataAggregationService;
 import org.openmrs.module.dataaggregation.api.impl.CSVFormatter;
@@ -63,18 +49,18 @@ public class  DataAggregationManageController {
 		String cities = "ZiWa:YemIt:YeNga:YamuBi:WeSt Indies:WEt Indies";
 
 		String testsOrdered = "X-RAY, CHEST:CD4 PANEL";		
-		model.addAttribute("testsOrdered", service.getTestsOrdered(testsOrdered, "1900-01-20 00:00:00", "2100-01-20 00:00:00", -1, -1));
+		model.addAttribute("testsOrdered", CSVFormatter.formatTestsOrdered(service.getTestsOrdered(testsOrdered, "1900-01-20 00:00:00", "2100-01-20 00:00:00", -1, -1)));
 		
-		model.addAttribute("diseases", service.getDiseaseBurden(diseases, null, "2006-01-01 00:00:00", "2006-02-20 00:00:00", null, null));
+		model.addAttribute("diseases", CSVFormatter.formatDiseaseBurden(service.getDiseaseBurden(diseases, null, "2006-01-01 00:00:00", "2006-02-20 00:00:00", null, null)));
 		//model.addAttribute("diseases", service.getDiseaseBurden(diseases, null, "1900-01-20 00:00:00", "2100-01-20 00:00:00", 10, 5000));
-		model.addAttribute("cities", service.getDiseaseBurden(null, cities, "1900-01-20 00:00:00", "2100-01-20 00:00:00", -1, -1));
+		model.addAttribute("cities", CSVFormatter.formatDiseaseBurden(service.getDiseaseBurden(null, cities, "1900-01-20 00:00:00", "2100-01-20 00:00:00", -1, -1)));
 
-		model.addAttribute("start", service.getDiseaseBurden(diseases, null, null, "2100-01-20 00:00:00", -1, -1));
-		model.addAttribute("end", service.getDiseaseBurden(diseases, null, "1900-01-20 00:00:00", null, -1, -1));
-		model.addAttribute("min", service.getDiseaseBurden(diseases, null, "1900-01-20 00:00:00", "2100-01-20 00:00:00", null, -1));
-		model.addAttribute("max", service.getDiseaseBurden(diseases, null, "1900-01-20 00:00:00", "2100-01-20 00:00:00", -1, null));
+		model.addAttribute("start", CSVFormatter.formatDiseaseBurden(service.getDiseaseBurden(diseases, null, null, "2100-01-20 00:00:00", -1, -1)));
+		model.addAttribute("end", CSVFormatter.formatDiseaseBurden(service.getDiseaseBurden(diseases, null, "1900-01-20 00:00:00", null, -1, -1)));
+		model.addAttribute("min", CSVFormatter.formatDiseaseBurden(service.getDiseaseBurden(diseases, null, "1900-01-20 00:00:00", "2100-01-20 00:00:00", null, -1)));
+		model.addAttribute("max", CSVFormatter.formatDiseaseBurden(service.getDiseaseBurden(diseases, null, "1900-01-20 00:00:00", "2100-01-20 00:00:00", -1, null)));
 		
-		model.addAttribute("weights", service.getWeights('M', 25, 28));
+		model.addAttribute("weights", CSVFormatter.formatWeights(service.getWeights('M', 25, 28)));
 
 
 	}
