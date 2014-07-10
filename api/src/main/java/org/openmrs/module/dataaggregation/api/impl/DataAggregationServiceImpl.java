@@ -13,15 +13,9 @@
  */
 package org.openmrs.module.dataaggregation.api.impl;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.LinkedList;
+
 import java.util.List;
 
-import org.hibernate.SQLQuery;
-import org.hibernate.Session;
 import org.jdom2.Attribute;
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -101,6 +95,18 @@ public class DataAggregationServiceImpl extends BaseOpenmrsService implements Da
     	WeightQuery wq = new WeightQuery(dao);
     	return wq.getQueryInfo(gender, minAge, maxAge);
     }
+
+	@Override
+	public String convertToJSON(String csvString) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String convertToXML(String csvString) {
+		// TODO Auto-generated method stub
+		return null;
+	}
    
 	
 }

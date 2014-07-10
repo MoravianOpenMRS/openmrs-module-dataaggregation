@@ -53,6 +53,7 @@ public class WeightQuery extends DataAggregationQuery {
     @SuppressWarnings("unchecked")
 	private List<Object> getWeights(Character gender, Integer minAge, Integer maxAge) {
     	
+    	// Open the Hibernate session
     	Session session = dao.getSessionFactory().openSession();
     	
     	int num_coded = getConceptIdOfKeyWord("WEIGHT (KG)");
@@ -94,7 +95,6 @@ public class WeightQuery extends DataAggregationQuery {
     	
 		// This gets the list of records from our SQL statement each record is a row in the table
 		return query.list();
-    	
-    	
+
     }
 }

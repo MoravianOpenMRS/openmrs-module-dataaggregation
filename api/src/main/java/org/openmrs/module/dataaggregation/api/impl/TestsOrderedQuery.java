@@ -41,9 +41,9 @@ public class TestsOrderedQuery extends DataAggregationQuery {
 	 * @return a string in the format "testName:count \n testName:count \n"
 	 * 					if there are no results the string will be empty
 	 */
-	public List<Object> getQueryInfo(String testList, String cityList, 
-								String startDate, String endDate, 
-								Integer minNumber, Integer maxNumber) {
+	public List<Object> getQueryInfo(String testList, String cityList, String 
+										startDate, String endDate, 
+										Integer minNumber, Integer maxNumber) {
 
 		List<String> tests;		
 		if (testList == null) {
@@ -51,6 +51,14 @@ public class TestsOrderedQuery extends DataAggregationQuery {
 		}
 		else {
 			tests = Arrays.asList(testList.split(":"));		
+		}
+		
+		List<String> cities;
+		if (cityList == null) {
+			cities = new LinkedList<String>(); // default: get all cities
+		}
+		else {
+			cities = Arrays.asList(cityList.split(":"));
 		}
 		
 		if (minNumber == null) {
@@ -71,13 +79,14 @@ public class TestsOrderedQuery extends DataAggregationQuery {
 			endDate = dateFormat.format(date); // default: current date
 		}
 	
-		return getTestsOrdered(tests, startDate, endDate, minNumber , maxNumber);
+		return getTestsOrdered(tests, cities, startDate, endDate, minNumber , maxNumber);
 	}
 	
 
 	@SuppressWarnings("unchecked")
-	private List<Object> getTestsOrdered(List<String> testsOrderedList, String startDate, String endDate, Integer minNumber, Integer maxNumber) {
+	private List<Object> getTestsOrdered(List<String> testsOrderedList, List<String> cities, String startDate, String endDate, Integer minNumber, Integer maxNumber) {
 	    	
+			// Open the Hibernate session
 	    	Session session = dao.getSessionFactory().openSession();
 
 	    	// get the concept_id of the concept "TESTS ORDERED"
@@ -88,13 +97,37 @@ public class TestsOrderedQuery extends DataAggregationQuery {
 	    	
 	    	SQL_Query.append("SELECT o.value_coded, c.name, count(*) ");
 	    	SQL_Query.append("FROM obs o, concept_name c ");
-	    	SQL_Query.append("WHERE o.value_coded = c.concept_id ");
+	    	
+	    	if (cities.size() != 0) { // make sure they specify locations
+	    		SQL_Query.append(", person_address pa "); // only check where people come from one particular city
+	    	}
+	    	
+	    	SQL_Query.append("WHERE o.value_coded = c.concept_id "); // want the names of the concepts ON
+	    	
+	    	if (cities.size() != 0) { // make sure they specify locations
+	    		SQL_Query.append("AND o.person_id=pa.person_id "); // get the addresses of the people with the observations
+	    	}  
+	    	
 	    	SQL_Query.append("AND o.concept_id = :coded_id ");
 	    	SQL_Query.append("AND c.concept_name_type = 'FULLY_SPECIFIED' ");	    	
 	    	SQL_Query.append("AND (o.obs_datetime BETWEEN  :start_date  AND  :end_date ) ");
 	    	
-	    	int count = 0;
+	       	// This is dealing with going through a list of cities to only include the specified ones
+	    	int count = 0;    	
+	    	for (String city : cities) {
+	    		if (count == 0) {
+	    			SQL_Query.append("AND (pa.city_village = '" + city + "' "); // add the first disease with ( at beginning 
+	    			count = 1;
+	    		}
+	    		else {
+	    			SQL_Query.append(" OR pa.city_village = '" + city + "' "); // add the next disease
+	    		}
+	    	}    	
+	    	if (count == 1) {
+	    		SQL_Query.append(") "); // only add the ending ) if there was a starting one
+	    	}   
 	    	
+	    	count = 0;	    	
 	    	for (String testOrdered : testsOrderedList) {
 	    		if (count == 0) {
 	    			SQL_Query.append("AND (c.name = '" + testOrdered + "'");
@@ -133,7 +166,11 @@ public class TestsOrderedQuery extends DataAggregationQuery {
 	    	
 	    	
 			// This gets the list of records from our SQL statement each record is a row in the table
-	    	return query.list();
+	    	List<Object> results = (List<Object>)query.list();
+			
+	    	// Close the Hibernate session - VERY IMPORTANT
+	    	session.close();
+			
+			return results;
 	    }
-
 }

@@ -94,7 +94,7 @@ public class DiseaseBurdenQuery extends DataAggregationQuery {
     								String startDate, String endDate, 
     								Integer minNumber, Integer maxNumber) {   	
     	
-    	
+    	// Open the Hibernate session
     	Session session = dao.getSessionFactory().openSession();
     	
     	int num_coded = getConceptIdOfKeyWord("PROBLEM ADDED");
@@ -174,10 +174,13 @@ public class DiseaseBurdenQuery extends DataAggregationQuery {
 		query.setParameter("start_date", startDate);
 		query.setParameter("end_date", endDate);
 		
-		
 		// The list method returns a List (without the generic specified).  We cast to the desired return
 		// type.  Note the "suppressWarning" command on this method.
-		return (List<Object>)query.list();
-
+		List<Object> results = (List<Object>)query.list();
+		
+    	// Close the Hibernate session - VERY IMPORTANT
+		session.close();
+		
+		return results;
     }
 }

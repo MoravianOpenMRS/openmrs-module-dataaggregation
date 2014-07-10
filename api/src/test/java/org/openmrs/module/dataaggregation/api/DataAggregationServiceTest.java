@@ -20,6 +20,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.dataaggregation.api.impl.DataAggregationServiceImpl;
 import org.openmrs.module.dataaggregation.api.impl.DataCounts;
 import org.openmrs.test.BaseModuleContextSensitiveTest;
 import org.openmrs.test.SkipBaseSetup;
@@ -41,10 +42,10 @@ public class DataAggregationServiceTest extends BaseModuleContextSensitiveTest {
 		service = Context.getService(DataAggregationService.class);
 	}
 
-
-	@Test
-	public void test() {
-		assertNotNull(DataAggregationService.class);
-	}
 	
+	@Test
+	@SkipBaseSetup
+	public void testAllParametersNull() {	
+		assertNotNull(DataAggregationServiceImpl.class);	
+	}
 }

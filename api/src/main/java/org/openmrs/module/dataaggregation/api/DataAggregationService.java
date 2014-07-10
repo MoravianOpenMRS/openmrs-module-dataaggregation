@@ -63,7 +63,7 @@ public interface DataAggregationService extends OpenmrsService {
 	 * 						index 1 is the name of the disease, index 2 is the count for the disease, index 0 is the concept_id of the disease
 	 */
 	public List<Object> getDiseaseBurden(String diseaseList, String cities, String startDate, String endDate, Integer minNumber, Integer maxNumber);
-
+	
 	
 	/**
 	 * This method returns a string containing the count of the desired tests.
@@ -102,7 +102,7 @@ public interface DataAggregationService extends OpenmrsService {
 	 * @return a string in the format "personID:weight"
 	 * 				If there are no results the string will be empty
 	 */
-	public String getWeights(Character gender, Integer minAge, Integer maxAge);
+	public List<Object> getWeights(Character gender, Integer minAge, Integer maxAge);
 	 
 	/**
 	 * Converts a cvs file to JSON
@@ -116,9 +116,6 @@ public interface DataAggregationService extends OpenmrsService {
 	 * @return a string is a XML file
 	 */
 	public String convertToXML(String csvString);
-	
-	
-	public HashMap<String, Integer> getDiseaseBurden();
-	
+		
 	
 }
