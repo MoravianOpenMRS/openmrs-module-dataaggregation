@@ -88,86 +88,19 @@ public class DataAggregationServiceImpl extends BaseOpenmrsService implements Da
     }
 
 
-    public String getTestsOrdered(String testsOrderedList,
+    public List<Object> getTestsOrdered(String testsOrderedList, String cityList,
     								String startDate, String endDate, 
     								Integer minNumber, Integer maxNumber) {
     	
     	TestsOrderedQuery toq = new TestsOrderedQuery(dao);    	
-    	return toq.getQueryInfo(testsOrderedList, startDate, endDate, minNumber, maxNumber);
+    	return toq.getQueryInfo(testsOrderedList, cityList, startDate, endDate, minNumber, maxNumber);
     }
     
-    public String getWeights(Character gender, Integer minAge, Integer maxAge) {
+    public List<Object> getWeights(Character gender, Integer minAge, Integer maxAge) {
     	
     	WeightQuery wq = new WeightQuery(dao);
     	return wq.getQueryInfo(gender, minAge, maxAge);
     }
-    
-	@Override
-	public HashMap<String, Integer> getDiseaseBurden() {
-		//make up fake data for now
-		HashMap<String, Integer> diseaseBurden = new HashMap<String, Integer>();
-		
-		diseaseBurden.put("malaria", 1202);
-		diseaseBurden.put("cholera", 1202);
-		diseaseBurden.put("typhoid", 1202);
-		diseaseBurden.put("hiv/aids", 1202);
-		diseaseBurden.put("syphilis", 1202);
-		
-		return diseaseBurden;
-	}
-	
-	/**
-	 * Converts a csv file to JSON
-	 * @param csvString a string that is a csv file separated by colons
-	 * @return a string is a JSON file
-	 */
-	public String convertToJSON(String csvString) {
-		JsonArrayBuilder table = Json.createArrayBuilder();
-		String[] rows = csvString.split("\n");//split by rows
-		String[] fieldNames = rows[0].split(":");
-		for(int j = 1; j < rows.length; j++){
-			JsonArrayBuilder jsonRow = Json.createArrayBuilder();
-			String[] cols = rows[j].split(":");//split by cols
-			int i = 0;
-			for(String col:cols){
-				jsonRow.add(fieldNames[i] + "=" + col);
-				i++;
-			}
-			table.add(jsonRow.build());
-		}
-		JsonArray toReturn = table.build();
-		return toReturn.toString();		
-	}
-
-	/**
-	 * Converts a csv file to XML
-	 * @param csvString a string that is a csv file separated by colons
-	 * @return a string is a XML file
-	 */
-	public String convertToXML(String csvString){
-		String [] rows = csvString.split("\n");
-		String[] fieldNames = rows[0].split(":");
-		Element table = new Element("table");
-		Document doc = new Document(table);
-		int i = 1;
-		while(i < rows.length){
-			Element row = new Element("row" + (i-1));
-			String [] cols = rows[i].split(":");
-			int j =0;
-			for(String rowS:cols){
-				row.setAttribute(new Attribute(fieldNames[j],rowS));
-				j++;
-			}
-						
-			doc.getRootElement().addContent(row);
-			
-			i++;
-		}
-
-		XMLOutputter xmlOutput = new XMLOutputter();
-		xmlOutput.setFormat(Format.getPrettyFormat());
-		return xmlOutput.outputString(doc);
-	}
-
+   
 	
 }

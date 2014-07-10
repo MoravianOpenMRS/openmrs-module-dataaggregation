@@ -13,18 +13,16 @@
  */
 package org.openmrs.module.dataaggregation.web.controller;
 
-import java.util.HashMap;
+
 import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.jdom2.Attribute;
-import org.jdom2.Document;
-import org.jdom2.Element;
-import org.jdom2.output.Format;
-import org.jdom2.output.XMLOutputter;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.dataaggregation.api.DataAggregationService;
+import org.openmrs.module.dataaggregation.api.impl.CSVFormatter;
+import org.openmrs.module.dataaggregation.api.impl.JSONFormatter;
+import org.openmrs.module.dataaggregation.api.impl.XMLFormatter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,18 +49,18 @@ public class  DataAggregationManageController {
 		String cities = "ZiWa:YemIt:YeNga:YamuBi:WeSt Indies:WEt Indies";
 
 		String testsOrdered = "X-RAY, CHEST:CD4 PANEL";		
-		model.addAttribute("testsOrdered", service.getTestsOrdered(testsOrdered, "1900-01-20 00:00:00", "2100-01-20 00:00:00", -1, -1));
+		model.addAttribute("testsOrdered", CSVFormatter.formatTestsOrdered(service.getTestsOrdered(testsOrdered, "1900-01-20 00:00:00", "2100-01-20 00:00:00", -1, -1)));
 		
-		model.addAttribute("diseases", service.getDiseaseBurden(diseases, null, "2006-01-01 00:00:00", "2006-02-20 00:00:00", null, null));
+		model.addAttribute("diseases", CSVFormatter.formatDiseaseBurden(service.getDiseaseBurden(diseases, null, "2006-01-01 00:00:00", "2006-02-20 00:00:00", null, null)));
 		//model.addAttribute("diseases", service.getDiseaseBurden(diseases, null, "1900-01-20 00:00:00", "2100-01-20 00:00:00", 10, 5000));
-		model.addAttribute("cities", service.getDiseaseBurden(null, cities, "1900-01-20 00:00:00", "2100-01-20 00:00:00", -1, -1));
+		model.addAttribute("cities", CSVFormatter.formatDiseaseBurden(service.getDiseaseBurden(null, cities, "1900-01-20 00:00:00", "2100-01-20 00:00:00", -1, -1)));
 
-		model.addAttribute("start", service.getDiseaseBurden(diseases, null, null, "2100-01-20 00:00:00", -1, -1));
-		model.addAttribute("end", service.getDiseaseBurden(diseases, null, "1900-01-20 00:00:00", null, -1, -1));
-		model.addAttribute("min", service.getDiseaseBurden(diseases, null, "1900-01-20 00:00:00", "2100-01-20 00:00:00", null, -1));
-		model.addAttribute("max", service.getDiseaseBurden(diseases, null, "1900-01-20 00:00:00", "2100-01-20 00:00:00", -1, null));
+		model.addAttribute("start", CSVFormatter.formatDiseaseBurden(service.getDiseaseBurden(diseases, null, null, "2100-01-20 00:00:00", -1, -1)));
+		model.addAttribute("end", CSVFormatter.formatDiseaseBurden(service.getDiseaseBurden(diseases, null, "1900-01-20 00:00:00", null, -1, -1)));
+		model.addAttribute("min", CSVFormatter.formatDiseaseBurden(service.getDiseaseBurden(diseases, null, "1900-01-20 00:00:00", "2100-01-20 00:00:00", null, -1)));
+		model.addAttribute("max", CSVFormatter.formatDiseaseBurden(service.getDiseaseBurden(diseases, null, "1900-01-20 00:00:00", "2100-01-20 00:00:00", -1, null)));
 		
-		model.addAttribute("weights", service.getWeights('M', 25, 28));
+		model.addAttribute("weights", CSVFormatter.formatWeights(service.getWeights('M', 25, 28)));
 
 
 	}
@@ -73,22 +71,20 @@ public class  DataAggregationManageController {
 						@RequestParam(value = "startDate", required = false) String startDate, @RequestParam(value = "endDate", required = false) String endDate,
 						@RequestParam(value = "minNumber", required = false) Integer minNumber, @RequestParam(value = "maxNumber", required = false) Integer maxNumber,
 						@RequestParam(value = "format", required = false) String format) {
+		List<Object> toReturn = Context.getService(DataAggregationService.class).getDiseaseBurden(diseaseList, cityList, startDate, endDate, minNumber , maxNumber);
 		
-
-		List<Object> results = Context.getService(DataAggregationService.class).getDiseaseBurden(diseaseList, cityList, startDate, endDate, minNumber , maxNumber);
-		
-		StringBuilder resultString = new StringBuilder();
-		resultString.append("diseaseName:count\n");
-		// Each object in results is another record from our SQL statement
-		for (Object o : results) {
-			// Cast each object into an array where each column is another index into the array
-			Object[] vals = (Object[]) o;
-			// vals[1] is the name of the disease
-			// vals[2] is the count for the disease
-			// vals[0] is just the concept_id of the disease which we may or may not need and that is why vals[0] is not used here
-			resultString.append(vals[1] + ":" + vals[2] + "\n");
+		if(format == null){
+			return JSONFormatter.formatDiseaseBurden(toReturn);
 		}
-		return selectFormat(format, resultString.toString());
+		String form = format.toLowerCase();//make case insensitive
+		if(form.equals("csv")){
+			return CSVFormatter.formatDiseaseBurden(toReturn);
+		}else if (form.equals("json")){
+			return JSONFormatter.formatDiseaseBurden(toReturn);
+		}else if (form.equals("xml")){
+			return XMLFormatter.formatDiseaseBurden(toReturn);
+		}
+			return JSONFormatter.formatDiseaseBurden(toReturn);
 	}
 
 	@RequestMapping(value = "/module/dataaggregation/testsordered", method = RequestMethod.GET)
@@ -98,8 +94,20 @@ public class  DataAggregationManageController {
 						@RequestParam(value = "minNumber", required = false) Integer minNumber, @RequestParam(value = "maxNumber", required = false) Integer maxNumber,
 						@RequestParam(value = "format", required = false) String format) {
 		
-		String toReturn = Context.getService(DataAggregationService.class).getTestsOrdered(diseaseList, startDate, endDate, minNumber , maxNumber);
-		return selectFormat(format, toReturn);
+		List<Object> toReturn = Context.getService(DataAggregationService.class).getTestsOrdered(diseaseList, startDate, endDate, minNumber , maxNumber);
+
+		if(format == null){
+			return JSONFormatter.formatTestsOrdered(toReturn);
+		}
+		String form = format.toLowerCase();//make case insensitive
+		if(form.equals("csv")){
+			return CSVFormatter.formatTestsOrdered(toReturn);
+		}else if (form.equals("json")){
+			return JSONFormatter.formatTestsOrdered(toReturn);
+		}else if (form.equals("xml")){
+			return XMLFormatter.formatTestsOrdered(toReturn);
+		}
+			return JSONFormatter.formatTestsOrdered(toReturn);
 	}
 	
 	@RequestMapping(value = "/module/dataaggregation/weights", method = RequestMethod.GET)
@@ -107,26 +115,20 @@ public class  DataAggregationManageController {
 	public String weights(@RequestParam(value = "gender", required = false) Character gender, 
 							@RequestParam(value = "minAge", required = false) Integer minAge, @RequestParam(value = "maxAge", required = false) Integer maxAge,
 							@RequestParam(value = "format", required = false) String format) {
+		List<Object> toReturn = Context.getService(DataAggregationService.class).getWeights(gender, minAge, maxAge);
 		
-		String toReturn = Context.getService(DataAggregationService.class).getWeights(gender, minAge, maxAge);
-
-		return selectFormat(format, toReturn);
-	}
-	
-
-	private String selectFormat(String format, String toReturn){
+		
 		if(format == null){
-			return Context.getService(DataAggregationService.class).convertToJSON(toReturn);
+			return JSONFormatter.formatWeights(toReturn);
 		}
 		String form = format.toLowerCase();//make case insensitive
 		if(form.equals("csv")){
-			return toReturn;
+			return CSVFormatter.formatWeights(toReturn);
 		}else if (form.equals("json")){
-			return Context.getService(DataAggregationService.class).convertToJSON(toReturn);
+			return JSONFormatter.formatWeights(toReturn);
 		}else if (form.equals("xml")){
-			return Context.getService(DataAggregationService.class).convertToXML(toReturn);
+			return XMLFormatter.formatWeights(toReturn);
 		}
-			return Context.getService(DataAggregationService.class).convertToJSON(toReturn);
+			return JSONFormatter.formatWeights(toReturn);
 	}
-
 }

@@ -16,7 +16,6 @@ package org.openmrs.module.dataaggregation.api;
 import java.util.HashMap;
 import java.util.List;
 
-import org.jfree.chart.JFreeChart;
 import org.openmrs.api.OpenmrsService;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -71,6 +70,9 @@ public interface DataAggregationService extends OpenmrsService {
 	 * @param testList a string in the format "desiredTest0:desiredTest1:...:desiredTestN"
 	 * 					This method will only list the results of the test specified in this string.
 	 * 					If this parameter is null, then all tests will be included in the result.
+	 * @param cityList a string in the format "desiredCity1:desiredCity2:...:desiredCityN"
+	 * 					This method will only list the results of the diseases in the city specified in the string.
+	 * 				   	If the parameter in null, then all the diseases will be included in the result.
 	 * @param startDate a string in the format "YYYY-MM-DD HH:MM:SS" for example : "2006-01-30 00:00:00"
 	 * 					This string bounds the query only to tests ordered after a specific date (inclusive or exclusive?).
 	 * 					If this parameter is null, then no lower bound will exist.
@@ -83,10 +85,10 @@ public interface DataAggregationService extends OpenmrsService {
 	 * @param maxNumber a positive integer
 	 * 					This integer bounds the query only to tests ordered less than a certain amount of times (inclusive or exclusive?).
 	 * 					If this parameter is null or negative, there will be no upper bound.
-	 * @return a string in the format "testName:count \n testName:count \n"
-	 * 					if there are no results the string will be empty
-	 */
-	public String getTestsOrdered(String testsOrderedList, String startDate, String endDate, Integer minNumber, Integer maxNumber);
+     * @return a List<Obect> It is the list of records coming back from the database, each object representing a row in the table which
+	 * 						index 1 is the name of the test, index 2 is the count for the test, index 0 is the concept_id of the test
+     */
+	public List<Object> getTestsOrdered(String testsOrderedList, String cityList, String startDate, String endDate, Integer minNumber, Integer maxNumber);
 
 	/**
 	 * This method returns a string containing the weight of people in a desired age group and/or gender.
