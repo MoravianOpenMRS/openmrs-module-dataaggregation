@@ -64,7 +64,6 @@ public interface DataAggregationService extends OpenmrsService {
 	 * 						index 1 is the name of the disease, index 2 is the count for the disease, index 0 is the concept_id of the disease
 	 */
 	public List<Object> getDiseaseBurden(String diseaseList, String cities, String startDate, String endDate, Integer minNumber, Integer maxNumber);
-
 	
 	/**
 	 * This method returns a string containing the count of the desired tests.
@@ -83,10 +82,9 @@ public interface DataAggregationService extends OpenmrsService {
 	 * @param maxNumber a positive integer
 	 * 					This integer bounds the query only to tests ordered less than a certain amount of times (inclusive or exclusive?).
 	 * 					If this parameter is null or negative, there will be no upper bound.
-	 * @return a string in the format "testName:count \n testName:count \n"
-	 * 					if there are no results the string will be empty
+	 * @return a List containing all of the rows (Object[]) from the database
 	 */
-	public String getTestsOrdered(String testsOrderedList, String startDate, String endDate, Integer minNumber, Integer maxNumber);
+	public List<Object> getTestsOrdered(String testsOrderedList, String startDate, String endDate, Integer minNumber, Integer maxNumber);
 
 	/**
 	 * This method returns a string containing the weight of people in a desired age group and/or gender.
@@ -97,26 +95,9 @@ public interface DataAggregationService extends OpenmrsService {
 	 * @param maxAge a positive integer
 	 * 				This integer bounds the query only to weights of people at a maximum age (inclusive or exclusive?).
 	 * 				If this parameter is null or negative, there will be no upper age bound.
-	 * @return a string in the format "personID:weight"
-	 * 				If there are no results the string will be empty
+	 * @return a List containing all of the rows (Object[]) from the database
+	 * 				
 	 */
-	public String getWeights(Character gender, Integer minAge, Integer maxAge);
-	 
-	/**
-	 * Converts a cvs file to JSON
-	 * @param csvString a string that is a cvs file separated by colons
-	 * @return a string is a JSON file
-	 */
-	public String convertToJSON(String csvString);
-	/**
-	 * Converts a cvs file to XML
-	 * @param csvString a string that is a cvs file separated by colons
-	 * @return a string is a XML file
-	 */
-	public String convertToXML(String csvString);
-	
-	
-	public HashMap<String, Integer> getDiseaseBurden();
-	
+	public List<Object> getWeights(Character gender, Integer minAge, Integer maxAge);
 	
 }

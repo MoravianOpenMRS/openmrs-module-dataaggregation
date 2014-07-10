@@ -41,7 +41,7 @@ public class TestsOrderedQuery extends DataAggregationQuery {
 	 * @return a string in the format "testName:count \n testName:count \n"
 	 * 					if there are no results the string will be empty
 	 */
-	public String getQueryInfo(String testList,
+	public List<Object> getQueryInfo(String testList,
 								String startDate, String endDate, 
 								Integer minNumber, Integer maxNumber) {
 
@@ -75,7 +75,8 @@ public class TestsOrderedQuery extends DataAggregationQuery {
 	}
 	
 
-	private String getTestsOrdered(List<String> testsOrderedList, String startDate, String endDate, Integer minNumber, Integer maxNumber) {
+	@SuppressWarnings("unchecked")
+	private List<Object> getTestsOrdered(List<String> testsOrderedList, String startDate, String endDate, Integer minNumber, Integer maxNumber) {
 	    	
 	    	Session session = dao.getSessionFactory().openSession();
 
@@ -130,23 +131,9 @@ public class TestsOrderedQuery extends DataAggregationQuery {
 	    	query.setParameter("start_date", startDate);
 	    	query.setParameter("end_date", endDate);
 	    	
-	    	@SuppressWarnings("unchecked")
-			// This gets the list of records from our SQL statement each record is a row in the table
-			List<Object> results = query.list();
 	    	
-	    	StringBuilder resultString = new StringBuilder();
-	    	resultString.append("testName:count\n");
-			// Each object in results is another record from our SQL statement
-			for (Object o : results) {
-				// Cast each object into an array where each column is another index into the array
-				Object[] vals = (Object[]) o;
-				// vals[1] is the name of the disease
-				// vals[2] is the count for the disease
-				// vals[0] is just the concept_id of the disease which we may or may not need but that is why vals[0] is not used here
-				resultString.append(vals[1] + ":" + vals[2] + "\n");
-			}
-			
-	    	return resultString.toString();
+			// This gets the list of records from our SQL statement each record is a row in the table
+	    	return query.list();
 	    }
 
 }

@@ -45,7 +45,6 @@ public class DiseaseBurdenQuery extends DataAggregationQuery {
 	 * 						index 1 is the name of the disease, index 2 is the count for the disease, index 0 is the concept_id of the disease
 	 */
 	public List<Object> getQueryInfo(String diseaseList, String cityList, 
-
 									String startDate, String endDate, 
 									Integer minNumber, Integer maxNumber) {
 		
@@ -90,7 +89,7 @@ public class DiseaseBurdenQuery extends DataAggregationQuery {
 	 /**
      * 
      */
-    @SuppressWarnings("unchecked")
+	@SuppressWarnings("unchecked")
 	private List<Object> getDiseaseCounts(List<String> diseaseList, List<String> cities, 
     								String startDate, String endDate, 
     								Integer minNumber, Integer maxNumber) {   	
