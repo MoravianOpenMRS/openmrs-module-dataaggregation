@@ -13,7 +13,7 @@ import org.openmrs.module.dataaggregation.api.db.DataAggregationDAO;
 
 public class TestsOrderedQuery extends DataAggregationQuery {
 	
-	private static final String  default_start_date = "0000-00-00 00:00:00";
+	private static final String  default_start_date = "0000-01-01 00:00:00";
 	private static final Integer default_min_number = -1;
 	private static final Integer default_max_number = -1;	
 	
@@ -74,7 +74,7 @@ public class TestsOrderedQuery extends DataAggregationQuery {
 		}
 		
 		if (endDate == null) { 
-			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			Date date = new Date();
 			endDate = dateFormat.format(date); // default: current date
 		}
