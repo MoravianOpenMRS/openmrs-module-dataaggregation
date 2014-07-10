@@ -13,15 +13,9 @@
  */
 package org.openmrs.module.dataaggregation.api.impl;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.LinkedList;
+
 import java.util.List;
 
-import org.hibernate.SQLQuery;
-import org.hibernate.Session;
 import org.jdom2.Attribute;
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -88,12 +82,12 @@ public class DataAggregationServiceImpl extends BaseOpenmrsService implements Da
     }
 
 
-    public String getTestsOrdered(String testsOrderedList,
+    public List<Object> getTestsOrdered(String testsOrderedList, String cityList,
     								String startDate, String endDate, 
     								Integer minNumber, Integer maxNumber) {
     	
     	TestsOrderedQuery toq = new TestsOrderedQuery(dao);    	
-    	return toq.getQueryInfo(testsOrderedList, startDate, endDate, minNumber, maxNumber);
+    	return toq.getQueryInfo(testsOrderedList, cityList, startDate, endDate, minNumber, maxNumber);
     }
     
     public String getWeights(Character gender, Integer minAge, Integer maxAge) {

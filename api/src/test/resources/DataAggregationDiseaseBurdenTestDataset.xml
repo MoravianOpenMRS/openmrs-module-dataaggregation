@@ -17,22 +17,34 @@
   <concept_name concept_id="44"   name="PREGNANCY"                locale="en" creator="1" date_created="2008-08-15 13:58:36.0" concept_name_id="2452" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false"/>
   <concept_name concept_id="5009" name="SPLENOMEGALY"             locale="en" creator="1" date_created="2008-08-15 14:04:20.0" concept_name_id="2453" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false"/>
   <!-- These are the concept_ids/names of the diseases -->
+  
+  <!-- Tests -->		
+  <concept_name concept_id="11" name="HIV ENZYME IMMUNOASSAY, QUALITATIVE"            locale="en" creator="1" date_created="2007-01-21 21:14:54" concept_name_id="11" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false" />
+  <concept_name concept_id="12" name="HIV DNA POLYMERASE CHAIN REACTION, QUALITATIVE" locale="en" creator="1" date_created="2007-02-21 21:14:54" concept_name_id="12" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false" />
+  <concept_name concept_id="13" name="HEMOGLOBIN"                                     locale="en" creator="1" date_created="2007-03-21 21:14:54" concept_name_id="13" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false" />
+  <concept_name concept_id="14" name="OTHER NON-CODED"                                locale="en" creator="1" date_created="2007-04-21 21:14:54" concept_name_id="14" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false" />
+  <concept_name concept_id="15" name="HIV VIRAL LOAD"                                 locale="en" creator="1" date_created="2007-05-21 21:14:54" concept_name_id="15" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false" />
+  <concept_name concept_id="16" name="X-RAY CHEST"                                    locale="en" creator="1" date_created="2007-06-21 21:14:54" concept_name_id="16" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false" />
+  <concept_name concept_id="17" name="SERUM CREATININE"                               locale="en" creator="1" date_created="2007-08-21 21:14:54" concept_name_id="18" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false" />
+  <concept_name concept_id="18" name="COMPLETE BLOOD COUNT"                           locale="en" creator="1" date_created="2007-09-21 21:14:54" concept_name_id="19" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false" />
+  <concept_name concept_id="19" name="CD4 PANEL"                                      locale="en" creator="1" date_created="2007-10-21 21:14:54" concept_name_id="20" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false" />
+  <!-- Tests -->
  
   <!-- Observations for diseases -->
   <!-- One case of ANEMIA -->
-  <obs obs_id="1"  person_id="7" concept_id="6042" obs_datetime="2008-08-15 00:00:00.0" value_coded="3" creator="1" date_created="2008-08-19 12:32:59.0" voided="false"/>
+  <obs obs_id="1"  person_id="7"   concept_id="6042" obs_datetime="2008-08-15 00:00:00.0" value_coded="3"   creator="1" date_created="2008-08-19 12:32:59.0" voided="false"/>
   <!-- Two cases of BRONCHITIS -->
-  <obs obs_id="2"  person_id="7" concept_id="6042" obs_datetime="2008-08-01 00:00:00.0" value_coded="147" creator="1" date_created="2008-08-18 14:09:35.0" voided="false"/>
-  <obs obs_id="3"  person_id="7" concept_id="6042" obs_datetime="2008-08-01 00:00:00.0" value_coded="147" creator="1" date_created="2008-08-18 14:11:13.0" voided="false"/>
+  <obs obs_id="2"  person_id="7"   concept_id="6042" obs_datetime="2008-08-01 00:00:00.0" value_coded="147" creator="1" date_created="2008-08-18 14:09:35.0" voided="false"/>
+  <obs obs_id="3"  person_id="7"   concept_id="6042" obs_datetime="2008-08-01 00:00:00.0" value_coded="147" creator="1" date_created="2008-08-18 14:11:13.0" voided="false"/>
   <!-- Three cases of ECZEMA -->
-  <obs obs_id="4"  person_id="7" concept_id="6042" obs_datetime="2008-08-15 00:00:00.0" value_coded="829" creator="1" date_created="2008-08-18 14:22:47.0" voided="false"/>
-  <obs obs_id="5"  person_id="7" concept_id="6042" obs_datetime="2008-08-15 00:00:00.0" value_coded="829" creator="1" date_created="2008-08-18 14:25:29.0" voided="false"/>
-  <obs obs_id="6"  person_id="7" concept_id="6042" obs_datetime="2008-08-15 00:00:00.0" value_coded="829" creator="1" date_created="2008-08-19 12:32:03.0" voided="false"/>
+  <obs obs_id="4"  person_id="7"   concept_id="6042" obs_datetime="2008-08-15 00:00:00.0" value_coded="829" creator="1" date_created="2008-08-18 14:22:47.0" voided="false"/>
+  <obs obs_id="5"  person_id="7"   concept_id="6042" obs_datetime="2008-08-15 00:00:00.0" value_coded="829" creator="1" date_created="2008-08-18 14:25:29.0" voided="false"/>
+  <obs obs_id="6"  person_id="7"   concept_id="6042" obs_datetime="2008-08-15 00:00:00.0" value_coded="829" creator="1" date_created="2008-08-19 12:32:03.0" voided="false"/>
   <!-- Four cases of GINGIVITIS -->
-  <obs obs_id="7"  person_id="7" concept_id="6042" obs_datetime="2008-08-15 00:00:00.0" value_coded="126" creator="1" date_created="2008-08-19 12:32:20.0" voided="false"/>
-  <obs obs_id="8"  person_id="7" concept_id="6042" obs_datetime="2008-08-15 00:00:00.0" value_coded="126" creator="1" date_created="2008-08-19 12:32:38.0" voided="false"/>
-  <obs obs_id="9"  person_id="7" concept_id="6042" obs_datetime="2008-08-15 00:00:00.0" value_coded="126" creator="1" date_created="2008-08-19 12:32:59.0" voided="false"/>
-  <obs obs_id="10" person_id="7" concept_id="6042" obs_datetime="2008-08-19 00:00:00.0" value_coded="126" creator="1" date_created="2008-08-19 12:35:30.0" voided="false"/>
+  <obs obs_id="7"  person_id="7"   concept_id="6042" obs_datetime="2008-08-15 00:00:00.0" value_coded="126" creator="1" date_created="2008-08-19 12:32:20.0" voided="false"/>
+  <obs obs_id="8"  person_id="7"   concept_id="6042" obs_datetime="2008-08-15 00:00:00.0" value_coded="126" creator="1" date_created="2008-08-19 12:32:38.0" voided="false"/>
+  <obs obs_id="9"  person_id="7"   concept_id="6042" obs_datetime="2008-08-15 00:00:00.0" value_coded="126" creator="1" date_created="2008-08-19 12:32:59.0" voided="false"/>
+  <obs obs_id="10" person_id="7"   concept_id="6042" obs_datetime="2008-08-19 00:00:00.0" value_coded="126" creator="1" date_created="2008-08-19 12:35:30.0" voided="false"/>
   <!-- Five cases of MALARIA -->
   <obs obs_id="11" person_id="7"   concept_id="6042" obs_datetime="2008-08-19 00:00:00.0" value_coded="123" creator="1" date_created="2008-08-19 12:35:30.0" voided="false"/>
   <obs obs_id="12" person_id="501" concept_id="6042" obs_datetime="2008-08-19 00:00:00.0" value_coded="123" creator="1" date_created="2008-08-19 12:35:30.0" voided="false"/>
@@ -40,6 +52,29 @@
   <obs obs_id="14" person_id="8"   concept_id="6042" obs_datetime="2008-08-19 00:00:00.0" value_coded="123" creator="1" date_created="2008-08-19 12:35:30.0" voided="false"/>
   <obs obs_id="15" person_id="2"   concept_id="6042" obs_datetime="2008-08-19 00:00:00.0" value_coded="123" creator="1" date_created="2008-08-19 12:35:30.0" voided="false"/>
   <!-- Observations for diseases -->
+  
+  <!-- Observations for tests -->
+  <!-- One case of HEMOGLOBIN -->
+  <obs obs_id="16"  person_id="7"   concept_id="1271" obs_datetime="2008-08-15 00:00:00.0" value_coded="13" creator="1" date_created="2008-08-19 12:32:59.0" voided="false"/>
+  <!-- Two cases of OTHER NON-CODED -->
+  <obs obs_id="17"  person_id="7"   concept_id="1271" obs_datetime="2008-08-01 00:00:00.0" value_coded="14" creator="1" date_created="2008-08-18 14:09:35.0" voided="false"/>
+  <obs obs_id="18"  person_id="7"   concept_id="1271" obs_datetime="2008-08-01 00:00:00.0" value_coded="14" creator="1" date_created="2008-08-18 14:11:13.0" voided="false"/>
+  <!-- Three cases of CD4 PANEL -->
+  <obs obs_id="19"  person_id="7"   concept_id="1271" obs_datetime="2008-08-15 00:00:00.0" value_coded="19" creator="1" date_created="2008-08-18 14:22:47.0" voided="false"/>
+  <obs obs_id="20"  person_id="7"   concept_id="1271" obs_datetime="2008-08-15 00:00:00.0" value_coded="19" creator="1" date_created="2008-08-18 14:25:29.0" voided="false"/>
+  <obs obs_id="21"  person_id="7"   concept_id="1271" obs_datetime="2008-08-15 00:00:00.0" value_coded="19" creator="1" date_created="2008-08-19 12:32:03.0" voided="false"/>
+  <!-- Four cases of X-RAY CHEST -->
+  <obs obs_id="22"  person_id="7"   concept_id="1271" obs_datetime="2008-08-15 00:00:00.0" value_coded="16" creator="1" date_created="2008-08-19 12:32:20.0" voided="false"/>
+  <obs obs_id="23"  person_id="7"   concept_id="1271" obs_datetime="2008-08-15 00:00:00.0" value_coded="16" creator="1" date_created="2008-08-19 12:32:38.0" voided="false"/>
+  <obs obs_id="24"  person_id="7"   concept_id="1271" obs_datetime="2008-08-15 00:00:00.0" value_coded="16" creator="1" date_created="2008-08-19 12:32:59.0" voided="false"/>
+  <obs obs_id="25"  person_id="7"   concept_id="1271" obs_datetime="2008-08-19 00:00:00.0" value_coded="16" creator="1" date_created="2008-08-19 12:35:30.0" voided="false"/>
+  <!-- Five cases of COMPLETE BLOOD COUNT -->
+  <obs obs_id="26"  person_id="7"   concept_id="1271" obs_datetime="2008-08-19 00:00:00.0" value_coded="18" creator="1" date_created="2008-08-19 12:35:30.0" voided="false"/>
+  <obs obs_id="27"  person_id="501" concept_id="1271" obs_datetime="2008-08-19 00:00:00.0" value_coded="18" creator="1" date_created="2008-08-19 12:35:30.0" voided="false"/>
+  <obs obs_id="28"  person_id="9"   concept_id="1271" obs_datetime="2008-08-19 00:00:00.0" value_coded="18" creator="1" date_created="2008-08-19 12:35:30.0" voided="false"/>
+  <obs obs_id="29"  person_id="8"   concept_id="1271" obs_datetime="2008-08-19 00:00:00.0" value_coded="18" creator="1" date_created="2008-08-19 12:35:30.0" voided="false"/>
+  <obs obs_id="30"  person_id="2"   concept_id="1271" obs_datetime="2008-08-19 00:00:00.0" value_coded="18" creator="1" date_created="2008-08-19 12:35:30.0" voided="false"/>
+  <!-- Observations for tests -->
   
   <person_address person_address_id="2"    person_id="2"   preferred="false" city_village="Indianapolis" creator="1" date_created="2005-09-22 00:00:00.0" voided="false"/>
   <person_address person_address_id="7"    person_id="7"   preferred="false" city_village="Philadelphia" creator="1" date_created="2006-01-18 00:00:00.0" voided="false"/>

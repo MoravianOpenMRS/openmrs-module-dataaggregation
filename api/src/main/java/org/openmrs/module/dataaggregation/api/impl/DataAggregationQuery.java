@@ -16,6 +16,7 @@ public abstract class DataAggregationQuery {
 	
 	public int getConceptIdOfKeyWord(String keyWord) {
 		
+		// Open the Hibernate session
 		Session session = dao.getSessionFactory().openSession();
 		
     	String problem_Query = "SELECT concept_id FROM concept_name WHERE name= :concept_name";
@@ -25,6 +26,10 @@ public abstract class DataAggregationQuery {
     	
     	@SuppressWarnings("unchecked")
 		List<Object> code_list = problem_q.list();
+
+    	// Close the Hibernate session - VERY IMPORTANT
+    	session.close();
+    	
     	// The num_coded does not need to be gotten out from the list through indexing because the SQL statement returns one record with one column
     	return (Integer) code_list.get(0);
 	}

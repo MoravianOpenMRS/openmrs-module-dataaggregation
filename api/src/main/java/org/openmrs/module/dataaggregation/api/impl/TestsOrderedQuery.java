@@ -41,7 +41,7 @@ public class TestsOrderedQuery extends DataAggregationQuery {
 	 * @return a string in the format "testName:count \n testName:count \n"
 	 * 					if there are no results the string will be empty
 	 */
-	public String getQueryInfo(String testList,
+	public List<Object> getQueryInfo(String testList, String cityList,
 								String startDate, String endDate, 
 								Integer minNumber, Integer maxNumber) {
 
@@ -51,6 +51,14 @@ public class TestsOrderedQuery extends DataAggregationQuery {
 		}
 		else {
 			tests = Arrays.asList(testList.split(":"));		
+		}
+		
+		List<String> cities;
+		if (cityList == null) {
+			cities = new LinkedList<String>(); // default: get all cities
+		}
+		else {
+			cities = Arrays.asList(cityList.split(":"));
 		}
 		
 		if (minNumber == null) {
@@ -71,12 +79,14 @@ public class TestsOrderedQuery extends DataAggregationQuery {
 			endDate = dateFormat.format(date); // default: current date
 		}
 	
-		return getTestsOrdered(tests, startDate, endDate, minNumber , maxNumber);
+		return getTestsOrdered(tests, cities, startDate, endDate, minNumber , maxNumber);
 	}
 	
 
-	private String getTestsOrdered(List<String> testsOrderedList, String startDate, String endDate, Integer minNumber, Integer maxNumber) {
+	@SuppressWarnings("unchecked")
+	private List<Object> getTestsOrdered(List<String> testsOrderedList, List<String> cities, String startDate, String endDate, Integer minNumber, Integer maxNumber) {
 	    	
+			// Open the Hibernate session
 	    	Session session = dao.getSessionFactory().openSession();
 
 	    	// get the concept_id of the concept "TESTS ORDERED"
@@ -87,13 +97,37 @@ public class TestsOrderedQuery extends DataAggregationQuery {
 	    	
 	    	SQL_Query.append("SELECT o.value_coded, c.name, count(*) ");
 	    	SQL_Query.append("FROM obs o, concept_name c ");
-	    	SQL_Query.append("WHERE o.value_coded = c.concept_id ");
+	    	
+	    	if (cities.size() != 0) { // make sure they specify locations
+	    		SQL_Query.append(", person_address pa "); // only check where people come from one particular city
+	    	}
+	    	
+	    	SQL_Query.append("WHERE o.value_coded = c.concept_id "); // want the names of the concepts ON
+	    	
+	    	if (cities.size() != 0) { // make sure they specify locations
+	    		SQL_Query.append("AND o.person_id=pa.person_id "); // get the addresses of the people with the observations
+	    	}  
+	    	
 	    	SQL_Query.append("AND o.concept_id = :coded_id ");
 	    	SQL_Query.append("AND c.concept_name_type = 'FULLY_SPECIFIED' ");	    	
 	    	SQL_Query.append("AND (o.obs_datetime BETWEEN  :start_date  AND  :end_date ) ");
 	    	
-	    	int count = 0;
+	       	// This is dealing with going through a list of cities to only include the specified ones
+	    	int count = 0;    	
+	    	for (String city : cities) {
+	    		if (count == 0) {
+	    			SQL_Query.append("AND (pa.city_village = '" + city + "' "); // add the first disease with ( at beginning 
+	    			count = 1;
+	    		}
+	    		else {
+	    			SQL_Query.append(" OR pa.city_village = '" + city + "' "); // add the next disease
+	    		}
+	    	}    	
+	    	if (count == 1) {
+	    		SQL_Query.append(") "); // only add the ending ) if there was a starting one
+	    	}   
 	    	
+	    	count = 0;	    	
 	    	for (String testOrdered : testsOrderedList) {
 	    		if (count == 0) {
 	    			SQL_Query.append("AND (c.name = '" + testOrdered + "'");
@@ -130,23 +164,13 @@ public class TestsOrderedQuery extends DataAggregationQuery {
 	    	query.setParameter("start_date", startDate);
 	    	query.setParameter("end_date", endDate);
 	    	
-	    	@SuppressWarnings("unchecked")
-			// This gets the list of records from our SQL statement each record is a row in the table
-			List<Object> results = query.list();
 	    	
-	    	StringBuilder resultString = new StringBuilder();
-	    	resultString.append("testName:count\n");
-			// Each object in results is another record from our SQL statement
-			for (Object o : results) {
-				// Cast each object into an array where each column is another index into the array
-				Object[] vals = (Object[]) o;
-				// vals[1] is the name of the disease
-				// vals[2] is the count for the disease
-				// vals[0] is just the concept_id of the disease which we may or may not need but that is why vals[0] is not used here
-				resultString.append(vals[1] + ":" + vals[2] + "\n");
-			}
+			// This gets the list of records from our SQL statement each record is a row in the table
+	    	List<Object> results = (List<Object>)query.list();
 			
-	    	return resultString.toString();
+	    	// Close the Hibernate session - VERY IMPORTANT
+	    	session.close();
+			
+			return results;
 	    }
-
 }

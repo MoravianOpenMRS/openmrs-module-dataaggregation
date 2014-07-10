@@ -52,6 +52,7 @@ public class WeightQuery extends DataAggregationQuery {
 	
     private String getWeights(Character gender, Integer minAge, Integer maxAge) {
     	
+    	// Open the Hibernate session
     	Session session = dao.getSessionFactory().openSession();
     	
     	int num_coded = getConceptIdOfKeyWord("WEIGHT (KG)");
@@ -108,6 +109,9 @@ public class WeightQuery extends DataAggregationQuery {
 			// due to the MAX() function, allowing for patient's current weight.
 			resultString.append(vals[0] + ": " + vals[3] + "(KG)" + "\n");
 		}
+		
+		// Close the Hibernate session - VERY IMPORTANT
+		session.close();
 		
     	return resultString.toString();
     }

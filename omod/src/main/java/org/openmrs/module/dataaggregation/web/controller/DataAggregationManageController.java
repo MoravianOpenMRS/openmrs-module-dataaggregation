@@ -13,16 +13,11 @@
  */
 package org.openmrs.module.dataaggregation.web.controller;
 
-import java.util.HashMap;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.jdom2.Attribute;
-import org.jdom2.Document;
-import org.jdom2.Element;
-import org.jdom2.output.Format;
-import org.jdom2.output.XMLOutputter;
+
 import org.openmrs.api.context.Context;
 import org.openmrs.module.dataaggregation.api.DataAggregationService;
 import org.springframework.stereotype.Controller;
@@ -51,7 +46,7 @@ public class  DataAggregationManageController {
 		String cities = "ZiWa:YemIt:YeNga:YamuBi:WeSt Indies:WEt Indies";
 
 		String testsOrdered = "X-RAY, CHEST:CD4 PANEL";		
-		model.addAttribute("testsOrdered", service.getTestsOrdered(testsOrdered, "1900-01-20 00:00:00", "2100-01-20 00:00:00", -1, -1));
+		model.addAttribute("testsOrdered", service.getTestsOrdered(testsOrdered, null, "1900-01-20 00:00:00", "2100-01-20 00:00:00", -1, -1));
 		
 		model.addAttribute("diseases", service.getDiseaseBurden(diseases, null, "2006-01-01 00:00:00", "2006-02-20 00:00:00", null, null));
 		//model.addAttribute("diseases", service.getDiseaseBurden(diseases, null, "1900-01-20 00:00:00", "2100-01-20 00:00:00", 10, 5000));
@@ -93,13 +88,26 @@ public class  DataAggregationManageController {
 
 	@RequestMapping(value = "/module/dataaggregation/testsordered", method = RequestMethod.GET)
 	@ResponseBody
-	public String tests(@RequestParam(value = "testList", required = false) String diseaseList,
+	public String tests(@RequestParam(value = "testList", required = false) String diseaseList, @RequestParam(value = "cityList", required = false) String cityList, 
 						@RequestParam(value = "startDate", required = false) String startDate, @RequestParam(value = "endDate", required = false) String endDate,
 						@RequestParam(value = "minNumber", required = false) Integer minNumber, @RequestParam(value = "maxNumber", required = false) Integer maxNumber,
 						@RequestParam(value = "format", required = false) String format) {
 		
-		String toReturn = Context.getService(DataAggregationService.class).getTestsOrdered(diseaseList, startDate, endDate, minNumber , maxNumber);
-		return selectFormat(format, toReturn);
+		List<Object> results = Context.getService(DataAggregationService.class).getTestsOrdered(diseaseList, cityList, startDate, endDate, minNumber , maxNumber);
+    	
+    	StringBuilder resultString = new StringBuilder();
+    	resultString.append("testName:count\n");
+		// Each object in results is another record from our SQL statement
+		for (Object o : results) {
+			// Cast each object into an array where each column is another index into the array
+			Object[] vals = (Object[]) o;
+			// vals[1] is the name of the disease
+			// vals[2] is the count for the disease
+			// vals[0] is just the concept_id of the disease which we may or may not need but that is why vals[0] is not used here
+			resultString.append(vals[1] + ":" + vals[2] + "\n");
+		}
+		
+		return selectFormat(format, resultString.toString());
 	}
 	
 	@RequestMapping(value = "/module/dataaggregation/weights", method = RequestMethod.GET)
