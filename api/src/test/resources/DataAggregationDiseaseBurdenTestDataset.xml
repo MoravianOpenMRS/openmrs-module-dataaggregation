@@ -1,33 +1,33 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <dataset>
 
-  <concept_name concept_id="6042" name="PROBLEM ADDED"            locale="en" creator="1" date_created="2004-08-12 00:00:00"   concept_name_id="6042" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false" />
-  <concept_name concept_id="1271" name="TESTS ORDERED"            locale="en" creator="1" date_created="2005-02-22 20:43:57"   concept_name_id="1271" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false" />
-  <concept_name concept_id="5089" name="WEIGHT (KG)"              locale="en" creator="1" date_created="2004-08-12 00:00:00.0" concept_name_id="1439" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false"/>
+  <concept_name concept_name_id="1"  concept_id="6042" name="PROBLEM ADDED"            locale="en" creator="1" date_created="2004-08-12 00:00:00"   concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false" />
+  <concept_name concept_name_id="2"  concept_id="1271" name="TESTS ORDERED"            locale="en" creator="1" date_created="2005-02-22 20:43:57"   concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false" />
+  <concept_name concept_name_id="3"  concept_id="5089" name="WEIGHT (KG)"              locale="en" creator="1" date_created="2004-08-12 00:00:00.0" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false"/>
    
   <!-- These are the concept_ids/names of the diseases -->
-  <concept_name concept_id="3"    name="ANEMIA"                   locale="en" creator="1" date_created="2005-02-22 20:43:57"   concept_name_id="3"    concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false"/>
-  <concept_name concept_id="123"  name="MALARIA"                  locale="en" creator="1" date_created="2005-02-22 20:43:57"   concept_name_id="123"  concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false"/>
-  <concept_name concept_id="1294" name="MENINGITIS, CRYPTOCOCCAL" locale="en" creator="1" date_created="2005-02-22 20:43:57"   concept_name_id="1294" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false"/>
-  <concept_name concept_id="140"  name="SCABIES"                  locale="en" creator="1" date_created="2005-02-22 20:43:57"   concept_name_id="140"  concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false"/>
-  <concept_name concept_id="147"  name="BRONCHITIS"               locale="en" creator="1" date_created="2004-08-12 00:00:00.0" concept_name_id="1847" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false"/>
-  <concept_name concept_id="829"  name="ECZEMA"                   locale="en" creator="1" date_created="2008-08-15 13:52:53.0" concept_name_id="2449" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false"/>
-  <concept_name concept_id="126"  name="GINGIVITIS"               locale="en" creator="1" date_created="2008-08-15 13:53:31.0" concept_name_id="2450" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false"/>
-  <concept_name concept_id="63"   name="MEASLES"                  locale="en" creator="1" date_created="2008-08-15 13:57:57.0" concept_name_id="2451" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false"/>
-  <concept_name concept_id="44"   name="PREGNANCY"                locale="en" creator="1" date_created="2008-08-15 13:58:36.0" concept_name_id="2452" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false"/>
-  <concept_name concept_id="5009" name="SPLENOMEGALY"             locale="en" creator="1" date_created="2008-08-15 14:04:20.0" concept_name_id="2453" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false"/>
+  <concept_name concept_name_id="4"  concept_id="3"    name="ANEMIA"                   locale="en" creator="1" date_created="2005-02-22 20:43:57"   concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false"/>
+  <concept_name concept_name_id="5"  concept_id="123"  name="MALARIA"                  locale="en" creator="1" date_created="2005-02-22 20:43:57"   concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false"/>
+  <concept_name concept_name_id="6"  concept_id="1294" name="MENINGITIS, CRYPTOCOCCAL" locale="en" creator="1" date_created="2005-02-22 20:43:57"   concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false"/>
+  <concept_name concept_name_id="7"  concept_id="140"  name="SCABIES"                  locale="en" creator="1" date_created="2005-02-22 20:43:57"   concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false"/>
+  <concept_name concept_name_id="8"  concept_id="147"  name="BRONCHITIS"               locale="en" creator="1" date_created="2004-08-12 00:00:00.0" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false"/>
+  <concept_name concept_name_id="9"  concept_id="829"  name="ECZEMA"                   locale="en" creator="1" date_created="2008-08-15 13:52:53.0" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false"/>
+  <concept_name concept_name_id="10" concept_id="126"  name="GINGIVITIS"               locale="en" creator="1" date_created="2008-08-15 13:53:31.0" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false"/>
+  <concept_name concept_name_id="11" concept_id="63"   name="MEASLES"                  locale="en" creator="1" date_created="2008-08-15 13:57:57.0" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false"/>
+  <concept_name concept_name_id="12" concept_id="44"   name="PREGNANCY"                locale="en" creator="1" date_created="2008-08-15 13:58:36.0" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false"/>
+  <concept_name concept_name_id="13" concept_id="5009" name="SPLENOMEGALY"             locale="en" creator="1" date_created="2008-08-15 14:04:20.0" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false"/>
   <!-- These are the concept_ids/names of the diseases -->
   
   <!-- Tests -->		
-  <concept_name concept_id="11" name="HIV ENZYME IMMUNOASSAY, QUALITATIVE"            locale="en" creator="1" date_created="2007-01-21 21:14:54" concept_name_id="11" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false" />
-  <concept_name concept_id="12" name="HIV DNA POLYMERASE CHAIN REACTION, QUALITATIVE" locale="en" creator="1" date_created="2007-02-21 21:14:54" concept_name_id="12" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false" />
-  <concept_name concept_id="13" name="HEMOGLOBIN"                                     locale="en" creator="1" date_created="2007-03-21 21:14:54" concept_name_id="13" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false" />
-  <concept_name concept_id="14" name="OTHER NON-CODED"                                locale="en" creator="1" date_created="2007-04-21 21:14:54" concept_name_id="14" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false" />
-  <concept_name concept_id="15" name="HIV VIRAL LOAD"                                 locale="en" creator="1" date_created="2007-05-21 21:14:54" concept_name_id="15" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false" />
-  <concept_name concept_id="16" name="X-RAY CHEST"                                    locale="en" creator="1" date_created="2007-06-21 21:14:54" concept_name_id="16" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false" />
-  <concept_name concept_id="17" name="SERUM CREATININE"                               locale="en" creator="1" date_created="2007-08-21 21:14:54" concept_name_id="18" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false" />
-  <concept_name concept_id="18" name="COMPLETE BLOOD COUNT"                           locale="en" creator="1" date_created="2007-09-21 21:14:54" concept_name_id="19" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false" />
-  <concept_name concept_id="19" name="CD4 PANEL"                                      locale="en" creator="1" date_created="2007-10-21 21:14:54" concept_name_id="20" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false" />
+  <concept_name concept_name_id="14" concept_id="11" name="HIV ENZYME IMMUNOASSAY, QUALITATIVE"            locale="en" creator="1" date_created="2007-01-21 21:14:54" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false" />
+  <concept_name concept_name_id="15" concept_id="12" name="HIV DNA POLYMERASE CHAIN REACTION, QUALITATIVE" locale="en" creator="1" date_created="2007-02-21 21:14:54" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false" />
+  <concept_name concept_name_id="16" concept_id="13" name="HEMOGLOBIN"                                     locale="en" creator="1" date_created="2007-03-21 21:14:54" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false" />
+  <concept_name concept_name_id="17" concept_id="14" name="OTHER NON-CODED"                                locale="en" creator="1" date_created="2007-04-21 21:14:54" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false" />
+  <concept_name concept_name_id="18" concept_id="15" name="HIV VIRAL LOAD"                                 locale="en" creator="1" date_created="2007-05-21 21:14:54" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false" />
+  <concept_name concept_name_id="19" concept_id="16" name="X-RAY CHEST"                                    locale="en" creator="1" date_created="2007-06-21 21:14:54" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false" />
+  <concept_name concept_name_id="20" concept_id="17" name="SERUM CREATININE"                               locale="en" creator="1" date_created="2007-08-21 21:14:54" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false" />
+  <concept_name concept_name_id="21" concept_id="18" name="COMPLETE BLOOD COUNT"                           locale="en" creator="1" date_created="2007-09-21 21:14:54" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false" />
+  <concept_name concept_name_id="22" concept_id="19" name="CD4 PANEL"                                      locale="en" creator="1" date_created="2007-10-21 21:14:54" concept_name_type="FULLY_SPECIFIED" locale_preferred="true" voided="false" />
   <!-- Tests -->
  
   <!-- Observations for diseases -->

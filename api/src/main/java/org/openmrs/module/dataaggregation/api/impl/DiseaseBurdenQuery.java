@@ -14,7 +14,7 @@ import org.openmrs.module.dataaggregation.api.db.DataAggregationDAO;
 public class DiseaseBurdenQuery extends DataAggregationQuery {
 	
 	private static final String  default_start_date =  "0000-01-01 00:00:00";
-	private static final Integer default_min_number = -1;
+	private static final Integer default_min_number = -1; // should default to something like 11 but we need it at -1 for testing
 	private static final Integer default_max_number = -1;	
 		
 	public DiseaseBurdenQuery(DataAggregationDAO dao) {
@@ -23,26 +23,43 @@ public class DiseaseBurdenQuery extends DataAggregationQuery {
 
 	/**
 	 * This method returns a string containing the count of the desired disease.
-	 * @param diseaseList a string in the format "desiredDisease1:desiredDisease2:...:desiredDiseaseN"
-	 * 					This method will only list the results of the disease specified in the string.
-	 * 					If this parameter is null, then all the diseases will be included in the result.
-	 * @param cityList a string in the format "desiredCity1:desiredCity2:...:desiredCityN"
-	 * 					This method will only list the results of the diseases in the city specified in the string.
-	 * 				   	If the parameter in null, then all the diseases will be included in the result.
-	 * @param startDate a string in the format "YYYY-MM-DD HH:MM:SS" for example : "2006-01-30 00:00:00"
-	 * 					This string bounds the query only to tests ordered after a specific date (inclusive or exclusive?).
-	 * 					If this parameter is null, then no lower bound will exist.
-	 * @param endDate a string in the format "YYYY-MM-DD HH:MM:SS" for example : "2006-01-30 00:00:00"
-	 * 					This string bounds the query only to tests ordered before a certain date (inclusive or exclusive?).
-	 * 					If this parameter is null, the no upper bound will exist.
-	 * @param minNumber a positive integer
-	 * 					This integer bounds the query only to tests ordered at least a certain amount of times (inclusive or exclusive?).
-	 * 					If this parameter is null or negative, there will be no lower bound.
-	 * @param maxNumber a positive integer
-	 * 					This integer bounds the query only to tests ordered less than a certain amount of times (inclusive or exclusive?).
-	 * 					If this parameter is null or negative, there will be no upper bound.
-	 * @return a List<Obect> It is the list of records coming back from the database, each object representing a row in the table which
-	 * 						index 1 is the name of the disease, index 2 is the count for the disease, index 0 is the concept_id of the disease
+	 * 
+	 * @param diseaseList
+	 *            a string in the format
+	 *            "desiredDisease1:desiredDisease2:...:desiredDiseaseN" This
+	 *            method will only list the results of the disease specified in
+	 *            the string. If this parameter is null, then all the diseases
+	 *            will be included in the result.
+	 * @param cityList
+	 *            a string in the format
+	 *            "desiredCity1:desiredCity2:...:desiredCityN" This method will
+	 *            only list the results of the diseases in the city specified in
+	 *            the string. If the parameter in null, then all the diseases
+	 *            will be included in the result.
+	 * @param startDate
+	 *            a string in the format "YYYY-MM-DD HH:MM:SS" for example :
+	 *            "2006-01-30 00:00:00" This string bounds the query only to
+	 *            tests ordered after a specific date (inclusive or exclusive?).
+	 *            If this parameter is null, then no lower bound will exist.
+	 * @param endDate
+	 *            a string in the format "YYYY-MM-DD HH:MM:SS" for example :
+	 *            "2006-01-30 00:00:00" This string bounds the query only to
+	 *            tests ordered before a certain date (inclusive or exclusive?).
+	 *            If this parameter is null, the no upper bound will exist.
+	 * @param minNumber
+	 *            a positive integer This integer bounds the query only to tests
+	 *            ordered at least a certain amount of times (inclusive or
+	 *            exclusive?). If this parameter is null or negative, there will
+	 *            be no lower bound.
+	 * @param maxNumber
+	 *            a positive integer This integer bounds the query only to tests
+	 *            ordered less than a certain amount of times (inclusive or
+	 *            exclusive?). If this parameter is null or negative, there will
+	 *            be no upper bound.
+	 * @return a List<Obect> It is the list of records coming back from the
+	 *         database, each object representing a row in the table which index
+	 *         1 is the name of the disease, index 2 is the count for the
+	 *         disease, index 0 is the concept_id of the disease
 	 */
 	public List<Object> getQueryInfo(String diseaseList, String cityList, 
 									String startDate, String endDate, 
@@ -53,7 +70,7 @@ public class DiseaseBurdenQuery extends DataAggregationQuery {
 			diseases = new LinkedList<String>(); // default: get all diseases
 		}
 		else {
-			diseases = Arrays.asList(diseaseList.split(":"));		
+			diseases = Arrays.asList(diseaseList.split(":")); // make the long string into a list
 		}
 		
 		List<String> cities;		
@@ -61,7 +78,7 @@ public class DiseaseBurdenQuery extends DataAggregationQuery {
 			cities = new LinkedList<String>(); // default: get all cities 
 		}
 		else {
-			cities = Arrays.asList(cityList.split(":"));
+			cities = Arrays.asList(cityList.split(":")); // make the long string into a list
 		}
 		
 		if (minNumber == null) {
@@ -91,38 +108,37 @@ public class DiseaseBurdenQuery extends DataAggregationQuery {
      */
 	@SuppressWarnings("unchecked")
 	private List<Object> getDiseaseCounts(List<String> diseaseList, List<String> cities, 
-    								String startDate, String endDate, 
-    								Integer minNumber, Integer maxNumber) {   	
+    										String startDate, String endDate, 
+    										Integer minNumber, Integer maxNumber) {   	
     	
-    	// Open the Hibernate session
-    	Session session = dao.getSessionFactory().openSession();
+    	Session session = dao.getSessionFactory().openSession(); // Open the Hibernate session
     	
-    	int num_coded = getConceptIdOfKeyWord("PROBLEM ADDED");
+    	int num_coded = getConceptIdOfKeyWord("PROBLEM ADDED"); // call the function that gets the concept_id # of PROBLEM ADDED
     	
     	// This is the HQL statement that is used with the database in order to get the data we want
     	StringBuilder SQL_Query = new StringBuilder();
     	
-    	SQL_Query.append("SELECT o.value_coded, c.name, count(*) "); // columns we want to have
-    	SQL_Query.append("FROM obs o, concept_name c "); // tables we need to join together JOIN
+    	SQL_Query.append("SELECT o.value_coded, c.name, count(*) "); // columns we want to have (value_coded=concept_id of diseases, name is name of disease, count is count)
+    	SQL_Query.append("FROM obs o, concept_name c "); // tables we need to join together JOIN (obs for counting occurrences, concept_name for diseases)
     	
     	if (cities.size() != 0) { // make sure they specify locations
-    		SQL_Query.append(", person_address pa "); // only check where people come from one particular city
+    		SQL_Query.append(", person_address pa "); // add the address table in order to get cities
     	}
     	
-    	SQL_Query.append("WHERE o.value_coded = c.concept_id "); // want the names of the concepts ON
+    	SQL_Query.append("WHERE o.value_coded = c.concept_id "); // want the names of the concepts (ON clause but Hibernate does not support on so it has to be in the where)
     	
     	if (cities.size() != 0) { // make sure they specify locations
-    		SQL_Query.append("AND o.person_id=pa.person_id "); // get the addresses of the people with the observations
+    		SQL_Query.append("AND o.person_id=pa.person_id "); // only get the addresses of the people with the diseases
     	}    	
     	
-    	SQL_Query.append("AND o.concept_id = :coded_id "); // only get observations that have the PROBLEM ADDED concept (concept_id = 6042)
-    	SQL_Query.append("AND c.concept_name_type = 'FULLY_SPECIFIED' "); // this prevents the repeats in the concept_name table (multiple names for same concept_id)    				
+    	SQL_Query.append("AND o.concept_id = :coded_id "); // only get observations that have the PROBLEM ADDED concept (problem added correlates to disease)
+    	SQL_Query.append("AND c.concept_name_type = 'FULLY_SPECIFIED' "); // this prevents the repeats in the concept_name table (multiple names for same concept_id only one is FULLY SPECIFIED)    				
     	SQL_Query.append("AND ( o.obs_datetime BETWEEN :start_date AND :end_date ) "); // specifies the date range that we want
     	
     	
     	// This is dealing with going through a list of cities to only include the specified ones
     	int count = 0;    	
-    	for (String city : cities) {
+     	for (String city : cities) {
     		if (count == 0) {
     			SQL_Query.append("AND (pa.city_village = '" + city + "' "); // add the first disease with ( at beginning 
     			count = 1;
@@ -151,8 +167,7 @@ public class DiseaseBurdenQuery extends DataAggregationQuery {
     	}    	
     	
     	
-    	//SQL_Query.append("GROUP BY o.value_coded "); // group by the value_coded (disease)
-    	SQL_Query.append("GROUP BY c.name "); // this makes it possible to test apparently grouping by the value_coded does not allow for testing
+    	SQL_Query.append("GROUP BY c.name "); // this makes it possible to test (apparently) grouping by the value_coded does not allow for testing
     	
     	
     	if (minNumber > -1 && maxNumber > -1) {
@@ -167,12 +182,12 @@ public class DiseaseBurdenQuery extends DataAggregationQuery {
     	
     	SQL_Query.append(" ORDER BY c.name "); // this way the diseases are sorted alphabetically 
     	
-		SQLQuery query = session.createSQLQuery(SQL_Query.toString());
+		SQLQuery query = session.createSQLQuery(SQL_Query.toString()); // run the actual query to get results
 
-		// This sets the parameter coded_id to whatever we got from the number above (should be 6042)	
-		query.setParameter("coded_id", num_coded);	
-		query.setParameter("start_date", startDate);
-		query.setParameter("end_date", endDate);
+		// This sets the parameters to the necessary values
+		query.setParameter("coded_id", num_coded); // concept_id of problem added
+		query.setParameter("start_date", startDate); // start_date parameter
+		query.setParameter("end_date", endDate); // end_date parameter
 		
 		// The list method returns a List (without the generic specified).  We cast to the desired return
 		// type.  Note the "suppressWarning" command on this method.

@@ -90,12 +90,12 @@ public class  DataAggregationManageController {
 
 	@RequestMapping(value = "/module/dataaggregation/testsordered", method = RequestMethod.GET)
 	@ResponseBody
-	public String tests(@RequestParam(value = "testList", required = false) String diseaseList, @RequestParam(value = "cityList", required = false) String cityList, 
+	public String tests(@RequestParam(value = "testList", required = false) String testList, @RequestParam(value = "cityList", required = false) String cityList, 
 						@RequestParam(value = "startDate", required = false) String startDate, @RequestParam(value = "endDate", required = false) String endDate,
 						@RequestParam(value = "minNumber", required = false) Integer minNumber, @RequestParam(value = "maxNumber", required = false) Integer maxNumber,
 						@RequestParam(value = "format", required = false) String format) {
 		
-		List<Object> toReturn = Context.getService(DataAggregationService.class).getTestsOrdered(diseaseList, cityList, startDate, endDate, minNumber , maxNumber);
+		List<Object> toReturn = Context.getService(DataAggregationService.class).getTestsOrdered(testList, cityList, startDate, endDate, minNumber , maxNumber);
 
 		if(format == null){
 			return JSONFormatter.formatTestsOrdered(toReturn);
